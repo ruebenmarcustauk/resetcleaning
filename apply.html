@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>Apply for Access · Reset Cleaning Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --linen: #F5F2EE;
+  --stone: #C8B89A;
+  --drift: #6B6259;
+  --obsidian: #2C2825;
+  --sage: #5A8A7A;
+  --bg: #EDEBE7;
+  --border: rgba(107,98,89,0.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--obsidian);
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+header {
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: rgba(237,235,231,0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--obsidian);
+  text-decoration: none;
+  line-height: 1;
+}
+
+.logo-city {
+  display: block;
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  color: var(--drift);
+  margin-top: 4px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 40px 28px 20px;
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 18px;
+  display: block;
+  font-weight: 500;
+}
+
+.headline {
+  font-family: 'Cormorant', serif;
+  font-weight: 300;
+  font-size: clamp(2.8rem, 11vw, 4rem);
+  line-height: 1.06;
+  color: var(--obsidian);
+  margin-bottom: 18px;
+  letter-spacing: -0.01em;
+}
+
+.headline em {
+  font-style: italic;
+  color: var(--drift);
+}
+
+.subhead {
+  font-size: 0.88rem;
+  line-height: 1.8;
+  color: rgba(44,40,37,0.72);
+  letter-spacing: 0.01em;
+  max-width: 320px;
+  margin: 0 auto 24px;
+  font-weight: 300;
+}
+
+/* Divider */
+.divider {
+  width: 32px;
+  height: 1px;
+  background: var(--stone);
+  opacity: 0.5;
+  margin: 0 auto 28px;
+}
+
+/* ── FORM SECTION ── */
+.form-section {
+  padding: 0 20px 24px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.form-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--drift);
+  opacity: 0.8;
+  margin-bottom: 14px;
+  display: block;
+  text-align: center;
+  font-weight: 400;
+}
+
+.form-card {
+  background: var(--linen);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  width: 100%;
+}
+
+.ghl-form-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.ghl-form-wrap iframe {
+  width: 100%;
+  height: 951px;
+  border: none;
+  display: block;
+}
+
+/* ── TRUST ROW ── */
+.trust {
+  padding: 32px 28px 16px;
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.trust-mark {
+  font-family: 'Cormorant', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--stone);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.trust-text {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: rgba(44,40,37,0.7);
+  letter-spacing: 0.01em;
+}
+
+.trust-text strong {
+  font-weight: 500;
+  color: var(--obsidian);
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 28px;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--drift);
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 400;
+}
+
+.footer-sub {
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(107,98,89,0.6);
+}
+
+/* ── DESKTOP ── */
+@media (min-width: 768px) {
+  .hero { padding: 64px 40px 32px; }
+  .form-section { padding: 0 40px 40px; }
+  .trust {
+    padding: 40px 40px 24px;
+    flex-direction: row;
+    gap: 32px;
+  }
+  .trust-item { flex: 1; }
+}
+
+/* ── FADE IN ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero > * { animation: fadeUp 0.6s ease both; }
+.eyebrow  { animation-delay: 0.05s; }
+.headline { animation-delay: 0.12s; }
+.subhead  { animation-delay: 0.2s; }
+.divider  { animation-delay: 0.28s; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="logo" href="#">
+    Reset Cleaning Group
+    <span class="logo-city">Gold Coast, Australia</span>
+  </a>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="eyebrow">Premium Home Reset · By Application</span>
+  <h1 class="headline">
+    Walk in.<br>
+    <em>Exhale.</em>
+  </h1>
+  <p class="subhead">
+    Hotel-standard cleaning with natural products and a signature scent — chosen by you, applied on every visit.
+  </p>
+  <div class="divider"></div>
+</div>
+
+<!-- FORM -->
+<div class="form-section">
+  <span class="form-label">Apply for access — June slots now open</span>
+  <div class="form-card">
+    <div class="ghl-form-wrap">
+      <iframe
+        src="https://api.leadconnectorhq.com/widget/form/BseKzH9UrREKAlmuvixj"
+        id="inline-BseKzH9UrREKAlmuvixj"
+        data-layout="{'id':'INLINE'}"
+        data-trigger-type="alwaysShow"
+        data-trigger-value=""
+        data-activation-type="alwaysActivated"
+        data-activation-value=""
+        data-deactivation-type="neverDeactivate"
+        data-deactivation-value=""
+        data-form-name="Request for Access form"
+        data-height="951"
+        data-layout-iframe-id="inline-BseKzH9UrREKAlmuvixj"
+        data-form-id="BseKzH9UrREKAlmuvixj"
+        title="Request for Access form"
+        scrolling="no">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="trust-item">
+    <span class="trust-mark">I</span>
+    <p class="trust-text"><strong>Hotel standard.</strong> Beds made with precision. Surfaces cleared and arranged — not just wiped.</p>
+  </div>
+  <div class="trust-item">
+    <span class="trust-mark">II</span>
+    <p class="trust-text"><strong>Your signature scent.</strong> Chosen once. Applied every visit. Your home always feels the same.</p>
+  </div>
+  <div class="trust-item">
+    <span class="trust-mark">III</span>
+    <p class="trust-text"><strong>Natural products only.</strong> Nothing synthetic. The scent is the finishing act.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Reset Cleaning Group</span>
+  <span class="footer-sub">From $450 · Broadbeach · Mermaid Beach · Burleigh Heads</span>
+</footer>
+
+<script src="https://link.msgsndr.com/js/form_embed.js"></script>
+
+</body>
+</html>
