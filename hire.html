@@ -7,6 +7,25 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<!-- Meta Pixel — Reset Cleaning Group HIRING -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '719595437882075');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=719595437882075&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel -->
+
 <style>
 :root {
   --linen: #F5F2EE;
@@ -33,7 +52,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── HEADER ── */
 header {
   padding: 22px 28px;
   display: flex;
@@ -69,7 +87,6 @@ header {
   opacity: 0.7;
 }
 
-/* ── HERO ── */
 .hero {
   padding: 48px 28px 28px;
   text-align: center;
@@ -112,7 +129,6 @@ header {
   font-weight: 300;
 }
 
-/* ── RATE BADGE ── */
 .rate-badge {
   display: inline-block;
   border: 1px solid var(--border-light);
@@ -140,7 +156,6 @@ header {
   margin-top: 5px;
 }
 
-/* Divider */
 .divider {
   width: 32px;
   height: 1px;
@@ -149,7 +164,6 @@ header {
   margin: 0 auto 32px;
 }
 
-/* ── FORM SECTION ── */
 .form-section {
   padding: 0 20px 16px;
   max-width: 520px;
@@ -186,7 +200,6 @@ header {
   display: block;
 }
 
-/* ── PERKS — below form ── */
 .perks {
   padding: 32px 20px 8px;
   max-width: 520px;
@@ -224,7 +237,6 @@ header {
   letter-spacing: 0.01em;
 }
 
-/* ── FOOTER ── */
 footer {
   padding: 28px;
   border-top: 1px solid var(--border);
@@ -250,14 +262,12 @@ footer {
   color: rgba(245,242,238,0.18);
 }
 
-/* ── DESKTOP ── */
 @media (min-width: 768px) {
   .hero { padding: 72px 40px 36px; }
   .form-section { padding: 0 40px 16px; }
   .perks { padding: 32px 40px 8px; }
 }
 
-/* ── FADE IN ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -274,7 +284,6 @@ footer {
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <a class="logo" href="#">
     Reset Cleaning Group
@@ -282,7 +291,6 @@ footer {
   </a>
 </header>
 
-<!-- HERO -->
 <div class="hero">
   <span class="eyebrow">Now Hiring · Gold Coast</span>
   <h1 class="headline">
@@ -292,16 +300,13 @@ footer {
   <p class="subhead">
     We're building a team of cleaners who take genuine pride in their work. Premium clients. Consistent hours. Top rates in QLD.
   </p>
-
   <div class="rate-badge">
     <span class="rate-number">$40–60/hr</span>
     <span class="rate-label">Top rates in Queensland</span>
   </div>
-
   <div class="divider"></div>
 </div>
 
-<!-- FORM -->
 <div class="form-section">
   <span class="form-label">Apply in 60 seconds — we'll call you today</span>
   <div class="form-card">
@@ -327,7 +332,6 @@ footer {
   </div>
 </div>
 
-<!-- PERKS — below form -->
 <div class="perks">
   <div class="perk">
     <span class="perk-value">Consistent</span>
@@ -347,13 +351,30 @@ footer {
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <span class="footer-logo">Reset Cleaning Group</span>
   <span class="footer-sub">Gold Coast, Australia · Premium Home Reset</span>
 </footer>
 
 <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+
+<!-- GHL Form Submission → Meta CompleteRegistration Event -->
+<script>
+  window.addEventListener('message', function(event) {
+    if (!event.data) return;
+    var d = event.data;
+    var isSubmission = (
+      d.type === 'form-submission' ||
+      d === 'form-submission-completed' ||
+      (d.eventType && d.eventType === 'formSubmitted') ||
+      (d.type && d.type === 'FORM_SUBMITTED')
+    );
+    if (isSubmission && typeof fbq !== 'undefined') {
+      fbq('track', 'CompleteRegistration');
+    }
+  });
+</script>
+<!-- End GHL Listener -->
 
 </body>
 </html>

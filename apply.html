@@ -7,6 +7,25 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<!-- Meta Pixel — Reset Cleaning Group CLIENTS -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1548609960014613');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1548609960014613&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel -->
+
 <style>
 :root {
   --linen: #F5F2EE;
@@ -31,7 +50,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── HEADER ── */
 header {
   padding: 22px 28px;
   display: flex;
@@ -66,7 +84,6 @@ header {
   font-weight: 300;
 }
 
-/* ── HERO ── */
 .hero {
   padding: 40px 28px 20px;
   text-align: center;
@@ -109,7 +126,6 @@ header {
   font-weight: 300;
 }
 
-/* Divider */
 .divider {
   width: 32px;
   height: 1px;
@@ -118,7 +134,6 @@ header {
   margin: 0 auto 28px;
 }
 
-/* ── FORM SECTION ── */
 .form-section {
   padding: 0 20px 24px;
   max-width: 520px;
@@ -156,7 +171,6 @@ header {
   display: block;
 }
 
-/* ── TRUST ROW ── */
 .trust {
   padding: 32px 28px 16px;
   max-width: 520px;
@@ -193,7 +207,6 @@ header {
   color: var(--obsidian);
 }
 
-/* ── FOOTER ── */
 footer {
   padding: 28px;
   border-top: 1px solid var(--border);
@@ -219,19 +232,13 @@ footer {
   color: rgba(107,98,89,0.6);
 }
 
-/* ── DESKTOP ── */
 @media (min-width: 768px) {
   .hero { padding: 64px 40px 32px; }
   .form-section { padding: 0 40px 40px; }
-  .trust {
-    padding: 40px 40px 24px;
-    flex-direction: row;
-    gap: 32px;
-  }
+  .trust { padding: 40px 40px 24px; flex-direction: row; gap: 32px; }
   .trust-item { flex: 1; }
 }
 
-/* ── FADE IN ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -245,7 +252,6 @@ footer {
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <a class="logo" href="#">
     Reset Cleaning Group
@@ -253,7 +259,6 @@ footer {
   </a>
 </header>
 
-<!-- HERO -->
 <div class="hero">
   <span class="eyebrow">Premium Home Reset · By Application</span>
   <h1 class="headline">
@@ -266,7 +271,6 @@ footer {
   <div class="divider"></div>
 </div>
 
-<!-- FORM -->
 <div class="form-section">
   <span class="form-label">Apply for access — June slots now open</span>
   <div class="form-card">
@@ -292,7 +296,6 @@ footer {
   </div>
 </div>
 
-<!-- TRUST -->
 <div class="trust">
   <div class="trust-item">
     <span class="trust-mark">I</span>
@@ -308,13 +311,30 @@ footer {
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <span class="footer-logo">Reset Cleaning Group</span>
   <span class="footer-sub">From $450 · Broadbeach · Mermaid Beach · Burleigh Heads</span>
 </footer>
 
 <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+
+<!-- GHL Form Submission → Meta Lead Event -->
+<script>
+  window.addEventListener('message', function(event) {
+    if (!event.data) return;
+    var d = event.data;
+    var isSubmission = (
+      d.type === 'form-submission' ||
+      d === 'form-submission-completed' ||
+      (d.eventType && d.eventType === 'formSubmitted') ||
+      (d.type && d.type === 'FORM_SUBMITTED')
+    );
+    if (isSubmission && typeof fbq !== 'undefined') {
+      fbq('track', 'Lead');
+    }
+  });
+</script>
+<!-- End GHL Listener -->
 
 </body>
 </html>
