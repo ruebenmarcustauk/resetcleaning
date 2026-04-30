@@ -358,19 +358,15 @@ footer {
 
 <script src="https://link.msgsndr.com/js/form_embed.js"></script>
 
-<!-- GHL Form Submission → Meta CompleteRegistration Event -->
+<!-- GHL Form Submission → Meta Lead Event -->
 <script>
   window.addEventListener('message', function(event) {
     if (!event.data) return;
     var d = event.data;
-    var isSubmission = (
-      d.type === 'form-submission' ||
-      d === 'form-submission-completed' ||
-      (d.eventType && d.eventType === 'formSubmitted') ||
-      (d.type && d.type === 'FORM_SUBMITTED')
-    );
-    if (isSubmission && typeof fbq !== 'undefined') {
-      fbq('track', 'CompleteRegistration');
+    if (Array.isArray(d) && d[0] === 'set-sticky-contacts') {
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead');
+      }
     }
   });
 </script>
