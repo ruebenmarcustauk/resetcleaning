@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<title>Apply for Access · Reset Cleaning Group</title>
+<title>Book Your Reset · Reset Cleaning Group</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -85,7 +85,7 @@ header {
 }
 
 .hero {
-  padding: 40px 28px 20px;
+  padding: 20px 28px 12px;
   text-align: center;
   max-width: 480px;
   margin: 0 auto;
@@ -96,7 +96,7 @@ header {
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--sage);
-  margin-bottom: 18px;
+  margin-bottom: 10px;
   display: block;
   font-weight: 500;
 }
@@ -104,10 +104,10 @@ header {
 .headline {
   font-family: 'Cormorant', serif;
   font-weight: 300;
-  font-size: clamp(2.8rem, 11vw, 4rem);
+  font-size: clamp(2rem, 9vw, 4rem);
   line-height: 1.06;
   color: var(--obsidian);
-  margin-bottom: 18px;
+  margin-bottom: 10px;
   letter-spacing: -0.01em;
 }
 
@@ -117,13 +117,18 @@ header {
 }
 
 .subhead {
-  font-size: 0.88rem;
-  line-height: 1.8;
+  font-size: 0.82rem;
+  line-height: 1.7;
   color: rgba(44,40,37,0.72);
   letter-spacing: 0.01em;
   max-width: 320px;
-  margin: 0 auto 24px;
+  margin: 0 auto 14px;
   font-weight: 300;
+}
+
+/* hide subhead on small phones to save vertical space */
+@media (max-height: 750px) and (max-width: 767px) {
+  .subhead { display: none; }
 }
 
 .divider {
@@ -131,12 +136,12 @@ header {
   height: 1px;
   background: var(--stone);
   opacity: 0.5;
-  margin: 0 auto 28px;
+  margin: 0 auto 16px;
 }
 
-.form-section {
-  padding: 0 20px 24px;
-  max-width: 520px;
+.calendar-section {
+  padding: 0 16px 24px;
+  max-width: 820px;
   margin: 0 auto;
 }
 
@@ -146,34 +151,29 @@ header {
   text-transform: uppercase;
   color: var(--drift);
   opacity: 0.8;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   display: block;
   text-align: center;
   font-weight: 400;
 }
 
-.form-card {
+.calendar-card {
   background: var(--linen);
   border: 1px solid var(--border);
   overflow: hidden;
   width: 100%;
 }
 
-.ghl-form-wrap {
+.calendar-card iframe {
   width: 100%;
-  overflow: hidden;
-}
-
-.ghl-form-wrap iframe {
-  width: 100%;
-  height: 951px;
+  min-height: 700px;
   border: none;
   display: block;
 }
 
 .trust {
   padding: 32px 28px 16px;
-  max-width: 520px;
+  max-width: 820px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -234,7 +234,10 @@ footer {
 
 @media (min-width: 768px) {
   .hero { padding: 64px 40px 32px; }
-  .form-section { padding: 0 40px 40px; }
+  .headline { font-size: clamp(2.8rem, 5vw, 4rem); }
+  .subhead { display: block !important; font-size: 0.88rem; line-height: 1.8; margin-bottom: 24px; }
+  .divider { margin-bottom: 28px; }
+  .calendar-section { padding: 0 40px 40px; }
   .trust { padding: 40px 40px 24px; flex-direction: row; gap: 32px; }
   .trust-item { flex: 1; }
 }
@@ -260,54 +263,41 @@ footer {
 </header>
 
 <div class="hero">
-  <span class="eyebrow">Premium Home Reset · By Application</span>
+  <span class="eyebrow">Your confirmed spot · Select a date</span>
   <h1 class="headline">
-    Walk in.<br>
-    <em>Exhale.</em>
+    Choose your<br>
+    <em>first Reset.</em>
   </h1>
   <p class="subhead">
-    Hotel-standard cleaning with natural products and a signature scent — chosen by you, applied on every visit.
+    Pick a date and give us a few details about your home. Rueben will confirm everything personally before your first visit.
   </p>
   <div class="divider"></div>
 </div>
 
-<div class="form-section">
-  <span class="form-label">JUNE APPLICATIONS NOW OPEN — SPOTS ARE LIMITED</span>
-  <div class="form-card">
-    <div class="ghl-form-wrap">
-      <iframe
-        src="https://api.leadconnectorhq.com/widget/form/BseKzH9UrREKAlmuvixj"
-        id="inline-BseKzH9UrREKAlmuvixj"
-        data-layout="{'id':'INLINE'}"
-        data-trigger-type="alwaysShow"
-        data-trigger-value=""
-        data-activation-type="alwaysActivated"
-        data-activation-value=""
-        data-deactivation-type="neverDeactivate"
-        data-deactivation-value=""
-        data-form-name="Request for Access form"
-        data-height="951"
-        data-layout-iframe-id="inline-BseKzH9UrREKAlmuvixj"
-        data-form-id="BseKzH9UrREKAlmuvixj"
-        title="Request for Access form"
-        scrolling="no">
-      </iframe>
-    </div>
+<div class="calendar-section">
+  <span class="form-label">Select your preferred date — June slots available</span>
+  <div class="calendar-card">
+    <iframe
+      src="https://api.leadconnectorhq.com/widget/booking/5IC0kE1tgwJKksQSBEJn"
+      style="width: 100%; border: none; overflow: hidden;"
+      scrolling="no"
+      id="5IC0kE1tgwJKksQSBEJn_1777663495952">
+    </iframe>
   </div>
 </div>
 
 <div class="trust">
   <div class="trust-item">
     <span class="trust-mark">I</span>
-    <p class="trust-text"><strong>Hotel standard.</strong> Beds made with precision. Surfaces cleared and arranged — not just wiped.</p>
+    <p class="trust-text"><strong>No commitment required.</strong> Book your first Reset and we'll confirm the details with you personally before anything is finalised.</p>
   </div>
   <div class="trust-item">
     <span class="trust-mark">II</span>
-    <p class="trust-text"><strong>Your signature scent.</strong> Chosen once. Applied every visit. Your home always feels the same.</p>
+    <p class="trust-text"><strong>Hotel standard, every visit.</strong> Beds made with precision. Surfaces cleared and arranged — not just wiped.</p>
   </div>
   <div class="trust-item">
     <span class="trust-mark">III</span>
-    <p class="trust-text"><strong>Natural products only.</strong> Nothing synthetic. The scent is the finishing act.</p>
+    <p class="trust-text"><strong>Natural products only.</strong> Hand-selected formulas. Your signature scent applied on every visit.</p>
   </div>
 </div>
 
@@ -316,17 +306,22 @@ footer {
   <span class="footer-sub">From $450 · Broadbeach · Mermaid Beach · Burleigh Heads</span>
 </footer>
 
-<script src="https://link.msgsndr.com/js/form_embed.js"></script>
+<script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
 
-<<!-- GHL Form Submission → Meta Lead Event -->
+<!-- GHL Booking Submission → Meta Schedule Event -->
 <script>
   window.addEventListener('message', function(event) {
     if (!event.data) return;
     var d = event.data;
-    if (Array.isArray(d) && d[0] === 'set-sticky-contacts') {
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'Lead');
-      }
+    var isBooking = (
+      d.type === 'form-submission' ||
+      d === 'form-submission-completed' ||
+      (d.eventType && d.eventType === 'formSubmitted') ||
+      (d.type && d.type === 'FORM_SUBMITTED') ||
+      (d.type && d.type === 'booking-confirmed')
+    );
+    if (isBooking && typeof fbq !== 'undefined') {
+      fbq('track', 'Schedule');
     }
   });
 </script>
