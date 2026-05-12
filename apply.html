@@ -167,10 +167,15 @@ header {
 
 .calendar-wrap iframe {
   width: 100%;
-  height: 800px;
+  height: 1400px;
   border: none;
   display: block;
-  transition: height 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .calendar-wrap iframe {
+    height: 1200px;
+  }
 }
 
 .trust {
@@ -308,29 +313,7 @@ footer {
   <span class="footer-logo">Reset Cleaning Group</span>
   <span class="footer-sub">From $450 · Broadbeach · Mermaid Beach · Burleigh Heads</span>
 </footer>
-<!-- GHL Calendar Auto-resize -->
-<script>
-  window.addEventListener('message', function(event) {
-    if (!event.data) return;
-    var d = event.data;
 
-    // GHL iFrameSizer sends height updates like:
-    // "[iFrameSizer]inline-ID:width:height:type"
-    if (typeof d === 'string' && d.indexOf('iFrameSizer') !== -1) {
-      var parts = d.split(':');
-      if (parts.length >= 3) {
-        var height = parseInt(parts[2]);
-        if (!isNaN(height) && height > 100) {
-          var iframe = document.getElementById('ghl_calendar_booking');
-          if (iframe) {
-            iframe.style.height = (height + 60) + 'px';
-          }
-        }
-      }
-    }
-  });
-</script>
-<!-- End Auto-resize -->
 <!-- GHL Calendar Booking → Meta Lead Event -->
 <script>
   var pixelFired = false;
