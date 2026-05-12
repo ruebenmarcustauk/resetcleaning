@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<title>Apply for Access · Reset Cleaning Group</title>
+<title>Book Your Reset · Reset Cleaning Group</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -136,7 +136,7 @@ header {
 
 .form-section {
   padding: 0 20px 24px;
-  max-width: 520px;
+  max-width: 680px;
   margin: 0 auto;
 }
 
@@ -157,16 +157,17 @@ header {
   border: 1px solid var(--border);
   overflow: hidden;
   width: 100%;
+  border-radius: 4px;
 }
 
-.ghl-form-wrap {
+.calendar-wrap {
   width: 100%;
   overflow: hidden;
 }
 
-.ghl-form-wrap iframe {
+.calendar-wrap iframe {
   width: 100%;
-  height: 951px;
+  height: 750px;
   border: none;
   display: block;
 }
@@ -237,6 +238,7 @@ footer {
   .form-section { padding: 0 40px 40px; }
   .trust { padding: 40px 40px 24px; flex-direction: row; gap: 32px; }
   .trust-item { flex: 1; }
+  .calendar-wrap iframe { height: 800px; }
 }
 
 @keyframes fadeUp {
@@ -260,37 +262,27 @@ footer {
 </header>
 
 <div class="hero">
-  <span class="eyebrow">Premium Home Reset · By Application</span>
+  <span class="eyebrow">Premium Home Reset · Gold Coast</span>
   <h1 class="headline">
-    Walk in.<br>
-    <em>Exhale.</em>
+    Book your<br>
+    <em>first reset.</em>
   </h1>
   <p class="subhead">
-    Hotel-standard cleaning with natural products and a signature scent — chosen by you, applied on every visit.
+    We're accepting a limited number of Gold Coast homes in June. Select your date below.
   </p>
   <div class="divider"></div>
 </div>
 
 <div class="form-section">
-  <span class="form-label">JUNE APPLICATIONS NOW OPEN — SPOTS ARE LIMITED</span>
+  <span class="form-label">June slots now open — select your date</span>
   <div class="form-card">
-    <div class="ghl-form-wrap">
+    <div class="calendar-wrap">
       <iframe
-        src="https://api.leadconnectorhq.com/widget/form/BseKzH9UrREKAlmuvixj"
-        id="inline-BseKzH9UrREKAlmuvixj"
-        data-layout="{'id':'INLINE'}"
-        data-trigger-type="alwaysShow"
-        data-trigger-value=""
-        data-activation-type="alwaysActivated"
-        data-activation-value=""
-        data-deactivation-type="neverDeactivate"
-        data-deactivation-value=""
-        data-form-name="Request for Access form"
-        data-height="951"
-        data-layout-iframe-id="inline-BseKzH9UrREKAlmuvixj"
-        data-form-id="BseKzH9UrREKAlmuvixj"
-        title="Request for Access form"
-        scrolling="no">
+        src="https://api.leadconnectorhq.com/widget/booking/5IC0kE1tgwJKksQSBEJn"
+        style="width:100%;border:none;"
+        scrolling="no"
+        id="ghl_calendar_booking"
+        title="Book your reset">
       </iframe>
     </div>
   </div>
@@ -316,21 +308,63 @@ footer {
   <span class="footer-sub">From $450 · Broadbeach · Mermaid Beach · Burleigh Heads</span>
 </footer>
 
-<script src="https://link.msgsndr.com/js/form_embed.js"></script>
-
-<<!-- GHL Form Submission → Meta Lead Event -->
+<!-- GHL Calendar Booking → Meta Lead Event -->
 <script>
+  var pixelFired = false;
+
+  // Method 1 — postMessage listener for GHL calendar booking confirmation
   window.addEventListener('message', function(event) {
+    if (pixelFired) return;
     if (!event.data) return;
     var d = event.data;
-    if (Array.isArray(d) && d[0] === 'set-sticky-contacts') {
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'Lead');
-      }
+
+    // GHL calendar fires these on confirmed booking
+    var isBooking = (
+      (typeof d === 'string' && (
+        d.indexOf('booking-confirmed') !== -1 ||
+        d.indexOf('appointment-confirmed') !== -1 ||
+        d.indexOf('calendar-booking') !== -1
+      )) ||
+      (typeof d === 'object' && (
+        d.type === 'booking-confirmed' ||
+        d.type === 'appointment-confirmed' ||
+        d.eventType === 'bookingConfirmed' ||
+        d.eventType === 'appointmentBooked' ||
+        d.action === 'booking-confirmed'
+      )) ||
+      (Array.isArray(d) && (
+        d[0] === 'booking-confirmed' ||
+        d[0] === 'appointment-confirmed'
+      ))
+    );
+
+    if (isBooking && typeof fbq !== 'undefined') {
+      pixelFired = true;
+      var eventId = 'booking_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
+      fbq('track', 'Lead', {}, {eventID: eventId});
     }
   });
+
+  // Method 2 — URL change observer as fallback
+  // GHL calendars sometimes redirect to a confirmation URL after booking
+  var lastUrl = location.href;
+  new MutationObserver(function() {
+    var url = location.href;
+    if (url !== lastUrl) {
+      lastUrl = url;
+      if (!pixelFired && (
+        url.indexOf('confirmed') !== -1 ||
+        url.indexOf('success') !== -1 ||
+        url.indexOf('booked') !== -1
+      )) {
+        pixelFired = true;
+        var eventId = 'booking_url_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
+        fbq('track', 'Lead', {}, {eventID: eventId});
+      }
+    }
+  }).observe(document, {subtree: true, childList: true});
 </script>
-<!-- End GHL Listener -->
+<!-- End GHL Calendar Listener -->
 
 </body>
 </html>
