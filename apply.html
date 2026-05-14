@@ -238,7 +238,21 @@ footer {
   text-transform: uppercase;
   color: rgba(107,98,89,0.6);
 }
+.pricing-strip {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 16px auto 24px;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--obsidian);
+}
 
+.pricing-strip strong {
+  font-weight: 500;
+  color: var(--sage);
+}
 @media (min-width: 768px) {
   .hero { padding: 64px 40px 32px; }
   .form-section { padding: 0 40px 40px; }
@@ -273,8 +287,15 @@ footer {
     <em>first reset.</em>
   </h1>
   <p class="subhead">
-    Transparent pricing, no surprises. From $169 for a 1-bed · $189 for 2-bed · $229 for 3-bed · $269 for 4-bed. Select your date below.
-  </p>
+  We're accepting a limited number of Gold Coast homes each month.
+</p>
+
+<div class="pricing-strip">
+  <span>1 bed — <strong>$169</strong></span>
+  <span>2 bed — <strong>$189</strong></span>
+  <span>3 bed — <strong>$229</strong></span>
+  <span>4 bed — <strong>$269</strong></span>
+</div>
   <div class="divider"></div>
 </div>
 
