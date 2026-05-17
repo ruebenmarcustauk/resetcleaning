@@ -131,6 +131,67 @@ header{
 .btn-header:hover{
   background:var(--obsidian);color:var(--linen);border-color:var(--obsidian);
 }
+/* ─── NAV DROPDOWN ─── */
+.nav-services{
+  position:relative;
+}
+.nav-services-btn{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-family:'Raleway','Gill Sans','Optima',sans-serif;
+  font-weight:400;
+  font-size:.6rem;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--obsidian);
+  padding:10px 0;
+  transition:color .3s;
+}
+.nav-services-btn:hover{
+  color:var(--driftwood);
+}
+.nav-services-btn svg{
+  transition:transform .3s;
+}
+.nav-services-btn[aria-expanded="true"] svg{
+  transform:rotate(180deg);
+}
+.nav-dropdown{
+  display:none;
+  position:absolute;
+  top:calc(100% + 8px);
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--linen);
+  border:1px solid var(--border-mid);
+  list-style:none;
+  min-width:240px;
+  z-index:300;
+  padding:8px 0;
+}
+.nav-dropdown.open{
+  display:block;
+}
+.nav-dropdown li a{
+  display:block;
+  padding:12px 24px;
+  font-family:'Raleway','Gill Sans','Optima',sans-serif;
+  font-size:.58rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--obsidian);
+  text-decoration:none;
+  transition:background .2s, color .2s;
+  white-space:nowrap;
+}
+.nav-dropdown li a:hover{
+  background:rgba(200,184,154,.2);
+  color:var(--driftwood);
+}
 
 /* ─── HERO ─── */
 .hero{
@@ -649,6 +710,21 @@ footer{
   <span class="flogo">Reset Homes</span>
   <span class="ftag">Gold Coast, Australia</span>
 </footer>
+<script>
+  const btn = document.querySelector('.nav-services-btn');
+  const dropdown = document.querySelector('.nav-dropdown');
 
+  btn.addEventListener('click', () => {
+    const isOpen = dropdown.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-services')) {
+      dropdown.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>
 </body>
 </html>
