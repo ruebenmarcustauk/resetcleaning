@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Office Cleaning Gold Coast · Reset Homes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Raleway:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --linen:#F5F2EE;--stone:#C8B89A;--driftwood:#6B6259;--obsidian:#2C2825;--sage:#8FAF9F;--bg:#EDE8DF;--border:rgba(107,98,89,.16);--border-mid:rgba(107,98,89,.3);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--obsidian);font-family:'Raleway','Gill Sans','Gill Sans MT','Optima',Candara,sans-serif;font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+.whatsapp-float{position:fixed;bottom:28px;right:28px;z-index:999;display:flex;align-items:center;gap:10px;background:var(--obsidian);color:var(--linen);text-decoration:none;padding:12px 20px 12px 16px;border:1px solid rgba(255,255,255,0.1);font-family:'Raleway',sans-serif;font-size:0.58rem;letter-spacing:.22em;text-transform:uppercase;font-weight:400;transition:background .3s,color .3s;}
+.whatsapp-float:hover{background:var(--linen);color:var(--obsidian);}
+.whatsapp-float svg{width:16px;height:16px;flex-shrink:0;}
+@media(max-width:768px){.whatsapp-float{padding:7px 12px 7px 9px;gap:6px;font-size:.35rem;letter-spacing:.15em;bottom:18px;right:18px;}.whatsapp-float svg{width:10px;height:10px;}}
+header{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;padding:0 56px;display:flex;align-items:center;justify-content:space-between;background:rgba(237,232,223,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.logo-group{display:flex;flex-direction:column;gap:3px;}
+.logo{font-family:'Raleway','Gill Sans','Optima',sans-serif;font-weight:400;font-size:.8rem;letter-spacing:.38em;text-transform:uppercase;color:var(--obsidian);text-decoration:none;line-height:1;}
+.logo-sub{font-family:'Raleway','Gill Sans','Optima',sans-serif;font-weight:300;font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;color:var(--driftwood);opacity:.7;line-height:1;}
+.btn-header{font-family:'Raleway','Gill Sans','Optima',sans-serif;font-weight:400;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--obsidian);text-decoration:none;padding:10px 28px;border:1px solid var(--border-mid);transition:background .3s,color .3s,border-color .3s;}
+.btn-header:hover{background:var(--obsidian);color:var(--linen);border-color:var(--obsidian);}
+.breadcrumb{padding:18px 56px;border-bottom:1px solid var(--border);background:var(--bg);}
+.breadcrumb nav{font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--driftwood);opacity:.6;}
+.breadcrumb a{color:var(--driftwood);text-decoration:none;}
+.breadcrumb a:hover{opacity:1;color:var(--obsidian);}
+
+/* HERO */
+.hero{padding-top:60px;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);align-items:stretch;min-height:88vh;}
+.hero-left{overflow:hidden;border-right:1px solid rgba(107,98,89,.2);display:flex;align-items:flex-end;padding:72px 64px;position:relative;}
+.hero-left-bg{position:absolute;inset:0;background:linear-gradient(160deg,#1a1e28 0%,#222838 50%,#1c2030 100%);z-index:0;}
+.hero-left-pattern{position:absolute;inset:0;opacity:.05;background-image:linear-gradient(var(--stone) 1px,transparent 1px),linear-gradient(90deg,var(--stone) 1px,transparent 1px);background-size:48px 48px;z-index:1;}
+.hero-left-content{position:relative;z-index:2;}
+.hero-service-label{font-size:.52rem;letter-spacing:.34em;text-transform:uppercase;color:var(--sage);margin-bottom:28px;display:block;}
+.hero-stat-group{display:flex;gap:48px;margin-top:40px;}
+.hero-stat{display:flex;flex-direction:column;gap:6px;}
+.hero-stat-num{font-family:'Cormorant',serif;font-size:2.4rem;font-weight:300;color:var(--linen);line-height:1;}
+.hero-stat-label{font-size:.48rem;letter-spacing:.24em;text-transform:uppercase;color:var(--stone);opacity:.7;}
+.hero-right{padding:72px 60px 64px;display:flex;flex-direction:column;justify-content:space-between;background:var(--linen);}
+.hero-index{font-family:'Cormorant',serif;font-size:.7rem;letter-spacing:.2em;color:var(--driftwood);opacity:.45;align-self:flex-end;}
+.hero-content{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 0;}
+.hero-eyebrow{font-size:.56rem;letter-spacing:.32em;text-transform:uppercase;color:var(--sage);margin-bottom:32px;}
+h1{font-family:'Cormorant',serif;font-weight:300;font-size:clamp(2.6rem,3.8vw,4.6rem);line-height:1.06;color:var(--obsidian);margin-bottom:36px;}
+h1 em{font-style:italic;color:var(--driftwood);}
+.hero-desc{font-size:.9rem;line-height:1.95;color:rgba(44,40,37,.58);max-width:380px;margin-bottom:48px;letter-spacing:.01em;}
+.hero-desc em{font-style:italic;color:rgba(44,40,37,.8);}
+.btn{display:inline-block;align-self:flex-start;padding:13px 38px;background:transparent;color:var(--obsidian);font-family:'Raleway','Gill Sans','Optima',sans-serif;font-weight:400;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;text-decoration:none;border:1px solid var(--border-mid);position:relative;overflow:hidden;cursor:pointer;transition:color .45s,border-color .45s;}
+.btn::after{content:'';position:absolute;inset:0;background:var(--obsidian);transform:translateY(101%);transition:transform .5s cubic-bezier(.76,0,.24,1);z-index:0;}
+.btn:hover::after{transform:translateY(0);}
+.btn:hover{color:var(--linen);border-color:var(--obsidian);}
+.btn span{position:relative;z-index:1;}
+.hero-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:22px;}
+.hf-text{font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--driftwood);opacity:.7;}
+
+/* PILLARS */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border);background:var(--linen);}
+.pillar{padding:52px 44px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:14px;}
+.pillar:last-child{border-right:none;}
+.pillar-num{font-family:'Cormorant',serif;font-size:.68rem;letter-spacing:.22em;color:var(--stone);opacity:.7;}
+.pillar-title{font-family:'Cormorant',serif;font-weight:400;font-size:1.3rem;color:var(--obsidian);line-height:1.3;margin-bottom:2px;}
+.pillar-desc{font-size:.82rem;line-height:1.95;color:rgba(44,40,37,.52);letter-spacing:.01em;}
+
+/* STATEMENT */
+.statement{display:grid;grid-template-columns:180px 1fr 1fr;border-bottom:1px solid var(--border);background:var(--bg);}
+.stmt-side{border-right:1px solid var(--border);padding:72px 0;display:flex;align-items:center;justify-content:center;}
+.stmt-side-text{font-size:.54rem;letter-spacing:.28em;text-transform:uppercase;color:var(--driftwood);opacity:.55;writing-mode:vertical-rl;transform:rotate(180deg);}
+.stmt-left{padding:72px 56px;border-right:1px solid var(--border);display:flex;align-items:center;}
+.stmt-quote{font-family:'Cormorant',serif;font-style:italic;font-weight:300;font-size:clamp(1.5rem,2vw,2rem);line-height:1.52;color:var(--obsidian);border-left:1.5px solid var(--sage);padding-left:28px;opacity:.9;}
+.stmt-right{padding:72px 56px;display:flex;flex-direction:column;justify-content:center;gap:22px;}
+.stmt-body{font-size:.85rem;line-height:1.98;color:rgba(44,40,37,.55);letter-spacing:.01em;}
+.stmt-rule{width:28px;height:1px;background:var(--stone);opacity:.4;}
+
+/* OFFICE TYPES */
+.types-section{border-bottom:1px solid var(--border);}
+.types-intro{padding:72px 64px 52px;background:var(--stone);display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;}
+.ti-eyebrow{font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--obsidian);opacity:.5;margin-bottom:18px;}
+.ti-title{font-family:'Cormorant',serif;font-weight:300;font-size:clamp(2rem,3vw,3.2rem);line-height:1.1;color:var(--obsidian);}
+.ti-right{font-size:.85rem;line-height:1.98;color:rgba(44,40,37,.6);max-width:420px;justify-self:end;}
+.types-grid{display:grid;grid-template-columns:repeat(3,1fr);background:var(--linen);}
+.type-card{padding:52px 44px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:14px;}
+.type-card:nth-child(3n){border-right:none;}
+.type-card:nth-child(n+4){border-bottom:none;}
+.type-icon{font-family:'Cormorant',serif;font-size:1.6rem;font-weight:300;color:var(--stone);margin-bottom:4px;}
+.type-title{font-family:'Cormorant',serif;font-weight:400;font-size:1.2rem;color:var(--obsidian);line-height:1.3;}
+.type-desc{font-size:.78rem;line-height:1.92;color:rgba(44,40,37,.5);}
+
+/* SCHEDULE SECTION */
+.schedule-section{display:grid;grid-template-columns:180px 1fr;border-bottom:1px solid var(--border);background:var(--bg);}
+.ss-side{border-right:1px solid var(--border);padding:72px 0;display:flex;align-items:center;justify-content:center;}
+.ss-side-text{font-size:.54rem;letter-spacing:.28em;text-transform:uppercase;color:var(--driftwood);opacity:.55;writing-mode:vertical-rl;transform:rotate(180deg);}
+.ss-main{padding:72px 56px;}
+.ss-title{font-family:'Cormorant',serif;font-weight:300;font-size:clamp(1.8rem,2.4vw,2.6rem);color:var(--obsidian);margin-bottom:48px;}
+.schedule-options{display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+.sched{padding:32px;border:1px solid var(--border);margin:-1px 0 0 -1px;}
+.sched-freq{font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);margin-bottom:12px;}
+.sched-title{font-family:'Cormorant',serif;font-size:1.1rem;font-weight:400;color:var(--obsidian);margin-bottom:10px;}
+.sched-desc{font-size:.78rem;line-height:1.85;color:rgba(44,40,37,.55);}
+.sched-best{margin-top:14px;font-size:.46rem;letter-spacing:.18em;text-transform:uppercase;color:var(--driftwood);opacity:.5;}
+
+/* INCLUSIONS */
+.inclusions-intro{padding:72px 64px 52px;display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:40px;border-bottom:1px solid var(--border);background:var(--bg);}
+.ii-eyebrow{font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--obsidian);opacity:.5;margin-bottom:18px;}
+.ii-title{font-family:'Cormorant',serif;font-weight:300;font-size:clamp(2rem,3vw,3.2rem);line-height:1.1;color:var(--obsidian);}
+.ii-right{font-size:.85rem;line-height:1.98;color:rgba(44,40,37,.6);max-width:420px;justify-self:end;}
+.inclusions-grid{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);background:var(--linen);}
+.inc{padding:40px 32px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:12px;}
+.inc:last-child{border-right:none;}
+.inc-num{font-family:'Cormorant',serif;font-size:.65rem;letter-spacing:.22em;color:var(--driftwood);opacity:.5;}
+.inc-title{font-family:'Cormorant',serif;font-size:1.1rem;font-weight:400;color:var(--obsidian);line-height:1.25;}
+.inc-list{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:4px;}
+.inc-list li{font-size:.74rem;line-height:1.7;color:rgba(44,40,37,.55);padding-left:14px;position:relative;}
+.inc-list li::before{content:'—';position:absolute;left:0;color:var(--stone);opacity:.5;font-size:.58rem;}
+
+/* CTA */
+.cta{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);background:var(--linen);}
+.cta-left{padding:72px 64px;background:linear-gradient(160deg,#1a1e28,#222838);display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid rgba(107,98,89,.2);}
+.cta-left-eyebrow{font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;color:var(--sage);margin-bottom:24px;}
+.cta-h2{font-family:'Cormorant',serif;font-weight:300;font-size:clamp(2.4rem,3.6vw,4.4rem);line-height:1.06;color:var(--linen);}
+.cta-h2 em{font-style:italic;color:var(--stone);}
+.cta-areas{margin-top:48px;}
+.cta-area-label{font-size:.48rem;letter-spacing:.24em;text-transform:uppercase;color:var(--stone);opacity:.6;margin-bottom:16px;}
+.cta-area-list{display:flex;flex-wrap:wrap;gap:8px;}
+.cta-area-tag{font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--linen);border:1px solid rgba(255,255,255,.12);padding:5px 12px;opacity:.7;}
+.cta-right{padding:72px 64px;display:flex;flex-direction:column;justify-content:space-between;}
+.cta-body{font-size:.9rem;line-height:2;color:rgba(44,40,37,.58);margin-bottom:48px;letter-spacing:.01em;}
+.cta-body em{font-style:italic;color:rgba(44,40,37,.82);}
+.cta-detail{font-size:.72rem;line-height:1.9;color:rgba(44,40,37,.35);padding-top:24px;border-top:1px solid var(--border);letter-spacing:.01em;}
+
+footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-between;background:var(--bg);}
+.flogo{font-family:'Raleway','Gill Sans','Optima',sans-serif;font-weight:400;font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--driftwood);}
+.ftag{font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(107,98,89,.5);}
+.fnav{display:flex;gap:32px;}
+.fnav a{font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(107,98,89,.5);text-decoration:none;transition:color .3s;}
+.fnav a:hover{color:var(--obsidian);}
+
+@media(max-width:960px){
+  header{padding:0 24px;}
+  .breadcrumb{padding:14px 24px;}
+  .hero{grid-template-columns:1fr;}
+  .hero-left{aspect-ratio:16/7;border-right:none;border-bottom:1px solid rgba(107,98,89,.2);}
+  .hero-right{padding:56px 28px 52px;}
+  .pillars{grid-template-columns:1fr;}
+  .pillar{border-right:none;border-bottom:1px solid var(--border);padding:36px 28px;}
+  .pillar:last-child{border-bottom:none;}
+  .statement{grid-template-columns:1fr;}
+  .stmt-side{display:none;}
+  .stmt-left{border-right:none;border-bottom:1px solid var(--border);padding:52px 28px;}
+  .stmt-right{padding:44px 28px;}
+  .types-intro{grid-template-columns:1fr;padding:52px 28px 40px;gap:20px;}
+  .ti-right{justify-self:start;max-width:100%;}
+  .types-grid{grid-template-columns:1fr 1fr;}
+  .type-card{padding:36px 28px;}
+  .schedule-section{grid-template-columns:1fr;}
+  .ss-side{display:none;}
+  .ss-main{padding:52px 28px;}
+  .schedule-options{grid-template-columns:1fr;}
+  .inclusions-intro{grid-template-columns:1fr;padding:52px 28px 40px;gap:20px;}
+  .ii-right{justify-self:start;max-width:100%;}
+  .inclusions-grid{grid-template-columns:1fr 1fr;}
+  .inc{padding:32px 20px;}
+  .cta{grid-template-columns:1fr;}
+  .cta-left,.cta-right{padding:52px 28px;}
+  footer{padding:28px 24px;flex-direction:column;gap:14px;text-align:center;}
+  .fnav{justify-content:center;flex-wrap:wrap;gap:20px;}
+}
+@media(max-width:520px){
+  header{height:52px;}
+  .hero-left{aspect-ratio:16/9;}
+  .hero-right{padding:44px 20px 48px;}
+  h1{font-size:clamp(2.2rem,8vw,3rem);}
+  .types-grid{grid-template-columns:1fr;}
+  .inclusions-grid{grid-template-columns:1fr;}
+  .cta-left,.cta-right{padding:44px 20px;}
+  footer{padding:24px 20px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-group">
+    <a class="logo" href="index.html">Reset Homes</a>
+    <span class="logo-sub">Homecare &amp; Cleaning</span>
+  </div>
+  <a class="btn-header" href="apply.html">Book Now</a>
+</header>
+
+<div class="breadcrumb">
+  <nav><a href="index.html">Home</a> &nbsp;/&nbsp; Office Cleaning Gold Coast</nav>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-left-bg"></div>
+    <div class="hero-left-pattern"></div>
+    <div class="hero-left-content">
+      <span class="hero-service-label">Commercial Cleaning · Gold Coast</span>
+      <p style="font-family:'Cormorant',serif;font-style:italic;font-weight:300;font-size:clamp(1.6rem,2.4vw,2.8rem);line-height:1.4;color:var(--linen);max-width:420px;opacity:.9;">"The state of your office tells clients, candidates, and your own team exactly how much you care."</p>
+      <div class="hero-stat-group">
+        <div class="hero-stat">
+          <span class="hero-stat-num">AM</span>
+          <span class="hero-stat-label">Before-hours service</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">100%</span>
+          <span class="hero-stat-label">Natural products</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">0</span>
+          <span class="hero-stat-label">Missed visits</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <span class="hero-index">V</span>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Premium Office Cleaning</p>
+      <h1>Your workspace,<br><em>held to a<br>higher standard.</em></h1>
+      <p class="hero-desc">
+        Most office cleaning services are invisible until something goes wrong. Reset Homes treats your commercial space with the same care we bring to a premium home — natural products, consistent teams, and a standard your team and clients notice <em>because it is genuinely better.</em>
+      </p>
+      <a href="apply.html" class="btn"><span>Get a Quote</span></a>
+    </div>
+    <div class="hero-footer">
+      <span class="hf-text">Before-hours or after-hours</span>
+      <span class="hf-text">From $180</span>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<div class="pillars">
+  <div class="pillar">
+    <span class="pillar-num">I</span>
+    <h3 class="pillar-title">Consistent teams only</h3>
+    <p class="pillar-desc">The same person or pair arrives at your office every scheduled visit. They know your space, your preferences, and your standards. You never arrive to find a stranger with a mop who has no idea where anything goes.</p>
+  </div>
+  <div class="pillar">
+    <span class="pillar-num">II</span>
+    <h3 class="pillar-title">Natural products, always</h3>
+    <p class="pillar-desc">Your team spends forty or more hours a week in this space. The products we use matter — not just for surfaces, but for the air quality your people breathe. Nothing synthetic, nothing harsh. Plant-derived throughout, without compromise on results.</p>
+  </div>
+  <div class="pillar">
+    <span class="pillar-num">III</span>
+    <h3 class="pillar-title">Before your day begins</h3>
+    <p class="pillar-desc">We clean before your team arrives so the workspace is reset by the time anyone sits down. No disruption, no strangers during working hours, no cleaning equipment visible when clients walk in. Invisible service, visible results.</p>
+  </div>
+</div>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <div class="stmt-side">
+    <span class="stmt-side-text">The standard</span>
+  </div>
+  <div class="stmt-left">
+    <p class="stmt-quote">"A clean office is not a nice-to-have. It shapes how your team feels about coming to work, and how your clients feel about trusting you with their business."</p>
+  </div>
+  <div class="stmt-right">
+    <span class="stmt-rule"></span>
+    <p class="stmt-body">Research consistently shows that workplace cleanliness directly affects employee wellbeing, productivity, and absenteeism. Yet most businesses treat office cleaning as a commodity — choosing on price and accepting inconsistency.</p>
+    <p class="stmt-body">Reset Homes brings the same philosophy to commercial spaces that drives our residential work: a consistent, considered approach that treats your environment as worth caring about. The businesses we work with notice the difference — and so do the people who visit them.</p>
+  </div>
+</div>
+
+<!-- OFFICE TYPES -->
+<div class="types-section">
+  <div class="types-intro">
+    <div>
+      <p class="ti-eyebrow">Who we work with</p>
+      <h2 class="ti-title">Every kind of<br>Gold Coast workspace.</h2>
+    </div>
+    <p class="ti-right">From boutique studios to multi-floor commercial tenancies, Reset Homes services a range of business types on the Gold Coast. Each receives a bespoke schedule and team, not a one-size-fits-all package.</p>
+  </div>
+  <div class="types-grid">
+    <div class="type-card">
+      <p class="type-icon">I</p>
+      <h3 class="type-title">Professional offices</h3>
+      <p class="type-desc">Accounting firms, legal practices, financial advisers, consultancies. Spaces where client trust begins the moment they walk through the door.</p>
+    </div>
+    <div class="type-card">
+      <p class="type-icon">II</p>
+      <h3 class="type-title">Medical &amp; allied health</h3>
+      <p class="type-desc">GP practices, allied health clinics, physiotherapy and psychology studios. Hygiene is non-negotiable — and visible to every patient.</p>
+    </div>
+    <div class="type-card">
+      <p class="type-icon">III</p>
+      <h3 class="type-title">Creative studios</h3>
+      <p class="type-desc">Architecture, design, photography, and marketing studios. Spaces where the aesthetic of the environment is part of the brand itself.</p>
+    </div>
+    <div class="type-card">
+      <p class="type-icon">IV</p>
+      <h3 class="type-title">Real estate offices</h3>
+      <p class="type-desc">Agencies that sell premium property need a premium space. The standard of your office shapes client confidence before a single word is spoken.</p>
+    </div>
+    <div class="type-card">
+      <p class="type-icon">V</p>
+      <h3 class="type-title">Co-working spaces</h3>
+      <p class="type-desc">Shared workspaces used by multiple businesses and teams. High-frequency cleaning at a consistent standard that members rely on.</p>
+    </div>
+    <div class="type-card">
+      <p class="type-icon">VI</p>
+      <h3 class="type-title">Showrooms &amp; retail</h3>
+      <p class="type-desc">Spaces where product is presented and purchase decisions are made. Cleanliness is merchandising — it either supports or undermines everything else.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SCHEDULE OPTIONS -->
+<div class="schedule-section">
+  <div class="ss-side">
+    <span class="ss-side-text">Scheduling</span>
+  </div>
+  <div class="ss-main">
+    <h2 class="ss-title">Choose the frequency<br>that fits your operation.</h2>
+    <div class="schedule-options">
+      <div class="sched">
+        <p class="sched-freq">Daily</p>
+        <h3 class="sched-title">Every morning</h3>
+        <p class="sched-desc">For high-traffic environments, client-facing businesses, or medical and allied health practices where hygiene is visible and non-negotiable.</p>
+        <p class="sched-best">Best for · Medical, retail, high-footfall offices</p>
+      </div>
+      <div class="sched">
+        <p class="sched-freq">Three times weekly</p>
+        <h3 class="sched-title">Maintained standard</h3>
+        <p class="sched-desc">The most common schedule for professional offices. Frequent enough to maintain a genuinely clean environment without the cost of daily service.</p>
+        <p class="sched-best">Best for · Professional offices, studios, agencies</p>
+      </div>
+      <div class="sched">
+        <p class="sched-freq">Weekly</p>
+        <h3 class="sched-title">Essential baseline</h3>
+        <p class="sched-desc">For smaller teams or lower-traffic spaces. A thorough weekly clean keeps standards high without the frequency of a larger operation.</p>
+        <p class="sched-best">Best for · Small teams, home offices, boutique studios</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INCLUSIONS -->
+<div class="inclusions-intro">
+  <div>
+    <p class="ii-eyebrow">What's included</p>
+    <h2 class="ii-title">Every visit.<br>Every area.</h2>
+  </div>
+  <p class="ii-right">Office cleaning is only valuable when every area is addressed every visit — not rotated, not skipped, not done only when someone remembers. Our standard inclusions cover the full space, consistently.</p>
+</div>
+<div class="inclusions-grid">
+  <div class="inc">
+    <p class="inc-num">01</p>
+    <h3 class="inc-title">Workstations &amp; desks</h3>
+    <ul class="inc-list">
+      <li>All desk surfaces wiped and sanitised</li>
+      <li>Monitors, keyboards, peripherals</li>
+      <li>Phone handsets disinfected</li>
+      <li>Chairs wiped down</li>
+      <li>Bins emptied and relined</li>
+    </ul>
+  </div>
+  <div class="inc">
+    <p class="inc-num">02</p>
+    <h3 class="inc-title">Kitchen &amp; breakroom</h3>
+    <ul class="inc-list">
+      <li>Benchtops and splashback cleaned</li>
+      <li>Sink and taps sanitised</li>
+      <li>Microwave interior wiped</li>
+      <li>Fridge exterior cleaned</li>
+      <li>Dishwasher emptied and restacked</li>
+    </ul>
+  </div>
+  <div class="inc">
+    <p class="inc-num">03</p>
+    <h3 class="inc-title">Bathrooms</h3>
+    <ul class="inc-list">
+      <li>Toilets cleaned and sanitised</li>
+      <li>Basins and mirrors polished</li>
+      <li>Floors mopped and sanitised</li>
+      <li>Soap and paper restocked</li>
+      <li>Bins emptied and relined</li>
+    </ul>
+  </div>
+  <div class="inc">
+    <p class="inc-num">04</p>
+    <h3 class="inc-title">Common areas &amp; floors</h3>
+    <ul class="inc-list">
+      <li>Reception and lobby surfaces</li>
+      <li>Meeting room tables and chairs</li>
+      <li>All hard floors vacuumed and mopped</li>
+      <li>Carpets vacuumed throughout</li>
+      <li>Entry glass and door handles</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="cta-left">
+    <div>
+      <p class="cta-left-eyebrow">Service areas</p>
+      <h2 class="cta-h2">Gold Coast<br><em>office cleaning.</em></h2>
+    </div>
+    <div class="cta-areas">
+      <p class="cta-area-label">We service</p>
+      <div class="cta-area-list">
+        <span class="cta-area-tag">Broadbeach</span>
+        <span class="cta-area-tag">Surfers Paradise</span>
+        <span class="cta-area-tag">Southport</span>
+        <span class="cta-area-tag">Robina</span>
+        <span class="cta-area-tag">Bundall</span>
+        <span class="cta-area-tag">Varsity Lakes</span>
+        <span class="cta-area-tag">Burleigh Heads</span>
+        <span class="cta-area-tag">Helensvale</span>
+      </div>
+    </div>
+  </div>
+  <div class="cta-right">
+    <div>
+      <p class="hero-eyebrow">Request a quote</p>
+      <h2 style="font-family:'Cormorant',serif;font-weight:300;font-size:clamp(2.2rem,3vw,3.8rem);line-height:1.06;color:var(--obsidian);margin-bottom:36px;">A workspace<br><em>worth working in.</em></h2>
+      <p class="cta-body">
+        Tell us about your office — size, team count, and how often you need us. We will visit the space, understand your requirements, and provide a fixed quote. <em>No lock-in contracts. No hidden costs.</em>
+      </p>
+      <a href="apply.html" class="btn"><span>Get a Quote</span></a>
+    </div>
+    <p class="cta-detail">Office cleaning from $180 per visit · Natural products only · Before-hours service · Fixed pricing · Gold Coast wide</p>
+  </div>
+</div>
+
+<a class="whatsapp-float" href="https://wa.me/447377363625" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  Message us
+</a>
+
+<footer>
+  <span class="flogo">Reset Homes</span>
+  <nav class="fnav">
+    <a href="house-cleaning-gold-coast.html">House Cleaning</a>
+    <a href="bond-cleaning-gold-coast.html">Bond Cleaning</a>
+    <a href="deep-cleaning-gold-coast.html">Deep Cleaning</a>
+    <a href="airbnb-cleaning-gold-coast.html">Airbnb Cleaning</a>
+    <a href="office-cleaning-gold-coast.html">Office Cleaning</a>
+  </nav>
+  <span class="ftag">Gold Coast, Australia</span>
+</footer>
+
+</body>
+</html>
