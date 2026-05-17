@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Deep Cleaning Gold Coast · Reset Homes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Raleway:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --linen:#F5F2EE;--stone:#C8B89A;--driftwood:#6B6259;--obsidian:#2C2825;--sage:#8FAF9F;--bg:#EDE8DF;--border:rgba(107,98,89,.16);--border-mid:rgba(107,98,89,.3);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--obsidian);font-family:'Raleway','Gill Sans','Gill Sans MT','Optima',Candara,sans-serif;font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+.whatsapp-float{position:fixed;bottom:28px;right:28px;z-index:999;display:flex;align-items:center;gap:10px;background:var(--obsidian);color:var(--linen);text-decoration:none;padding:12px 20px 12px 16px;border:1px solid rgba(255,255,255,0.1);font-family:'Raleway',sans-serif;font-size:0.58rem;letter-spacing:.22em;text-transform:uppercase;font-weight:400;transition:background .3s,color .3s;}
+.whatsapp-float:hover{background:var(--linen);color:var(--obsidian);}
+.whatsapp-float svg{width:16px;height:16px;flex-shrink:0;}
+@media(max-width:768px){.whatsapp-float{padding:7px 12px 7px 9px;gap:6px;font-size:.35rem;letter-spacing:.15em;bottom:18px;right:18px;}.whatsapp-float svg{width:10px;height:10px;}}
+header{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;padding:0 56px;display:flex;align-items:center;justify-content:space-between;background:rgba(237,232,223,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.logo-group{display:flex;flex-direction:column;gap:3px;}
+.logo{font-family:'Raleway','Gill Sans','Optima',sans-serif;font-weight:400;font-size:.8rem;letter-spacing:.38em;text-transform:uppercase;color:var(--obsidian);text-decoration:none;line-height:1;}
+.logo-sub{font-family:'Raleway','Gill Sans','Optima',sans-serif;font-weight:300;font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;color:var(--driftwood);opacity:.7;line-height:1;}
+.btn-header{font-family:'Raleway','Gill Sans','Optima',sans-serif;font-weight:400;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--obsidian);text-decoration:none;padding:10px 28px;border:1px solid var(--border-mid);transition:background .3s,color .3s,border-color .3s;}
+.btn-header:hover{background:var(--obsidian);color:var(--linen);border-color:var(--obsidian);}
+.breadcrumb{padding:18px 56px;border-bottom:1px solid var(--border);background:var(--bg);}
+.breadcrumb nav{font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--driftwood);opacity:.6;}
+.breadcrumb a{color:var(--driftwood);text-decoration:none;}
+.hero{padding-top:60px;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);align-items:stretch;min-height:88vh;}
+.hero-left{overflow:hidden;border-right:1px solid rgba(107,98,89,.2);background:#2a1f1a;display:flex;align-items:flex-end;padding:72px 64px;position:relative;}
+.hero-left-bg{position:absolute;inset:0;background:linear-gradient(160deg,#1e1510 0%,#2a1f1a 50%,#3a2a20 100%);z-index:0;}
+.hero-left-pattern{position:absolute;inset:0;opacity:.04;background-image:radial-gradient(circle at 1px 1px,var(--stone) 1px,transparent 0);background-size:32px 32px;z-index:1;}
+.hero-left-content{position:relative;z-index:2;}
+.hero-service-label{font-size:.52rem;letter-spacing:.34em;text-transform:uppercase;color:var(--stone);margin-bottom:28px;display:block;}
+.hero-stat-group{display:flex;gap:48px;margin-top:40px;}
+.hero-stat{display:flex;flex-direction:column;gap:6px;}
+.hero-stat-num{font-family:'Cormorant',serif;font-size:2.4rem;font-weight:300;color:var(--linen);line-height:1;}
+.hero-stat-label{font-size:.48rem;letter-spacing:.24em;text-transform:uppercase;color:var(--stone);opacity:.7;}
+.hero-right{padding:72px 60px 64px;display:flex;flex-direction:column;justify-content:space-between;background:var(--linen);}
+.hero-index{font-family:'Cormorant',serif;font-size:.7rem;letter-spacing:.2em;color:var(--driftwood);opacity:.45;align-self:flex-end;}
+.hero-content{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 0;}
+.hero-eyebrow{font-size:.56rem;letter-spacing:.32em;text-transform:uppercase;color:var(--sage);margin-bottom:32px;}
+h1{font-family:'Cormorant',serif;font-weight:300;font-size:clamp(2.6rem,3.8vw,4.6rem);line-height:1.06;color:var(--obsidian);margin-bottom:36px;}
+h1 em{font-style:italic;color:var(--driftwood);}
+.hero-desc{font-size:.9rem;line-height:1.95;color:rgba(44,40,37,.58);max-width:380px;margin-bottom:48px;letter-spacing:.01em;}
+.hero-desc em{font-style:italic;color:rgba(44,40,37,.8);}
+.btn{display:inline-block;align-self:flex-start;padding:13px 38px;background:transparent;color:var(--obsidian);font-family:'Raleway','Gill Sans','Optima',sans-serif;font-weight:400;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;text-decoration:none;border:1px solid var(--border-mid);position:relative;overflow:hidden;cursor:pointer;transition:color .45s,border-color .45s;}
+.btn::after{content:'';position:absolute;inset:0;background:var(--obsidian);transform:translateY(101%);transition:transform .5s cubic-bezier(.76,0,.24,1);z-index:0;}
+.btn:hover::after{transform:translateY(0);}
+.btn:hover{color:var(--linen);border-color:var(--obsidian);}
+.btn span{position:relative;z-index:1;}
+.hero-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:22px;}
+.hf-text{font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--driftwood);opacity:.7;}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border);background:var(--linen);}
+.pillar{padding:52px 44px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:14px;}
+.pillar:last-child{border-right:none;}
+.pillar-num{font-family:'Cormorant',serif;font-size:.68rem;letter-spacing:.22em;color:var(--stone);opacity:.7;}
+.pillar-title{font-family:'Cormorant',serif;font-weight:400;font-size:1.3rem;color:var(--obsidian);line-height:1.3;margin-bottom:2px;}
+.pillar-desc{font-size:.82rem;line-height:1.95;color:rgba(44,40,37,.52);letter-spacing:.01em;}
+.statement{display:grid;grid-template-columns:180px 1fr 1fr;border-bottom:1px solid var(--border);background:var(--bg);}
+.stmt-side{border-right:1px solid var(--border);padding:72px 0;display:flex;align-items:center;justify-content:center;}
+.stmt-side-text{font-size:.54rem;letter-spacing:.28em;text-transform:uppercase;color:var(--driftwood);opacity:.55;writing-mode:vertical-rl;transform:rotate(180deg);}
+.stmt-left{padding:72px 56px;border-right:1px solid var(--border);display:flex;align-items:center;}
+.stmt-quote{font-family:'Cormorant',serif;font-style:italic;font-weight:300;font-size:clamp(1.5rem,2vw,2rem);line-height:1.52;color:var(--obsidian);border-left:1.5px solid var(--stone);padding-left:28px;opacity:.9;}
+.stmt-right{padding:72px 56px;display:flex;flex-direction:column;justify-content:center;gap:22px;}
+.stmt-body{font-size:.85rem;line-height:1.98;color:rgba(44,40,37,.55);letter-spacing:.01em;}
+.stmt-rule{width:28px;height:1px;background:var(--stone);opacity:.4;}
+.when-section{border-bottom:1px solid var(--border);background:var(--stone);}
+.when-intro{padding:72px 64px 40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;}
+.wi-eyebrow{font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--obsidian);opacity:.5;margin-bottom:18px;}
+.wi-title{font-family:'Cormorant',serif;font-weight:300;font-size:clamp(2rem,3vw,3.2rem);line-height:1.1;color:var(--obsidian);}
+.wi-right{font-size:.85rem;line-height:1.98;color:rgba(44,40,37,.6);max-width:420px;justify-self:end;}
+.when-grid{display:grid;grid-template-columns:repeat(3,1fr);padding:0 64px 72px;gap:24px;}
+.when-card{background:rgba(237,232,223,.35);padding:36px 32px;border:1px solid rgba(107,98,89,.2);}
+.when-card-icon{font-family:'Cormorant',serif;font-size:2rem;font-weight:300;color:var(--obsidian);margin-bottom:16px;opacity:.7;}
+.when-card-title{font-family:'Cormorant',serif;font-size:1.15rem;font-weight:400;color:var(--obsidian);margin-bottom:10px;}
+.when-card-desc{font-size:.78rem;line-height:1.85;color:rgba(44,40,37,.6);}
+.scents-intro{padding:72px 64px 52px;display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:40px;border-bottom:1px solid var(--border);background:var(--bg);}
+.si-eyebrow{font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--obsidian);opacity:.5;margin-bottom:18px;}
+.si-title{font-family:'Cormorant',serif;font-weight:300;font-size:clamp(2rem,3vw,3.2rem);line-height:1.1;color:var(--obsidian);}
+.si-right{font-size:.85rem;line-height:1.98;color:rgba(44,40,37,.6);max-width:420px;justify-self:end;}
+.cta{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);background:var(--linen);}
+.cta-left{padding:72px 64px;background:#2a1f1a;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid rgba(107,98,89,.2);}
+.cta-left-eyebrow{font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;color:var(--stone);margin-bottom:24px;}
+.cta-h2{font-family:'Cormorant',serif;font-weight:300;font-size:clamp(2.4rem,3.6vw,4.4rem);line-height:1.06;color:var(--linen);}
+.cta-h2 em{font-style:italic;color:var(--stone);}
+.cta-areas{margin-top:48px;}
+.cta-area-label{font-size:.48rem;letter-spacing:.24em;text-transform:uppercase;color:var(--stone);opacity:.6;margin-bottom:16px;}
+.cta-area-list{display:flex;flex-wrap:wrap;gap:8px;}
+.cta-area-tag{font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--linen);border:1px solid rgba(255,255,255,.12);padding:5px 12px;opacity:.7;}
+.cta-right{padding:72px 64px;display:flex;flex-direction:column;justify-content:space-between;}
+.cta-body{font-size:.9rem;line-height:2;color:rgba(44,40,37,.58);margin-bottom:48px;letter-spacing:.01em;}
+.cta-body em{font-style:italic;color:rgba(44,40,37,.82);}
+.cta-detail{font-size:.72rem;line-height:1.9;color:rgba(44,40,37,.35);padding-top:24px;border-top:1px solid var(--border);letter-spacing:.01em;}
+footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-between;background:var(--bg);}
+.flogo{font-family:'Raleway','Gill Sans','Optima',sans-serif;font-weight:400;font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--driftwood);}
+.ftag{font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(107,98,89,.5);}
+.fnav{display:flex;gap:32px;}
+.fnav a{font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(107,98,89,.5);text-decoration:none;transition:color .3s;}
+.fnav a:hover{color:var(--obsidian);}
+@media(max-width:960px){
+  header{padding:0 24px;}
+  .breadcrumb{padding:14px 24px;}
+  .hero{grid-template-columns:1fr;}
+  .hero-left{aspect-ratio:16/7;border-right:none;border-bottom:1px solid rgba(107,98,89,.2);}
+  .hero-right{padding:56px 28px 52px;}
+  .pillars{grid-template-columns:1fr;}
+  .pillar{border-right:none;border-bottom:1px solid var(--border);padding:36px 28px;}
+  .pillar:last-child{border-bottom:none;}
+  .statement{grid-template-columns:1fr;}
+  .stmt-side{display:none;}
+  .stmt-left{border-right:none;border-bottom:1px solid var(--border);padding:52px 28px;}
+  .stmt-right{padding:44px 28px;}
+  .when-intro{grid-template-columns:1fr;padding:52px 28px 32px;gap:20px;}
+  .wi-right{justify-self:start;max-width:100%;}
+  .when-grid{grid-template-columns:1fr;padding:0 28px 52px;}
+  .scents-intro{grid-template-columns:1fr;padding:52px 28px 40px;gap:20px;}
+  .si-right{justify-self:start;max-width:100%;}
+  .cta{grid-template-columns:1fr;}
+  .cta-left,.cta-right{padding:52px 28px;}
+  footer{padding:28px 24px;flex-direction:column;gap:14px;text-align:center;}
+  .fnav{justify-content:center;flex-wrap:wrap;gap:20px;}
+}
+@media(max-width:520px){
+  header{height:52px;}
+  .hero-left{aspect-ratio:16/9;}
+  .hero-right{padding:44px 20px 48px;}
+  h1{font-size:clamp(2.2rem,8vw,3rem);}
+  .cta-left,.cta-right{padding:44px 20px;}
+  footer{padding:24px 20px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-group">
+    <a class="logo" href="index.html">Reset Homes</a>
+    <span class="logo-sub">Homecare &amp; Cleaning</span>
+  </div>
+  <a class="btn-header" href="apply.html">Book Now</a>
+</header>
+
+<div class="breadcrumb">
+  <nav><a href="index.html">Home</a> &nbsp;/&nbsp; Deep Cleaning Gold Coast</nav>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-left-bg"></div>
+    <div class="hero-left-pattern"></div>
+    <div class="hero-left-content">
+      <span class="hero-service-label">Deep Cleaning · Gold Coast</span>
+      <p style="font-family:'Cormorant',serif;font-style:italic;font-weight:300;font-size:clamp(1.6rem,2.4vw,2.8rem);line-height:1.4;color:var(--linen);max-width:420px;opacity:.9;">"A deep clean is not a longer clean. It is a different kind of attention — one that reaches what ordinary cleaning never does."</p>
+      <div class="hero-stat-group">
+        <div class="hero-stat">
+          <span class="hero-stat-num">4–8</span>
+          <span class="hero-stat-label">Hours on site</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">200+</span>
+          <span class="hero-stat-label">Touch-points</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">0</span>
+          <span class="hero-stat-label">Synthetic products</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <span class="hero-index">III</span>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Premium Deep Cleaning</p>
+      <h1>Every corner.<br><em>Every surface.<br>Nothing spared.</em></h1>
+      <p class="hero-desc">
+        A deep clean addresses the areas that standard cleaning never reaches — behind appliances, inside cabinets, window tracks, grout lines, light fittings. It is how a home is <em>properly reset after neglect, between tenants, or before a significant occasion.</em>
+      </p>
+      <a href="apply.html" class="btn"><span>Book a Deep Clean</span></a>
+    </div>
+    <div class="hero-footer">
+      <span class="hf-text">One-off or seasonal</span>
+      <span class="hf-text">From $450</span>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<div class="pillars">
+  <div class="pillar">
+    <span class="pillar-num">I</span>
+    <h3 class="pillar-title">The areas others skip</h3>
+    <p class="pillar-desc">Oven interiors. Rangehood filters. Behind the fridge. Inside wardrobe tracks. Shower screen seal lines. The areas that accumulate invisible build-up over months are exactly where we begin — and where the difference is most visible.</p>
+  </div>
+  <div class="pillar">
+    <span class="pillar-num">II</span>
+    <h3 class="pillar-title">Time allocated, not rushed</h3>
+    <p class="pillar-desc">A deep clean of a standard home takes between four and eight hours depending on size and condition. We do not compress it to fit a schedule. The time required is the time we take — and you see the result in every room.</p>
+  </div>
+  <div class="pillar">
+    <span class="pillar-num">III</span>
+    <h3 class="pillar-title">Natural products throughout</h3>
+    <p class="pillar-desc">Even in the most intensive clean, nothing synthetic enters your home. Plant-derived degreasers, enzyme-based treatments, and mineral descalers do the work — without leaving chemical residue on surfaces your family touches daily.</p>
+  </div>
+</div>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <div class="stmt-side">
+    <span class="stmt-side-text">The philosophy</span>
+  </div>
+  <div class="stmt-left">
+    <p class="stmt-quote">"The difference between a clean home and a deep-cleaned home is the difference between the surface and what is beneath it."</p>
+  </div>
+  <div class="stmt-right">
+    <span class="stmt-rule"></span>
+    <p class="stmt-body">Regular cleaning maintains a home's surface appearance. A deep clean restores its baseline — stripping away the months of accumulated build-up that routine cleaning moves around rather than removes.</p>
+    <p class="stmt-body">Many clients book a Reset Homes deep clean before starting a regular cleaning schedule — to ensure that every subsequent visit begins from a genuine foundation, not just a maintained surface.</p>
+  </div>
+</div>
+
+<!-- WHEN SECTION -->
+<div class="when-section">
+  <div class="when-intro">
+    <div>
+      <p class="wi-eyebrow">When to book</p>
+      <h2 class="wi-title">Six situations that<br>call for a deep clean.</h2>
+    </div>
+    <p class="wi-right">Not every home needs a deep clean on the same schedule. Some need one immediately. Others benefit from one seasonally. Below are the most common reasons our clients reach out.</p>
+  </div>
+  <div class="when-grid">
+    <div class="when-card">
+      <p class="when-card-icon">I</p>
+      <h3 class="when-card-title">Moving into a new home</h3>
+      <p class="when-card-desc">Even a professionally cleaned property for sale rarely meets the standard you deserve. A deep clean before you move in means you start with genuine cleanliness, not inherited build-up.</p>
+    </div>
+    <div class="when-card">
+      <p class="when-card-icon">II</p>
+      <h3 class="when-card-title">Post-renovation</h3>
+      <p class="when-card-desc">Construction dust settles into every surface, gap, and vent. A deep clean after renovation removes the fine particulates that standard cleaning misses and leaves behind.</p>
+    </div>
+    <div class="when-card">
+      <p class="when-card-icon">III</p>
+      <h3 class="when-card-title">Between tenants</h3>
+      <p class="when-card-desc">Bond cleans address the inspection standard. A deep clean goes further — ensuring the property is genuinely reset for new occupants, not merely passable for the property manager.</p>
+    </div>
+    <div class="when-card">
+      <p class="when-card-icon">IV</p>
+      <h3 class="when-card-title">Pre-holiday or event</h3>
+      <p class="when-card-desc">Before guests arrive, a pre-sale preparation, or a significant occasion — a deep clean ensures your home is presented at its absolute best, beyond what routine cleaning achieves.</p>
+    </div>
+    <div class="when-card">
+      <p class="when-card-icon">V</p>
+      <h3 class="when-card-title">Seasonal reset</h3>
+      <p class="when-card-desc">Even homes on regular cleaning schedules benefit from a deep clean one to two times per year. It catches what routine visits accumulate over months and keeps the baseline genuinely high.</p>
+    </div>
+    <div class="when-card">
+      <p class="when-card-icon">VI</p>
+      <h3 class="when-card-title">First Reset Homes visit</h3>
+      <p class="when-card-desc">Many clients begin with a deep clean before moving to a regular schedule. It ensures every subsequent weekly or fortnightly clean starts from the right foundation — not a compromised one.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SCENTS INTRO -->
+<div class="scents-intro">
+  <div>
+    <p class="si-eyebrow">The finishing touch</p>
+    <h2 class="si-title">Deep cleaned.<br>Then scented.</h2>
+  </div>
+  <p class="si-right">Every deep clean concludes with your chosen signature scent. Choose from Hinoki &amp; Warm Wood, Coastal &amp; Cedar, Resin &amp; Smoke, or Clean Linen &amp; Musk — applied as the final act of every visit. The result is not just clean; it is unmistakably reset.</p>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="cta-left">
+    <div>
+      <p class="cta-left-eyebrow">Service areas</p>
+      <h2 class="cta-h2">Gold Coast<br><em>deep cleans.</em></h2>
+    </div>
+    <div class="cta-areas">
+      <p class="cta-area-label">We service</p>
+      <div class="cta-area-list">
+        <span class="cta-area-tag">Broadbeach</span>
+        <span class="cta-area-tag">Mermaid Beach</span>
+        <span class="cta-area-tag">Burleigh Heads</span>
+        <span class="cta-area-tag">Surfers Paradise</span>
+        <span class="cta-area-tag">Palm Beach</span>
+        <span class="cta-area-tag">Currumbin</span>
+        <span class="cta-area-tag">Robina</span>
+        <span class="cta-area-tag">Hope Island</span>
+      </div>
+    </div>
+  </div>
+  <div class="cta-right">
+    <div>
+      <p class="hero-eyebrow">Book a deep clean</p>
+      <h2 style="font-family:'Cormorant',serif;font-weight:300;font-size:clamp(2.2rem,3vw,3.8rem);line-height:1.06;color:var(--obsidian);margin-bottom:36px;">A genuine<br><em>baseline reset.</em></h2>
+      <p class="cta-body">
+        Tell us about your property and the situation. We will provide a price and confirm availability. <em>Deep cleans are scheduled as one-off bookings — we take the time required, not what fits a template.</em>
+      </p>
+      <a href="apply.html" class="btn"><span>Book Deep Clean</span></a>
+    </div>
+    <p class="cta-detail">Deep cleaning from $450 · Duration 4–8 hours · Natural products only · Signature scent included · Gold Coast wide</p>
+  </div>
+</div>
+
+<a class="whatsapp-float" href="https://wa.me/447377363625" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  Message us
+</a>
+
+<footer>
+  <span class="flogo">Reset Homes</span>
+  <nav class="fnav">
+    <a href="house-cleaning-gold-coast.html">House Cleaning</a>
+    <a href="bond-cleaning-gold-coast.html">Bond Cleaning</a>
+    <a href="deep-cleaning-gold-coast.html">Deep Cleaning</a>
+    <a href="airbnb-cleaning-gold-coast.html">Airbnb Cleaning</a>
+    <a href="office-cleaning-gold-coast.html">Office Cleaning</a>
+  </nav>
+  <span class="ftag">Gold Coast, Australia</span>
+</footer>
+
+</body>
+</html>
