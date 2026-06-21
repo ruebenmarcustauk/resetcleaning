@@ -286,13 +286,13 @@ h1 em{font-style:italic;color:var(--driftwood);}
 /* ─── BUTTON ─── */
 .btn{
   display:inline-block;align-self:flex-start;
-  padding:13px 38px;
-  background:transparent;color:var(--obsidian);
+  padding:14px 40px;
+  background:#AD674A;color:var(--linen);
   font-family:'Raleway','Gill Sans','Optima',sans-serif;
-  font-weight:400;font-size:.6rem;
+  font-weight:600;font-size:.6rem;
   letter-spacing:.26em;text-transform:uppercase;
   text-decoration:none;
-  border:1px solid var(--border-mid);
+  border:1px solid #AD674A;
   position:relative;overflow:hidden;cursor:pointer;
   transition:color .45s, border-color .45s;
 }
@@ -567,15 +567,20 @@ footer{
   .nav-services-btn{font-size:.54rem;letter-spacing:.16em;}
   .btn-header{font-size:.6rem;font-weight:600;padding:10px 18px;letter-spacing:.14em;}
 
-  /* Shorter, wider crop on small phones — keep the cleaner in frame */
-  .hero-left{aspect-ratio:16/9;}
-  .hero-img{object-position:center 48%;}
+  /* Compact hero so the orange Book Now CTA sits above the fold on phones */
+  .hero{padding-top:52px;}
+  .hero-left{aspect-ratio:auto;height:168px;}
+  .hero-img{object-position:center 45%;}
   .cta-left{aspect-ratio:16/9;}
   .cta-img{object-position:left 80%;}
 
-  .hero-right{padding:44px 20px 48px;}
-  h1{font-size:clamp(2.4rem,8vw,3.2rem);}
-  .hero-desc{font-size:.85rem;max-width:100%;}
+  .hero-index{display:none;}
+  .hero-right{padding:22px 20px 28px;}
+  .hero-content{padding:4px 0;justify-content:flex-start;}
+  .hero-eyebrow{margin-bottom:12px;}
+  h1{font-size:1.9rem;margin-bottom:16px;}
+  .hero-desc{font-size:.82rem;line-height:1.65;margin-bottom:20px;max-width:100%;}
+  .btn{padding:13px 30px;}
   .hero-footer{flex-direction:column;gap:6px;align-items:flex-start;}
 
   .pillar{padding:30px 20px;}
