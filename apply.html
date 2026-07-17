@@ -349,7 +349,7 @@ footer {
   <span class="footer-sub">From $450 · Broadbeach · Mermaid Beach · Burleigh Heads</span>
 </footer>
 
-<!-- GHL Calendar Booking → Meta Lead Event -->
+<!-- GHL Calendar Booking → Meta Lead + Google Ads Conversion -->
 <script>
   var pixelFired = false;
   window.addEventListener('message', function(event) {
@@ -360,6 +360,12 @@ footer {
       pixelFired = true;
       var eventId = 'booking_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
       fbq('track', 'Lead', {}, {eventID: eventId});
+      // Event snippet for Book appointment conversion page
+      gtag('event', 'conversion', {
+          'send_to': 'AW-467786744/00zfCM3i79EcEPi3h98B',
+          'value': 1.0,
+          'currency': 'GBP'
+      });
     }
   });
 </script>
