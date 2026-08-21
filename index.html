@@ -388,7 +388,7 @@ h1 em{font-style:normal;font-weight:500;color:var(--driftwood);}
 .qf-sub{font-size:.72rem;line-height:1.6;color:rgba(44,40,37,.5);margin-bottom:6px;}
 .qf-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .qf-row-single{grid-template-columns:1fr;}
-.quote-form input,.quote-form select{
+.quote-form input{
   width:100%;
   padding:14px 16px;
   border:1.5px solid transparent;
@@ -398,9 +398,42 @@ h1 em{font-style:normal;font-weight:500;color:var(--driftwood);}
   border-radius:var(--radius-sm);
   transition:border-color .25s, background .25s;
 }
-.quote-form select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B6259' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;}
 .quote-form input::placeholder{color:rgba(44,40,37,.4);}
-.quote-form input:focus,.quote-form select:focus{outline:none;border-color:var(--sage);background:#fff;}
+.quote-form input:focus{outline:none;border-color:var(--sage);background:#fff;}
+
+/* ─── CUSTOM SELECT (bedrooms / frequency) ─── */
+.cselect{position:relative;}
+.cselect-btn{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:14px 16px;
+  border:1.5px solid transparent;
+  background:var(--bg);
+  font-family:'Poppins',sans-serif;
+  font-size:.82rem;color:rgba(44,40,37,.4);
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  transition:border-color .25s, background .25s, color .2s;
+}
+.cselect.filled .cselect-btn{color:var(--obsidian);}
+.cselect.open .cselect-btn{border-color:var(--sage);background:#fff;}
+.cselect-chevron{flex-shrink:0;color:var(--driftwood);transition:transform .25s;}
+.cselect.open .cselect-chevron{transform:rotate(180deg);}
+.cselect-list{
+  position:absolute;top:calc(100% + 8px);left:0;right:0;
+  background:#fff;border-radius:var(--radius-sm);
+  box-shadow:var(--shadow-elev);
+  list-style:none;padding:6px;margin:0;
+  z-index:20;max-height:220px;overflow-y:auto;
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .2s, transform .2s, visibility .2s;
+}
+.cselect.open .cselect-list{opacity:1;visibility:visible;transform:translateY(0);}
+.cselect-list li{
+  padding:11px 12px;border-radius:calc(var(--radius-sm) - 4px);
+  font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--obsidian);
+  cursor:pointer;transition:background .15s;
+}
+.cselect-list li:hover,.cselect-list li[aria-selected="true"]{background:var(--bg);}
 .qf-submit{width:100%;text-align:center;align-self:stretch;font-family:'Poppins',sans-serif;margin-top:4px;padding:16px 42px;}
 .qf-status{font-size:.68rem;letter-spacing:.02em;min-height:1em;color:rgba(44,40,37,.5);}
 
@@ -478,19 +511,6 @@ h1 em{font-style:normal;font-weight:500;color:var(--driftwood);}
 }
 @media(max-width:640px){.cta{padding:64px 28px;}}
 
-/* ─── FOOTER ─── */
-footer{
-  padding:32px 56px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:var(--bg);
-}
-.flogo{
-  font-family:'Poppins',sans-serif;
-  font-weight:400;font-size:.72rem;
-  letter-spacing:.32em;text-transform:uppercase;color:var(--driftwood);
-}
-.ftag{font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(107,98,89,.5);}
-
 /* ─── RESPONSIVE ─── */
 
 /* Tablet */
@@ -510,8 +530,6 @@ footer{
   .hero-img{width:100%;height:100%;object-fit:cover;object-position:center 48%;}
   .hero-right{padding:56px 28px 52px;}
   .hero-content{padding:20px 0;}
-
-  footer{padding:28px 24px;flex-direction:column;gap:10px;text-align:center;}
 }
 
 /* Mobile */
@@ -536,8 +554,6 @@ footer{
   .qf-row{grid-template-columns:1fr;gap:10px;}
   .btn{padding:13px 30px;}
   .hero-footer{flex-direction:column;gap:6px;align-items:flex-start;}
-
-  footer{padding:24px 20px;}
 }
 /* ─── BLOG nav link + homepage blog section ─── */
 .nav-link{font-family:'Poppins',sans-serif;font-weight:400;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--obsidian);text-decoration:none;padding:10px 0;transition:color .3s;}
@@ -549,7 +565,7 @@ footer{
 <!-- HEADER -->
 <header>
   <div class="logo-group">
-    <a class="logo" href="apply.html"><span class="logo-hi">Reset</span> <span class="logo-lo">Cleaning</span></a>
+    <a class="logo" href="/"><span class="logo-hi">Reset</span> <span class="logo-lo">Cleaning</span></a>
     <span class="logo-sub">Gold Coast, Australia</span>
   </div>
 
@@ -587,28 +603,40 @@ footer{
       <p class="hero-eyebrow">Premium Cleaning · Gold Coast</p>
       <h1>Thoughtfully cleaned. <em>Quietly transformed.</em></h1>
       <form class="quote-form" id="quote-form">
-        <p class="qf-title">Get your free quote</p>
+        <p class="qf-title">Get your free instant quote</p>
         <p class="qf-sub">Tell us a little about your place — we'll call you with a price.</p>
         <div class="qf-row">
           <input type="text" name="name" placeholder="Full name" autocomplete="name" required>
           <input type="tel" name="phone" placeholder="Phone number" autocomplete="tel" required>
         </div>
         <div class="qf-row">
-          <select name="bedrooms" required>
-            <option value="" disabled selected>Bedrooms</option>
-            <option value="1">1 Bedroom</option>
-            <option value="2">2 Bedrooms</option>
-            <option value="3">3 Bedrooms</option>
-            <option value="4">4 Bedrooms</option>
-            <option value="5+">5+ Bedrooms</option>
-          </select>
-          <select name="frequency" required>
-            <option value="" disabled selected>Frequency</option>
-            <option value="One-off">One-off</option>
-            <option value="Weekly">Weekly</option>
-            <option value="Fortnightly">Fortnightly</option>
-            <option value="Monthly">Monthly</option>
-          </select>
+          <div class="cselect" data-name="bedrooms">
+            <button type="button" class="cselect-btn" aria-haspopup="listbox" aria-expanded="false">
+              <span class="cselect-label">Bedrooms</span>
+              <svg class="cselect-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </button>
+            <ul class="cselect-list" role="listbox" tabindex="-1">
+              <li role="option" data-value="1">1 Bedroom</li>
+              <li role="option" data-value="2">2 Bedrooms</li>
+              <li role="option" data-value="3">3 Bedrooms</li>
+              <li role="option" data-value="4">4 Bedrooms</li>
+              <li role="option" data-value="5+">5+ Bedrooms</li>
+            </ul>
+            <input type="hidden" name="bedrooms">
+          </div>
+          <div class="cselect" data-name="frequency">
+            <button type="button" class="cselect-btn" aria-haspopup="listbox" aria-expanded="false">
+              <span class="cselect-label">Frequency</span>
+              <svg class="cselect-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </button>
+            <ul class="cselect-list" role="listbox" tabindex="-1">
+              <li role="option" data-value="One-off">One-off</li>
+              <li role="option" data-value="Weekly">Weekly</li>
+              <li role="option" data-value="Fortnightly">Fortnightly</li>
+              <li role="option" data-value="Monthly">Monthly</li>
+            </ul>
+            <input type="hidden" name="frequency">
+          </div>
         </div>
         <div class="qf-row qf-row-single">
           <input type="text" name="address" placeholder="Street address" autocomplete="street-address" required>
@@ -883,6 +911,12 @@ footer{
     const status = form.querySelector('.qf-status');
     const submitBtn = form.querySelector('.qf-submit');
 
+    if (!form.bedrooms.value || !form.frequency.value) {
+      status.style.color = '#b23b3b';
+      status.textContent = 'Please select bedrooms and frequency.';
+      return;
+    }
+
     if (!GHL_WEBHOOK_URL) {
       status.textContent = "This form isn't connected yet — please call us instead.";
       status.style.color = '#b23b3b';
@@ -910,6 +944,11 @@ footer{
       });
       if (!res.ok) throw new Error('Request failed');
       form.reset();
+      form.querySelectorAll('.cselect').forEach(function (cselect) {
+        cselect.classList.remove('filled', 'open');
+        cselect.querySelector('.cselect-label').textContent = cselect.dataset.name === 'bedrooms' ? 'Bedrooms' : 'Frequency';
+        cselect.querySelectorAll('li').forEach(function (li) { li.removeAttribute('aria-selected'); });
+      });
       status.style.color = '#4a7a63';
       status.textContent = "Thanks! We'll call you shortly with your free quote.";
     } catch (err) {
@@ -917,6 +956,48 @@ footer{
       status.textContent = 'Something went wrong — please call us instead.';
     } finally {
       submitBtn.disabled = false;
+    }
+  });
+</script>
+<script>
+  // Custom dropdowns for Bedrooms / Frequency
+  document.querySelectorAll('.cselect').forEach(function (cselect) {
+    const btn = cselect.querySelector('.cselect-btn');
+    const label = cselect.querySelector('.cselect-label');
+    const list = cselect.querySelector('.cselect-list');
+    const hidden = cselect.querySelector('input[type="hidden"]');
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const isOpen = cselect.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen);
+      document.querySelectorAll('.cselect.open').forEach(function (other) {
+        if (other !== cselect) {
+          other.classList.remove('open');
+          other.querySelector('.cselect-btn').setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    list.querySelectorAll('li').forEach(function (li) {
+      li.addEventListener('click', function () {
+        hidden.value = li.dataset.value;
+        label.textContent = li.textContent;
+        cselect.classList.add('filled');
+        cselect.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        list.querySelectorAll('li').forEach(function (o) { o.removeAttribute('aria-selected'); });
+        li.setAttribute('aria-selected', 'true');
+      });
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.cselect')) {
+      document.querySelectorAll('.cselect.open').forEach(function (cselect) {
+        cselect.classList.remove('open');
+        cselect.querySelector('.cselect-btn').setAttribute('aria-expanded', 'false');
+      });
     }
   });
 </script>
