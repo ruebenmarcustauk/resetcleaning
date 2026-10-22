@@ -31,7 +31,7 @@
 <link rel="icon" type="image/png" href="/favicon.png"/>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-<meta name="description" content="Book your Reset Cleaning clean on the Gold Coast in two minutes. Choose a time and we will confirm your property details, schedule, and any add-ons."/>
+<meta name="description" content="Book your Reset Cleaning clean on the Gold Coast in two minutes. Choose your clean, add any extras and pick a time. No payment today."/>
 <link rel="canonical" href="https://resetcleaninggroup.com/apply.html"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -55,6 +55,7 @@ src="https://www.facebook.com/tr?id=1120381547048527&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
+<link rel="stylesheet" href="/booking/booking.css"/>
 <style>
 :root {
   --linen: #F5F2EE;
@@ -93,6 +94,7 @@ header {
 
 .logo {
   font-family: 'Poppins', sans-serif;
+  color: var(--linen);
   font-weight: 900;
   font-size: 0.95rem;
   letter-spacing: 0.01em;
@@ -311,33 +313,14 @@ footer {
     <em>first reset.</em>
   </h1>
   <p class="subhead">
-  No payment today — select a time and we'll confirm your booking.
+  Book in two minutes. No payment today.
 </p>
-
-<div class="pricing-strip">
-  <span>1 bed — <strong>$169</strong></span>
-  <span>2 bed — <strong>$189</strong></span>
-  <span>3 bed — <strong>$229</strong></span>
-  <span>4 bed — <strong>$269</strong></span>
-  <span>5 bed — <strong>$309</strong></span>
-</div>
 
   <div class="divider"></div>
 </div>
 
-<div class="form-section">
-  <div class="form-card">
-    <div class="calendar-wrap">
-      <iframe
-        src="https://api.leadconnectorhq.com/widget/booking/5IC0kE1tgwJKksQSBEJn"
-        style="width:100%;border:none;overflow:hidden;"
-        scrolling="no"
-        id="5IC0kE1tgwJKksQSBEJn_1755500000000"
-        title="Book your reset">
-      </iframe>
-      <script src="https://api.leadconnectorhq.com/js/form_embed.js" type="text/javascript"></script>
-    </div>
-  </div>
+<div class="bk" id="booking">
+  <noscript><p style="text-align:center">Please call us on <a href="tel:+61494427135">0494 427 135</a> to book.</p></noscript>
 </div>
 
 <div class="trust">
@@ -414,27 +397,7 @@ footer {
   </div>
 </footer>
 
-<!-- GHL Calendar Booking → Meta Lead + Google Ads Conversion -->
-<script>
-  var pixelFired = false;
-  window.addEventListener('message', function(event) {
-    if (pixelFired) return;
-    if (!event.data) return;
-    var d = event.data;
-    if (Array.isArray(d) && d[0] === 'msgsndr-booking-complete') {
-      pixelFired = true;
-      var eventId = 'booking_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
-      fbq('track', 'Lead', {}, {eventID: eventId});
-      // Event snippet for Book appointment conversion page
-      gtag('event', 'conversion', {
-          'send_to': 'AW-467786744/00zfCM3i79EcEPi3h98B',
-          'value': 1.0,
-          'currency': 'GBP'
-      });
-    }
-  });
-</script>
-<!-- End GHL Calendar Listener -->
+<script src="/booking/booking.js" defer></script>
 
 </body>
 </html>

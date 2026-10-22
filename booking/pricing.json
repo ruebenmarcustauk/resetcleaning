@@ -1,0 +1,58 @@
+{
+  "currency": "AUD",
+  "version": "2026-10-23",
+  "timezone": "Australia/Brisbane",
+  "extraTimeBlockMinutes": 30,
+  "extraHoursEach": 1,
+  "services": {
+    "regular": {
+      "label": "Regular Clean",
+      "tagline": "Keep your home fresh, room by room",
+      "frequencies": ["weekly", "fortnightly", "monthly", "one_off"],
+      "extraPerHour": 65,
+      "prices": { "1": 169, "2": 189, "3": 229, "4": 269, "5": 309 },
+      "includedHours": { "1": 2.5, "2": 3, "3": 3.5, "4": 4, "5": 4.5 },
+      "over5": { "type": "quote" }
+    },
+    "deep": {
+      "label": "Deep Clean",
+      "tagline": "Everything in Regular, plus the detail work",
+      "frequencies": ["one_off"],
+      "extraPerHour": 85,
+      "prices": { "1": 300, "2": 350, "3": 400, "4": 450, "5": 500 },
+      "includedHours": null,
+      "over5": { "type": "quote" }
+    },
+    "bond": {
+      "label": "Bond / End of Lease Clean",
+      "tagline": "Cleaned to REIQ exit report standard",
+      "frequencies": ["one_off"],
+      "extraPerHour": 95,
+      "prices": { "1": 450, "2": 550, "3": 650, "4": 750, "5": 850 },
+      "includedHours": null,
+      "over5": { "type": "perBedroom", "amount": 100 }
+    }
+  },
+  "maxBedrooms": 8,
+  "frequencyLabels": {
+    "weekly": "Weekly",
+    "fortnightly": "Fortnightly",
+    "monthly": "Monthly",
+    "one_off": "One-off"
+  },
+  "extras": [
+    { "id": "oven_interior",    "label": "Oven interior",         "includedIn": ["bond"] },
+    { "id": "fridge_interior",  "label": "Fridge interior",       "includedIn": ["bond"] },
+    { "id": "inside_cupboards", "label": "Inside cupboards",      "includedIn": ["deep", "bond"] },
+    { "id": "blinds",           "label": "Blinds",                "includedIn": ["bond"] },
+    { "id": "walls",            "label": "Walls (spot clean)",    "includedIn": ["bond"] },
+    { "id": "outside_windows",  "label": "Outside windows",       "includedIn": [] },
+    { "id": "laundry",          "label": "Laundry",               "includedIn": [] }
+  ],
+  "accessOptions": [
+    { "id": "home",      "label": "I'll be home" },
+    { "id": "lockbox",   "label": "Lockbox" },
+    { "id": "key",       "label": "Key left for you" },
+    { "id": "concierge", "label": "Concierge / building manager" }
+  ]
+}
