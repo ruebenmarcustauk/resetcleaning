@@ -30,6 +30,10 @@ exports.handler = async (event) => {
         days[day] = v.slots;
       }
     });
+    // TEMP: show GoHighLevel's raw reply when nothing was parsed
+    if (!Object.keys(days).length) {
+      return json(200, { timezone: pricing.timezone, days, raw: JSON.stringify(data).slice(0, 600) });
+    }
     return json(200, { timezone: pricing.timezone, days });
   } catch (err) {
     console.error(err.message, JSON.stringify(err.data));
