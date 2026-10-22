@@ -1,7 +1,8 @@
 // GET /.netlify/functions/booking-slots?month=2026-11
-// Returns available start times from the GoHighLevel calendar for that month:
+// Returns available start times from the GoHighLevel calendar for that month,
+// limited to the start times in pricing.json:
 //   { timezone, days: { "2026-11-03": ["2026-11-03T08:00:00+10:00", ...], ... } }
-const { pricing, config, ghl, json } = require("../lib/booking");
+const { pricing, config, ghl, json, startTimeAllowed } = require("../lib/booking");
 
 exports.handler = async (event) => {
   const cfg = config();
@@ -20,32 +21,19 @@ exports.handler = async (event) => {
   if (from > end) return json(200, { timezone: pricing.timezone, days: {} });
 
   try {
-    // TEMP: compare candidate calendars during setup
-    const testCal = ["AxE0EDxNb58exAIGMEgZ", "tY5ZeSxeqQQucNTFddhk", "rbA4rnszqxnD0QoqMQYP"]
-      .find((c) => c === (event.queryStringParameters || {}).cal);
-    const data = await ghl(cfg, "GET", `/calendars/${testCal || cfg.calendarId}/free-slots`, {
+    const data = await ghl(cfg, "GET", `/calendars/${cfg.calendarId}/free-slots`, {
       version: "2021-04-15",
       query: { startDate: from, endDate: end, timezone: pricing.timezone },
     });
     const days = {};
     Object.entries(data || {}).forEach(([day, v]) => {
-      if (/^\d{4}-\d{2}-\d{2}$/.test(day) && v && Array.isArray(v.slots) && v.slots.length) {
-        days[day] = v.slots;
-      }
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !v || !Array.isArray(v.slots)) return;
+      const slots = v.slots.filter(startTimeAllowed);
+      if (slots.length) days[day] = slots;
     });
-    // TEMP: show GoHighLevel's raw reply when nothing was parsed
-    if (!Object.keys(days).length) {
-      return json(200, { timezone: pricing.timezone, days, raw: JSON.stringify(data).slice(0, 600) });
-    }
     return json(200, { timezone: pricing.timezone, days });
   } catch (err) {
     console.error(err.message, JSON.stringify(err.data));
-    const d = err.data || {};
-    return json(502, {
-      error: "Couldn't load availability. Please try again.",
-      // TEMP: GoHighLevel's reason, for setup troubleshooting
-      ghlStatus: err.status || null,
-      ghlMessage: [].concat(d.message || d.error || d.msg || "").join("; ").slice(0, 200),
-    });
+    return json(502, { error: "Couldn't load availability. Please try again." });
   }
 };

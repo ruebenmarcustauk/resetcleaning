@@ -4,6 +4,7 @@
   "timezone": "Australia/Brisbane",
   "extraTimeBlockMinutes": 30,
   "extraHoursEach": 1,
+  "startTimes": ["08:00", "09:00", "10:00", "11:00"],
   "services": {
     "regular": {
       "label": "Regular Clean",

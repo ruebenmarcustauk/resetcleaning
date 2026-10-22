@@ -1,7 +1,7 @@
 // POST /.netlify/functions/booking-create
 // Creates (or updates) the contact in GoHighLevel, books the appointment on the
 // calendar, and adds a note with the full booking details.
-const { pricing, config, ghl, quote, json } = require("../lib/booking");
+const { pricing, config, ghl, quote, json, startTimeAllowed } = require("../lib/booking");
 
 const clean = (v, max = 300) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
@@ -47,7 +47,7 @@ exports.handler = async (event) => {
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return json(400, { error: "Please check your email address." });
 
   const startMs = Date.parse(b.startTime);
-  if (!startMs || startMs < Date.now()) return json(400, { error: "Please choose a time." });
+  if (!startMs || startMs < Date.now() || !startTimeAllowed(b.startTime)) return json(400, { error: "Please choose a time." });
 
   // Each extra is charged as one hour at the clean type's extra-time rate.
   const extraHours = pricing.extraHoursEach || 1;

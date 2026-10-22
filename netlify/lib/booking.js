@@ -60,6 +60,13 @@ function quote(serviceId, bedrooms) {
   return { base: null, includedHours: null, quote: true };
 }
 
+// Only offer the start times listed in pricing.json (Gold Coast time).
+const fmtHM = new Intl.DateTimeFormat("en-GB", { timeZone: pricing.timezone, hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+function startTimeAllowed(iso) {
+  const t = Date.parse(iso);
+  return !Number.isNaN(t) && (!pricing.startTimes || pricing.startTimes.includes(fmtHM.format(new Date(t))));
+}
+
 function json(statusCode, body) {
   return {
     statusCode,
@@ -68,4 +75,4 @@ function json(statusCode, body) {
   };
 }
 
-module.exports = { pricing, config, ghl, quote, json };
+module.exports = { pricing, config, ghl, quote, json, startTimeAllowed };
