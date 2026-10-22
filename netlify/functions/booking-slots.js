@@ -20,7 +20,10 @@ exports.handler = async (event) => {
   if (from > end) return json(200, { timezone: pricing.timezone, days: {} });
 
   try {
-    const data = await ghl(cfg, "GET", `/calendars/${cfg.calendarId}/free-slots`, {
+    // TEMP: compare candidate calendars during setup
+    const testCal = ["AxE0EDxNb58exAIGMEgZ", "tY5ZeSxeqQQucNTFddhk", "rbA4rnszqxnD0QoqMQYP"]
+      .find((c) => c === (event.queryStringParameters || {}).cal);
+    const data = await ghl(cfg, "GET", `/calendars/${testCal || cfg.calendarId}/free-slots`, {
       version: "2021-04-15",
       query: { startDate: from, endDate: end, timezone: pricing.timezone },
     });
