@@ -33,6 +33,12 @@ exports.handler = async (event) => {
     return json(200, { timezone: pricing.timezone, days });
   } catch (err) {
     console.error(err.message, JSON.stringify(err.data));
-    return json(502, { error: "Couldn't load availability. Please try again." });
+    const d = err.data || {};
+    return json(502, {
+      error: "Couldn't load availability. Please try again.",
+      // TEMP: GoHighLevel's reason, for setup troubleshooting
+      ghlStatus: err.status || null,
+      ghlMessage: [].concat(d.message || d.error || d.msg || "").join("; ").slice(0, 200),
+    });
   }
 };
