@@ -40,6 +40,27 @@ async function ghl(cfg, method, path, { version, query, body } = {}) {
   return data;
 }
 
+// Pipeline that website bookings go into, found by name (GHL_PIPELINE_NAME,
+// default "Website Bookings"). New opportunities go into the stage named in
+// GHL_PIPELINE_STAGE (default "New booking"), or the first stage if there's no match.
+let pipelineCache = null;
+async function bookingStage(cfg) {
+  if (pipelineCache) return pipelineCache;
+  const wantPipeline = (process.env.GHL_PIPELINE_NAME || "Website Bookings").trim().toLowerCase();
+  const wantStage = (process.env.GHL_PIPELINE_STAGE || "New booking").trim().toLowerCase();
+  const data = await ghl(cfg, "GET", "/opportunities/pipelines", {
+    version: "2021-07-28",
+    query: { locationId: cfg.locationId },
+  });
+  const pipeline = (data.pipelines || []).find((p) => (p.name || "").trim().toLowerCase() === wantPipeline);
+  if (!pipeline) throw new Error(`Pipeline "${wantPipeline}" not found`);
+  const stages = (pipeline.stages || []).slice().sort((a, b) => (a.position || 0) - (b.position || 0));
+  const stage = stages.find((s) => (s.name || "").trim().toLowerCase() === wantStage) || stages[0];
+  if (!stage) throw new Error(`Pipeline "${pipeline.name}" has no stages`);
+  pipelineCache = { pipelineId: pipeline.id, stageId: stage.id };
+  return pipelineCache;
+}
+
 // Customer price for a clean. Returns { base, quote } where quote=true means
 // the price must be confirmed manually (regular/deep over 5 bedrooms).
 function quote(serviceId, bedrooms) {
@@ -75,4 +96,4 @@ function json(statusCode, body) {
   };
 }
 
-module.exports = { pricing, config, ghl, quote, json, startTimeAllowed };
+module.exports = { pricing, config, ghl, quote, json, startTimeAllowed, bookingStage };

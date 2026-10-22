@@ -173,6 +173,8 @@
 .bk-addr-main { font-size: .88rem; font-weight: 500; }
 .bk-addr-sub { font-size: .74rem; color: var(--muted); }
 .bk-addr-credit { padding: 9px 16px; font-size: .68rem; color: var(--faint); }
+.bk-addr-loading { display: flex; align-items: center; gap: 10px; padding: 14px 16px; font-size: .78rem; }
+.bk-addr-loading .bk-spinner { width: 14px; height: 14px; }
 
 /* nav */
 .bk-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }

@@ -360,8 +360,23 @@
   var ADDR_API = 'https://photon.komoot.io/api/';
   var ADDR_BBOX = '152.9,-28.3,153.6,-27.6';
   function setupAddress(input, list) {
-    var timer = null, seq = 0, items = [], active = -1;
+    var timer = null, items = [], active = -1, pending = 0;
+    var cache = {};   // query -> Promise of features
+    var pool = [];    // recent result sets, re-filtered on every keystroke
 
+    function parse(text) {
+      // Keep the number they typed (e.g. 12, 12A, 3/7, "Unit 4 22") and look up the street.
+      var m = /^\s*(?:(?:unit|u|apt|apartment)\s*(\d+[a-z]?)\s*[,\/]?\s+)?(\d+[a-z]?(?:\s*[\/-]\s*\d+[a-z]?)?)\s+(.+)$/i.exec(text);
+      var main = m ? m[2].replace(/\s+/g, '') : '';
+      var query = (m ? m[3] : text).trim();
+      return {
+        number: m ? (m[1] ? m[1] + '/' : '') + main : '',
+        // For "3/7" (unit 3, number 7) or "19-21" look up the street number only.
+        lookupNum: /\//.test(main) ? main.split('/').pop() : main.split('-')[0],
+        query: query,
+        firstWord: (query.match(/[a-z]+/i) || [''])[0].toLowerCase()
+      };
+    }
     function close() {
       list.hidden = true; list.innerHTML = ''; items = []; active = -1;
       input.setAttribute('aria-expanded', 'false');
@@ -382,64 +397,73 @@
         input.focus(); input.setSelectionRange(0, 0);
       }
     }
-    function render() {
-      if (!items.length) { close(); return; }
-      list.innerHTML = items.map(function (it, i) {
+    // Build suggestions for what's in the box right now from every recent result.
+    function refresh() {
+      if (document.activeElement !== input) return;
+      var q = parse(input.value);
+      if (q.query.replace(/[^a-z]/gi, '').length < 3) { close(); return; }
+      var seen = {}, out = [];
+      pool.forEach(function (features) {
+        features.forEach(function (f) {
+          var p = f.properties || {};
+          var streetName = p.street || p.name;
+          var suburb = p.district || p.locality || p.city;
+          if (!streetName || !suburb || p.state !== 'Queensland' && p.state !== 'New South Wales') return;
+          // The street name must have a word starting with what they typed.
+          if (!streetName.toLowerCase().split(/\s+/).some(function (w) { return w.indexOf(q.firstWord) === 0; })) return;
+          var num = q.number || p.housenumber || '';
+          var it = { street: (num ? num + ' ' : '') + streetName, suburb: suburb, state: p.state === 'New South Wales' ? 'NSW' : 'QLD', postcode: p.postcode || '', hasNumber: !!num };
+          var k = (it.street + '|' + it.suburb).toLowerCase();
+          if (seen[k]) return;
+          seen[k] = true;
+          // Exact house matches first.
+          it.rank = p.housenumber && p.housenumber === q.lookupNum ? 0 : 1;
+          out.push(it);
+        });
+      });
+      items = out.sort(function (x, y) { return x.rank - y.rank; }).slice(0, 5);
+      active = -1;
+      if (!items.length && !pending) { close(); return; }
+      list.innerHTML = items.length ? items.map(function (it, i) {
         return '<li role="option" id="bk-addr-' + i + '" data-i="' + i + '" aria-selected="false">' +
           '<span class="bk-addr-main">' + esc(it.street) + '</span>' +
           '<span class="bk-addr-sub">' + esc(it.suburb) + ' ' + it.state + ' ' + esc(it.postcode) + '</span></li>';
-      }).join('') + '<li class="bk-addr-credit" aria-hidden="true">Not listed? Just type your full address.</li>';
+      }).join('') + '<li class="bk-addr-credit" aria-hidden="true">Not listed? Just type your full address.</li>'
+        : '<li class="bk-addr-credit bk-addr-loading" aria-hidden="true"><span class="bk-spinner"></span>Searching…</li>';
       list.hidden = false;
       input.setAttribute('aria-expanded', 'true');
       list.querySelectorAll('[role="option"]').forEach(function (li) {
         li.addEventListener('mousedown', function (e) { e.preventDefault(); pick(+li.dataset.i); });
       });
     }
-    function search(text) {
-      // Keep the number they typed (e.g. 12, 12A, 3/7, "Unit 4 22") and look up the street.
-      var m = /^\s*(?:(?:unit|u|apt|apartment)\s*(\d+[a-z]?)\s*[,\/]?\s+)?(\d+[a-z]?(?:\s*[\/-]\s*\d+[a-z]?)?)\s+(.+)$/i.exec(text);
-      var main = m ? m[2].replace(/\s+/g, '') : '';
-      var number = m ? (m[1] ? m[1] + '/' : '') + main : '';
-      var query = m ? m[3] : text;
-      if (query.replace(/[^a-z]/gi, '').length < 3) { close(); return; }
-      // For "3/7" (unit 3, number 7) or "19-21" look up the street number only.
-      var lookupNum = /\//.test(main) ? main.split('/').pop() : main.split('-')[0];
-      var firstWord = (query.match(/[a-z]+/i) || [''])[0].toLowerCase();
-      var my = ++seq;
-      function lookup(q) {
-        return fetch(ADDR_API + '?limit=10&lang=en&bbox=' + ADDR_BBOX + '&layer=house&layer=street&q=' + encodeURIComponent(q))
+    function lookup(q) {
+      var key = q.toLowerCase();
+      if (!cache[key]) {
+        cache[key] = fetch(ADDR_API + '?limit=10&lang=en&bbox=' + ADDR_BBOX + '&layer=house&layer=street&q=' + encodeURIComponent(q))
           .then(function (r) { return r.json(); })
           .then(function (d) { return d.features || []; })
-          .catch(function () { return []; });
+          .catch(function () { delete cache[key]; return []; });
       }
-      // Search with and without the number: the lookup knows most streets but not every house number.
-      Promise.all([lookupNum ? lookup(lookupNum + ' ' + query) : Promise.resolve([]), lookup(query)]).then(function (res) {
-        if (my !== seq) return;
-        var seen = {};
-        items = res[0].concat(res[1]).map(function (f) {
-          var p = f.properties || {};
-          var streetName = p.street || p.name;
-          var suburb = p.district || p.locality || p.city;
-          if (!streetName || !suburb || p.state !== 'Queensland' && p.state !== 'New South Wales') return null;
-          // The street name must start with (a word starting with) what they typed.
-          if (firstWord && !streetName.toLowerCase().split(/\s+/).some(function (w) { return w.indexOf(firstWord) === 0; })) return null;
-          var num = number || p.housenumber || '';
-          return { street: (num ? num + ' ' : '') + streetName, suburb: suburb, state: p.state === 'New South Wales' ? 'NSW' : 'QLD', postcode: p.postcode || '', hasNumber: !!num };
-        }).filter(function (it) {
-          if (!it) return false;
-          var k = (it.street + '|' + it.suburb).toLowerCase();
-          if (seen[k]) return false;
-          seen[k] = true; return true;
-        }).slice(0, 5);
-        render();
+      pending++;
+      cache[key].then(function (features) {
+        pending--;
+        if (features.length) { pool.unshift(features); pool = pool.slice(0, 8); }
+        refresh();
       });
+    }
+    function search() {
+      var q = parse(input.value);
+      if (q.query.replace(/[^a-z]/gi, '').length < 3) return;
+      // The lookup knows most streets but not every house number, so search both ways.
+      if (q.lookupNum) lookup(q.lookupNum + ' ' + q.query);
+      lookup(q.query);
     }
 
     input.addEventListener('input', function () {
       state.addr = null;
+      refresh(); // instant update from results we already have
       clearTimeout(timer);
-      var text = input.value;
-      timer = setTimeout(function () { search(text); }, 250);
+      timer = setTimeout(search, 120);
     });
     input.addEventListener('keydown', function (e) {
       if (list.hidden) return;

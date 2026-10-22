@@ -1,7 +1,7 @@
 // POST /.netlify/functions/booking-create
 // Creates (or updates) the contact in GoHighLevel, books the appointment on the
 // calendar, and adds a note with the full booking details.
-const { pricing, config, ghl, quote, json, startTimeAllowed } = require("../lib/booking");
+const { pricing, config, ghl, quote, json, startTimeAllowed, bookingStage } = require("../lib/booking");
 
 const clean = (v, max = 300) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
@@ -138,10 +138,35 @@ exports.handler = async (event) => {
       console.error("Note failed:", err.message, JSON.stringify(err.data));
     }
 
+    // Add the booking to the Website Bookings pipeline. As above, the booking
+    // already exists, so a failure here is logged rather than shown to the customer.
+    let opportunity = false;
+    try {
+      const { pipelineId, stageId } = await bookingStage(cfg);
+      const day = new Date(startMs).toLocaleDateString("en-AU", { timeZone: pricing.timezone, day: "numeric", month: "short" });
+      await ghl(cfg, "POST", "/opportunities/", {
+        version: "2021-07-28",
+        body: {
+          locationId: cfg.locationId,
+          pipelineId,
+          pipelineStageId: stageId,
+          contactId,
+          name: `${service.label} - ${bedLabel} - ${firstName} ${lastName} (${day})`.trim(),
+          status: "open",
+          monetaryValue: total || 0,
+          source: "Website booking",
+        },
+      });
+      opportunity = true;
+    } catch (err) {
+      console.error("Opportunity failed:", err.message, JSON.stringify(err.data));
+    }
+
     return json(200, {
       ok: true,
       bookingId: appointmentId || contactId,
       value: total,
+      opportunity,
     });
   } catch (err) {
     console.error(err.message, JSON.stringify(err.data));
