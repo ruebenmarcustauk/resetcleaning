@@ -325,9 +325,10 @@
       field('lastName', 'Last name', 'text', 'family-name') +
       field('phone', 'Mobile', 'tel', 'tel') +
       field('email', 'Email', 'email', 'email') +
-      field('street', 'Street address', 'text', 'address-line1', true) +
-      field('suburb', 'Suburb', 'text', 'address-level2') +
-      field('postcode', 'Postcode', 'text', 'postal-code', false, 'inputmode="numeric" maxlength="4"') +
+      '<div class="bk-field full bk-addr"><label for="bk-street">Address</label>' +
+      '<input id="bk-street" name="street" type="text" autocomplete="off" placeholder="Start typing, e.g. 12 Lakeview Drive" required ' +
+      'role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="bk-addr-list">' +
+      '<ul class="bk-addr-list" id="bk-addr-list" role="listbox" hidden></ul></div>' +
       '</div></div>' +
       '<div class="bk-group"><p class="bk-group-title">How will we get in?</p><div class="bk-chips" role="radiogroup" aria-label="Access">' +
       P.accessOptions.map(function (a) {
@@ -350,10 +351,114 @@
       });
     });
     stepEl(3).querySelector('form').addEventListener('submit', function (e) { e.preventDefault(); next(); });
+    setupAddress(stepEl(3).querySelector('#bk-street'), stepEl(3).querySelector('#bk-addr-list'));
     stepEl(3).querySelectorAll('input').forEach(function (inp) {
       inp.addEventListener('input', function () { inp.closest('.bk-field') && inp.closest('.bk-field').classList.remove('invalid'); setError(''); });
     });
   }
+  // ── address autocomplete (Photon / OpenStreetMap, Gold Coast area) ──
+  var ADDR_API = 'https://photon.komoot.io/api/';
+  var ADDR_BBOX = '152.9,-28.3,153.6,-27.6';
+  function setupAddress(input, list) {
+    var timer = null, seq = 0, items = [], active = -1;
+
+    function close() {
+      list.hidden = true; list.innerHTML = ''; items = []; active = -1;
+      input.setAttribute('aria-expanded', 'false');
+    }
+    function highlight(i) {
+      active = i;
+      list.querySelectorAll('[role="option"]').forEach(function (li, j) { li.setAttribute('aria-selected', j === i); });
+    }
+    function pick(i) {
+      var it = items[i];
+      if (!it) return;
+      state.addr = it;
+      input.value = it.street + ', ' + it.suburb + ' ' + it.state + (it.postcode ? ' ' + it.postcode : '');
+      input.closest('.bk-field').classList.remove('invalid');
+      close();
+      if (!it.hasNumber) {
+        // Street only: put the cursor at the start so they can add their number.
+        input.focus(); input.setSelectionRange(0, 0);
+      }
+    }
+    function render() {
+      if (!items.length) { close(); return; }
+      list.innerHTML = items.map(function (it, i) {
+        return '<li role="option" id="bk-addr-' + i + '" data-i="' + i + '" aria-selected="false">' +
+          '<span class="bk-addr-main">' + esc(it.street) + '</span>' +
+          '<span class="bk-addr-sub">' + esc(it.suburb) + ' ' + it.state + ' ' + esc(it.postcode) + '</span></li>';
+      }).join('') + '<li class="bk-addr-credit" aria-hidden="true">Not listed? Just type your full address.</li>';
+      list.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+      list.querySelectorAll('[role="option"]').forEach(function (li) {
+        li.addEventListener('mousedown', function (e) { e.preventDefault(); pick(+li.dataset.i); });
+      });
+    }
+    function search(text) {
+      // Keep the number they typed (e.g. 12, 12A, 3/7, "Unit 4 22") and look up the street.
+      var m = /^\s*(?:(?:unit|u|apt|apartment)\s*(\d+[a-z]?)\s*[,\/]?\s+)?(\d+[a-z]?(?:\s*[\/-]\s*\d+[a-z]?)?)\s+(.+)$/i.exec(text);
+      var main = m ? m[2].replace(/\s+/g, '') : '';
+      var number = m ? (m[1] ? m[1] + '/' : '') + main : '';
+      var query = m ? m[3] : text;
+      if (query.replace(/[^a-z]/gi, '').length < 3) { close(); return; }
+      // For "3/7" (unit 3, number 7) or "19-21" look up the street number only.
+      var lookupNum = /\//.test(main) ? main.split('/').pop() : main.split('-')[0];
+      var firstWord = (query.match(/[a-z]+/i) || [''])[0].toLowerCase();
+      var my = ++seq;
+      function lookup(q) {
+        return fetch(ADDR_API + '?limit=10&lang=en&bbox=' + ADDR_BBOX + '&layer=house&layer=street&q=' + encodeURIComponent(q))
+          .then(function (r) { return r.json(); })
+          .then(function (d) { return d.features || []; })
+          .catch(function () { return []; });
+      }
+      // Search with and without the number: the lookup knows most streets but not every house number.
+      Promise.all([lookupNum ? lookup(lookupNum + ' ' + query) : Promise.resolve([]), lookup(query)]).then(function (res) {
+        if (my !== seq) return;
+        var seen = {};
+        items = res[0].concat(res[1]).map(function (f) {
+          var p = f.properties || {};
+          var streetName = p.street || p.name;
+          var suburb = p.district || p.locality || p.city;
+          if (!streetName || !suburb || p.state !== 'Queensland' && p.state !== 'New South Wales') return null;
+          // The street name must start with (a word starting with) what they typed.
+          if (firstWord && !streetName.toLowerCase().split(/\s+/).some(function (w) { return w.indexOf(firstWord) === 0; })) return null;
+          var num = number || p.housenumber || '';
+          return { street: (num ? num + ' ' : '') + streetName, suburb: suburb, state: p.state === 'New South Wales' ? 'NSW' : 'QLD', postcode: p.postcode || '', hasNumber: !!num };
+        }).filter(function (it) {
+          if (!it) return false;
+          var k = (it.street + '|' + it.suburb).toLowerCase();
+          if (seen[k]) return false;
+          seen[k] = true; return true;
+        }).slice(0, 5);
+        render();
+      });
+    }
+
+    input.addEventListener('input', function () {
+      state.addr = null;
+      clearTimeout(timer);
+      var text = input.value;
+      timer = setTimeout(function () { search(text); }, 250);
+    });
+    input.addEventListener('keydown', function (e) {
+      if (list.hidden) return;
+      if (e.key === 'ArrowDown') { e.preventDefault(); highlight(Math.min(items.length - 1, active + 1)); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); highlight(Math.max(0, active - 1)); }
+      else if (e.key === 'Enter' && active >= 0) { e.preventDefault(); pick(active); }
+      else if (e.key === 'Escape') { close(); }
+    });
+    input.addEventListener('blur', function () { setTimeout(close, 150); });
+    // On phones, lift the field so suggestions aren't hidden behind the keyboard or price bar.
+    input.addEventListener('focus', function () {
+      if (window.innerWidth < 900) {
+        setTimeout(function () {
+          window.scrollTo({ top: input.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
+        }, 300);
+      }
+    });
+  }
+
   function field(name, label, type, ac, full, extra) {
     return '<div class="bk-field' + (full ? ' full' : '') + '"><label for="bk-' + name + '">' + label + '</label>' +
       '<input id="bk-' + name + '" name="' + name + '" type="' + type + '" autocomplete="' + ac + '" ' + (extra || '') + ' required></div>';
@@ -361,7 +466,7 @@
   function formValues() {
     var f = stepEl(3).querySelector('form');
     var v = {};
-    ['firstName', 'lastName', 'phone', 'email', 'street', 'suburb', 'postcode', 'accessDetails', 'notes', 'company'].forEach(function (k) {
+    ['firstName', 'lastName', 'phone', 'email', 'street', 'accessDetails', 'notes', 'company'].forEach(function (k) {
       v[k] = (f.elements[k].value || '').trim();
     });
     return v;
@@ -372,13 +477,13 @@
     if (!v.lastName) bad.push('lastName');
     if (v.phone.replace(/\D/g, '').length < 8) bad.push('phone');
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email)) bad.push('email');
-    if (!v.street) bad.push('street');
-    if (!v.suburb) bad.push('suburb');
-    if (!/^\d{4}$/.test(v.postcode)) bad.push('postcode');
+    // A picked suggestion needs a street number; a typed address needs a number and a suburb or postcode.
+    if (state.addr ? !/^\S*\d/.test(state.addr.street) : !/\d/.test(v.street) || v.street.replace(/[^a-z]/gi, '').length < 6) bad.push('street');
     stepEl(3).querySelectorAll('.bk-field').forEach(function (el) { el.classList.remove('invalid'); });
     bad.forEach(function (k) { stepEl(3).querySelector('#bk-' + k).closest('.bk-field').classList.add('invalid'); });
     if (bad.length) {
       stepEl(3).querySelector('#bk-' + bad[0]).focus();
+      if (bad.length === 1 && bad[0] === 'street') return 'Please enter your full address, including the street number.';
       return 'Please check the highlighted fields.';
     }
     if (!state.access) return 'Please tell us how we’ll get in.';
@@ -487,7 +592,10 @@
       company: v.company,
       contact: {
         firstName: v.firstName, lastName: v.lastName, phone: v.phone, email: v.email,
-        street: v.street, suburb: v.suburb, postcode: v.postcode,
+        street: state.addr ? state.addr.street : v.street,
+        suburb: state.addr ? state.addr.suburb : '',
+        state: state.addr ? state.addr.state : '',
+        postcode: state.addr ? state.addr.postcode : '',
         accessDetails: v.accessDetails, notes: v.notes
       }
     };

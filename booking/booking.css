@@ -161,6 +161,19 @@
 .bk-field.invalid input { border-color: var(--err); }
 .bk-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
+/* address autocomplete */
+.bk-addr { position: relative; }
+.bk-addr-list {
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 20; margin-top: 6px; list-style: none;
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 12px 32px rgba(44,40,37,.14);
+  overflow: hidden;
+}
+.bk-addr-list [role="option"] { padding: 12px 16px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; border-bottom: 1px solid var(--line); }
+.bk-addr-list [role="option"]:hover, .bk-addr-list [aria-selected="true"] { background: var(--accent-soft); }
+.bk-addr-main { font-size: .88rem; font-weight: 500; }
+.bk-addr-sub { font-size: .74rem; color: var(--muted); }
+.bk-addr-credit { padding: 9px 16px; font-size: .68rem; color: var(--faint); }
+
 /* nav */
 .bk-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }
 .bk-back { background: none; border: none; font-size: .86rem; font-weight: 500; text-decoration: underline; cursor: pointer; padding: 8px 0; }

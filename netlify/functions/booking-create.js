@@ -38,10 +38,11 @@ exports.handler = async (event) => {
   const street = clean(c.street, 150);
   const suburb = clean(c.suburb, 80);
   const postcode = clean(c.postcode, 10);
+  const addrState = c.state === "NSW" ? "NSW" : "QLD";
   const notes = clean(c.notes, 1000);
   const accessDetails = clean(c.accessDetails, 300);
 
-  if (!firstName || !phone || !email || !street || !suburb) {
+  if (!firstName || !phone || !email || !street) {
     return json(400, { error: "Please fill in your name, phone, email and address." });
   }
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return json(400, { error: "Please check your email address." });
@@ -61,7 +62,7 @@ exports.handler = async (event) => {
   const priceText = q.quote
     ? "Clean to be quoted (over 5 bedrooms)" + (extras.length ? ` + extras ${money(extrasTotal)}` : "")
     : extras.length ? `${money(q.base)} clean + ${money(extrasTotal)} extras = ${money(total)}` : money(q.base);
-  const address = `${street}, ${suburb} QLD ${postcode}`.trim();
+  const address = suburb ? `${street}, ${suburb} ${addrState} ${postcode}`.trim() : street;
   const when = new Date(startMs).toLocaleString("en-AU", {
     timeZone: pricing.timezone, weekday: "long", day: "numeric", month: "long", year: "numeric",
     hour: "numeric", minute: "2-digit",
@@ -91,9 +92,8 @@ exports.handler = async (event) => {
         email,
         phone,
         address1: street,
-        city: suburb,
-        state: "QLD",
-        postalCode: postcode,
+        ...(suburb ? { city: suburb, state: addrState } : {}),
+        ...(postcode ? { postalCode: postcode } : {}),
         country: "AU",
         source: "Website booking",
         tags: ["website booking", `${b.service} clean`],
