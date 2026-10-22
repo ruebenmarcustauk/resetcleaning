@@ -34,16 +34,7 @@ exports.handler = async (event) => {
   } catch (err) {
     console.error(err.message, JSON.stringify(err.data));
     const d = err.data || {};
-    // TEMP: list this account's calendars so the right ID can be set
-    let calendars = null;
-    try {
-      const list = await ghl(cfg, "GET", "/calendars/", { version: "2021-04-15", query: { locationId: cfg.locationId } });
-      calendars = (list.calendars || []).map((c) => ({ id: c.id, name: c.name, active: c.isActive }));
-    } catch (e) {
-      calendars = { status: e.status, message: [].concat((e.data || {}).message || "").join("; ") };
-    }
     return json(502, {
-      calendars,
       error: "Couldn't load availability. Please try again.",
       // TEMP: GoHighLevel's reason, for setup troubleshooting
       ghlStatus: err.status || null,
