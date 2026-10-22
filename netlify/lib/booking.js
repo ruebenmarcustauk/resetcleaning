@@ -1,6 +1,6 @@
 // Shared helpers for the booking functions.
 // Secrets live in Netlify environment variables, never in the page:
-//   GHL_TOKEN        Private Integration token (Settings → Private Integrations)
+//   GHL_TOKEN (or GHL) Private Integration token (Settings → Private Integrations)
 //   GHL_LOCATION_ID  Sub-account (location) ID
 //   GHL_CALENDAR_ID  Calendar customers book into
 const pricing = require("../../booking/pricing.json");
@@ -8,7 +8,7 @@ const pricing = require("../../booking/pricing.json");
 const GHL_BASE = "https://services.leadconnectorhq.com";
 
 function config() {
-  const token = process.env.GHL_TOKEN;
+  const token = process.env.GHL_TOKEN || process.env.GHL;
   const locationId = process.env.GHL_LOCATION_ID;
   const calendarId = process.env.GHL_CALENDAR_ID;
   if (!token || !locationId || !calendarId) return null;
