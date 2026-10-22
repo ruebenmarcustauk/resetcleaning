@@ -31,7 +31,7 @@
 <link rel="icon" type="image/png" href="/favicon.png"/>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-<meta name="description" content="Professional deep cleaning across the Gold Coast. Intensive top-to-bottom reset for homes that need more than a regular clean. Natural products. From $249. Book today."/>
+<meta name="description" content="Professional deep cleaning across the Gold Coast. Intensive top-to-bottom reset for homes that need more than a regular clean. Natural products. From $300. Book today."/>
 <link rel="canonical" href="https://resetcleaninggroup.com/services/deep-cleaning-gold-coast.html"/>
 
 <script type="application/ld+json">
@@ -44,39 +44,39 @@
       "name": "How much does deep cleaning cost on the Gold Coast?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Deep cleaning starts from $249 for a one-bedroom property, $319 for two bedrooms, $399 for three bedrooms, and $479 for four or more bedrooms. Deep cleans are priced higher than regular cleans to reflect the time and intensity required."
+        "text": "A deep clean is $300 for 1 bedroom, $350 for 2, $400 for 3, $450 for 4 and $500 for 5 bedrooms. Extra time is $85/hr, and only with your approval."
       }
     },
     {
       "@type": "Question",
-      "name": "What is the difference between a deep clean and a regular clean?",
+      "name": "What if my home takes longer than expected?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A regular clean maintains a home already in good condition. A deep clean addresses accumulated grime and neglected areas a maintenance clean does not touch — inside appliances, behind furniture, grout lines, window tracks, and more. It is a full reset."
+        "text": "We'll always ask you first. Extra time is billed in 30-minute blocks, and only with your approval."
       }
     },
     {
       "@type": "Question",
-      "name": "How long does a deep clean take?",
+      "name": "Do I need to be home?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A two-bedroom home typically takes 4–6 hours. Larger homes or properties that have not had a thorough clean in some time may take longer. We do not work to a clock — the job is finished when it is finished."
+        "text": "No – just tell us how we'll get in (lockbox, key or concierge) when you book."
       }
     },
     {
       "@type": "Question",
-      "name": "Do I need to be home during the deep clean?",
+      "name": "How do I pay?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Most clients provide access and leave us to it. We can also arrange access through your property manager or real estate agent if needed."
+        "text": "We'll text you a secure payment link after your clean."
       }
     },
     {
       "@type": "Question",
-      "name": "When should I book a deep clean instead of a regular clean?",
+      "name": "When do you clean?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "When moving in or out, after a long tenancy with no professional cleaning, before or after a significant event, after renovations, or simply when a home needs a proper reset before starting a regular routine."
+        "text": "Most cleans start between 8 and 11am."
       }
     }
   ]
@@ -449,6 +449,32 @@ footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-b
   .whatsapp-float svg{width:10px;height:10px;}
   footer{padding:24px 20px;}
 }
+
+/* ─── PRICING, EXTRA TIME & INCLUSIONS ─── */
+.pricing-grid.pricing-grid--5{grid-template-columns:repeat(5,1fr);}
+.pricing-grid--5 .pricing-cell{padding:28px 18px;}
+.extra-time{margin-top:32px;padding:28px 32px;border:1px solid var(--border-mid);background:var(--linen);max-width:760px;}
+.section .extra-time-title{font-family:'Poppins',sans-serif;font-size:1rem;font-weight:400;color:var(--obsidian);letter-spacing:.04em;margin-bottom:10px;}
+.section .extra-time-body{font-size:.84rem;line-height:1.9;margin-bottom:0;}
+.inc-rooms{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px;border:1px solid var(--border);}
+.inc-room{padding:32px 28px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.inc-room:nth-child(2n){border-right:none;}
+.inc-room--wide{grid-column:1/-1;border-right:none;}
+.section .inc-room-title{max-width:none;font-family:'Poppins',sans-serif;font-size:1rem;font-weight:400;color:var(--obsidian);letter-spacing:.04em;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.inc-room ul{list-style:none;}
+.inc-room--wide ul{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;}
+.inc-room ul li{padding:7px 0;border-bottom:1px solid var(--border);font-size:.78rem;line-height:1.5;color:rgba(44,40,37,.65);letter-spacing:.01em;display:flex;align-items:flex-start;gap:10px;}
+.inc-room ul li::before{content:'';display:block;width:4px;height:4px;border-radius:50%;background:var(--sage);margin-top:6px;flex-shrink:0;}
+.inc-room--extras ul li::before{background:var(--stone);}
+.section .inc-room-note{font-size:.78rem;line-height:1.7;margin:16px 0 0;}
+@media(max-width:960px){
+  .pricing-grid.pricing-grid--5{grid-template-columns:1fr 1fr;}
+  .pricing-grid--5 .pricing-cell{border-bottom:1px solid var(--border);}
+  .extra-time{padding:24px 22px;}
+  .inc-rooms{grid-template-columns:1fr;}
+  .inc-room,.inc-room:nth-child(2n){border-right:none;}
+  .inc-room--wide ul{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -492,7 +518,7 @@ footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-b
     <div class="hero-left-pattern"></div>
     <div class="hero-left-content">
       <span class="hero-service-label">Deep Cleaning · Gold Coast</span>
-      <p class="hero-quote">"A deep clean only earns its name if the hard parts actually get done — inside the oven, along the grout, behind the fridge. That is the whole point, not the extras."</p>
+      <p class="hero-quote">"A deep clean only earns its name if the hard parts actually get done — along the grout, inside the cupboards, behind the furniture. That is the whole point, not the extras."</p>
       <div class="hero-stat-group">
         <div class="hero-stat">
           <span class="hero-stat-num">100%</span>
@@ -500,7 +526,7 @@ footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-b
         </div>
         <div class="hero-stat">
           <span class="hero-stat-num">Inside</span>
-          <span class="hero-stat-label">Every appliance</span>
+          <span class="hero-stat-label">Cupboards &amp; drawers</span>
         </div>
         <div class="hero-stat">
           <span class="hero-stat-num">5★</span>
@@ -515,13 +541,13 @@ footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-b
       <p class="hero-eyebrow">Intensive Deep Cleaning</p>
       <h1>Not a clean.<br><em>A proper reset.</em></h1>
       <p class="hero-desc">
-        An intensive, top-to-bottom reset for homes that have moved beyond what a regular clean addresses — inside every appliance, behind every fitting, along every grout line — using <em>natural products</em> throughout.
+        An intensive, top-to-bottom reset for homes that have moved beyond what a regular clean addresses — inside cupboards and drawers, behind movable furniture, along every grout line — using <em>natural products</em> throughout.
       </p>
       <a href="/apply.html" class="btn"><span>Book a Deep Clean</span></a>
     </div>
     <div class="hero-footer">
       <span class="hf-text">Move-in, pre-sale &amp; post-reno</span>
-      <span class="hf-text">From $249</span>
+      <span class="hf-text">From $300</span>
     </div>
   </div>
 </section>
@@ -537,7 +563,7 @@ footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-b
   </div>
   <div class="stmt-right">
     <span class="stmt-rule"></span>
-    <p class="stmt-body">A regular clean maintains a home that is already in good condition. A deep clean addresses everything a maintenance visit does not touch — accumulated grime, neglected corners, the insides of appliances, grout lines, window tracks, and the build-up that only a proper reset removes.</p>
+    <p class="stmt-body">A regular clean maintains a home that is already in good condition. A deep clean addresses everything a maintenance visit does not touch — accumulated grime, neglected corners, inside cupboards and drawers, grout lines, window tracks, and the build-up that only a proper reset removes.</p>
     <p class="stmt-body">Reset Cleaning deep cleans are the right choice when moving in or out, preparing a property for sale, recovering from a renovation, or simply establishing a genuine baseline before starting a regular routine — completed with natural, plant-derived products throughout.</p>
   </div>
 </div>
@@ -553,7 +579,7 @@ footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-b
       <div class="pillar-item">
         <p class="pillar-num">I</p>
         <h3 class="pillar-title">Nothing skipped</h3>
-        <p class="pillar-desc">A deep clean only earns its name if the hard parts get done. Oven racks. Grout lines. Exhaust fans. Behind the fridge. These are not optional extras — they are the point. We do not substitute effort with speed.</p>
+        <p class="pillar-desc">A deep clean only earns its name if the hard parts get done. Grout lines. Window tracks. Exhaust fan covers. Behind and under the furniture. These are not optional extras — they are the point. We do not substitute effort with speed.</p>
       </div>
       <div class="pillar-item">
         <p class="pillar-num">II</p>
@@ -575,38 +601,61 @@ footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-b
     <div class="two-col">
       <div>
         <h2>What's <em>included</em></h2>
-        <p>A deep clean goes where a maintenance clean does not — inside every appliance, behind every fitting, along every grout line and window track. Here is exactly what we cover, Gold Coast wide.</p>
+        <p>A deep clean includes everything in our regular clean, plus the detail work that builds up over time — Gold Coast wide. Here's exactly what's included, and what's available as an extra.</p>
       </div>
       <div></div>
     </div>
-    <ul class="included-list" style="margin-top:40px;">
-      <li>All rooms vacuumed and mopped</li>
-      <li>Beds stripped and remade</li>
-      <li>Wardrobe interiors, tracks and shelving</li>
-      <li>Behind and under all furniture</li>
-      <li>Oven interior, racks and tray degreased</li>
-      <li>Stovetop, burners and rangehood degreased</li>
-      <li>Microwave interior and exterior</li>
-      <li>Dishwasher interior, filter and door seal</li>
-      <li>Fridge interior and door seals</li>
-      <li>All cupboard interiors wiped</li>
-      <li>Shower screen and grout scrubbed</li>
-      <li>Mould treated in bathrooms and laundry</li>
-      <li>Toilet scrubbed inside, outside and behind</li>
-      <li>All tapware and fixtures polished</li>
-      <li>Exhaust fans cleaned</li>
-      <li>Ceiling fans and light fittings</li>
-      <li>Skirting boards wiped throughout</li>
-      <li>Light switches and power points</li>
-      <li>Door frames and architraves</li>
-      <li>Windows cleaned inside, sills and tracks</li>
-      <li>Blinds and curtain tracks wiped</li>
-      <li>Walls spot-cleaned throughout</li>
-      <li>Mirrors and glass streak-free</li>
-      <li>Balcony or outdoor area cleaned</li>
-      <li>Rubbish bins emptied and sanitised</li>
-      <li>Natural products used throughout</li>
-    </ul>
+
+    <div class="inc-rooms">
+
+      <div class="inc-room">
+        <p class="inc-room-title">Everything in a regular clean</p>
+        <ul>
+          <li>Bathrooms — toilet, shower, basin, mirrors, vanity, floors</li>
+          <li>Kitchen — benchtops, sink, stovetop, outside of appliances</li>
+          <li>Splashback and cupboard fronts spot-cleaned</li>
+          <li>Bedrooms — beds made, dusting, tidy</li>
+          <li>Living areas — dusting, tables</li>
+          <li>All floors vacuumed and mopped</li>
+          <li>Bins emptied</li>
+        </ul>
+      </div>
+
+      <div class="inc-room">
+        <p class="inc-room-title">Plus deep clean detail</p>
+        <ul>
+          <li>Inside kitchen and bathroom cupboards and drawers (please empty them first)</li>
+          <li>Skirting boards</li>
+          <li>Door frames and doors</li>
+          <li>Light switches</li>
+          <li>Ceiling fans</li>
+          <li>Cobwebs removed</li>
+          <li>Window sills and tracks</li>
+          <li>Inside microwave</li>
+          <li>Full splashback</li>
+          <li>Grout scrubbed</li>
+          <li>Shower screen and taps descaled</li>
+          <li>Exhaust fan covers</li>
+          <li>Vacuum under and behind movable furniture</li>
+        </ul>
+      </div>
+
+      <div class="inc-room inc-room--wide inc-room--extras">
+        <p class="inc-room-title">Not included — available as extras</p>
+        <ul>
+          <li>Oven interior</li>
+          <li>Fridge interior</li>
+          <li>Carpet steam cleaning</li>
+          <li>Blinds</li>
+          <li>Outside windows</li>
+          <li>Walls</li>
+          <li>Laundry</li>
+          <li>Large piles of dishes</li>
+          <li>Heavy clutter</li>
+        </ul>
+      </div>
+
+    </div>
   </section>
 
 
@@ -614,30 +663,39 @@ footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-b
   <section class="section">
     <p class="section-label">Transparent pricing</p>
     <h2>Simple, <em>honest</em> pricing</h2>
-    <p>No hidden fees. Deep cleans are priced by property size to reflect the time and intensity required — Gold Coast wide.</p>
-    <div class="pricing-grid">
+    <p>Clear, upfront prices in AUD, based on the size of your home.</p>
+    <div class="pricing-grid pricing-grid--5">
       <div class="pricing-cell">
         <span class="pricing-bed">1 Bedroom</span>
-        <span class="pricing-amount">$249</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-amount">$300</span>
+        <span class="pricing-from">per clean</span>
       </div>
       <div class="pricing-cell">
         <span class="pricing-bed">2 Bedrooms</span>
-        <span class="pricing-amount">$319</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-amount">$350</span>
+        <span class="pricing-from">per clean</span>
       </div>
       <div class="pricing-cell">
         <span class="pricing-bed">3 Bedrooms</span>
-        <span class="pricing-amount">$399</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-amount">$400</span>
+        <span class="pricing-from">per clean</span>
       </div>
       <div class="pricing-cell">
-        <span class="pricing-bed">4+ Bedrooms</span>
-        <span class="pricing-amount">$479</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-bed">4 Bedrooms</span>
+        <span class="pricing-amount">$450</span>
+        <span class="pricing-from">per clean</span>
+      </div>
+      <div class="pricing-cell">
+        <span class="pricing-bed">5 Bedrooms</span>
+        <span class="pricing-amount">$500</span>
+        <span class="pricing-from">per clean</span>
       </div>
     </div>
-    <p class="pricing-note">Prices are a starting guide. Properties that haven't had a thorough clean in some time, have additional bathrooms, or require post-renovation attention may vary. You will receive a confirmed price before we begin.</p>
+    <p class="pricing-note">Extra time is $85/hr, only with your approval.</p>
+    <div class="extra-time">
+      <p class="extra-time-title">How extra time works</p>
+      <p class="extra-time-body">Our prices cover the typical time for a home of your size. When our cleaner arrives, they do a quick walkthrough. If your home needs more time than usual, we'll contact you before doing any extra work. You can approve extra time, billed in 30-minute blocks, or we'll focus on the essentials within your booked time. You'll never be charged for extra time you haven't approved.</p>
+    </div>
   </section>
 
 
@@ -708,39 +766,39 @@ footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-b
           How much does deep cleaning cost on the Gold Coast?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">From $249 for a one-bedroom property. Two bedrooms from $319, three bedrooms from $399, four or more from $479. Deep cleans are priced higher than regular cleans to reflect the time and intensity required.</div>
+        <div class="faq-answer">A deep clean is $300 for 1 bedroom, $350 for 2, $400 for 3, $450 for 4 and $500 for 5 bedrooms. Extra time is $85/hr, and only with your approval.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          What is the difference between a deep clean and a regular clean?
+          What if my home takes longer than expected?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">A regular clean maintains a home already in good condition. A deep clean addresses accumulated grime and neglected areas a maintenance clean does not touch — inside appliances, behind furniture, grout lines, window tracks, and more. It is a full reset.</div>
+        <div class="faq-answer">We'll always ask you first. Extra time is billed in 30-minute blocks, and only with your approval.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          How long does a deep clean take?
+          Do I need to be home?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">A two-bedroom home typically takes 4–6 hours. Larger homes or properties that have not had a thorough clean in some time may take longer. We do not work to a clock — the job is finished when it is finished.</div>
+        <div class="faq-answer">No – just tell us how we'll get in (lockbox, key or concierge) when you book.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          Do I need to be home during the deep clean?
+          How do I pay?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">No. Most clients provide access and leave us to it. We can also arrange access through your property manager or real estate agent if needed.</div>
+        <div class="faq-answer">We'll text you a secure payment link after your clean.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          When should I book a deep clean instead of a regular clean?
+          When do you clean?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">When moving in or out, after a long tenancy with no professional cleaning, before or after a significant event, after renovations, or simply when a home needs a proper reset before starting a regular routine.</div>
+        <div class="faq-answer">Most cleans start between 8 and 11am.</div>
       </li>
 
     </ul>
@@ -769,7 +827,7 @@ footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-b
     <p class="pc-num">02</p>
     <h3 class="pc-name">The Deep Clean</h3>
     <p class="pc-tagline">Where regular cleans don't go.</p>
-    <p class="pc-notes">Inside appliances, behind furniture, along grout lines and window tracks. Every area a maintenance clean skips, completed with natural products.</p>
+    <p class="pc-notes">Inside cupboards and drawers, behind furniture, along grout lines and window tracks. Every area a maintenance clean skips, completed with natural products.</p>
     <span class="pc-ref">Duration · 4–6 hrs by property</span>
   </div>
   <div class="pc">
@@ -784,7 +842,7 @@ footer{padding:32px 56px;display:flex;align-items:center;justify-content:space-b
     <h3 class="pc-name">Start Your Routine</h3>
     <p class="pc-tagline">If you want to keep it.</p>
     <p class="pc-notes">A deep clean is the ideal baseline before beginning a regular house cleaning routine — so every later visit maintains the standard rather than chasing it.</p>
-    <span class="pc-ref">Optional · Weekly or fortnightly</span>
+    <span class="pc-ref">Optional · Weekly, fortnightly or monthly</span>
   </div>
 </div>
 

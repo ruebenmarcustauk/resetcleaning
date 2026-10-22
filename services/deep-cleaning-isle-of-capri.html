@@ -51,47 +51,39 @@
       "name": "How much does deep cleaning cost in Isle of Capri?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Our deep cleaning in Isle of Capri starts from $249 for a one-bedroom property, $319 for two bedrooms, $399 for three bedrooms, and $479 for four or more bedrooms. Architecturally significant properties with premium finishes or larger floor plans may vary."
+        "text": "A deep clean is $300 for 1 bedroom, $350 for 2, $400 for 3, $450 for 4 and $500 for 5 bedrooms. Extra time is $85/hr, and only with your approval."
       }
     },
     {
       "@type": "Question",
-      "name": "What is the difference between a deep clean and a regular house clean?",
+      "name": "What if my home takes longer than expected?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A regular clean maintains a home that is already in good condition. A deep clean addresses accumulated grime, neglected areas, and buildup that a maintenance clean does not touch — inside appliances, behind furniture, grout lines, window tracks, ceiling fans, skirting boards, and all the areas that rarely get attention. It is a full reset, not a maintenance visit."
+        "text": "We'll always ask you first. Extra time is billed in 30-minute blocks, and only with your approval."
       }
     },
     {
       "@type": "Question",
-      "name": "How long does a deep clean take in Isle of Capri?",
+      "name": "Do I need to be home?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A two-bedroom home typically takes 4–6 hours. Isle of Capri's waterfront homes and architecturally significant properties often have larger floor plans and premium finishes that require more time and care. We do not work to a clock — the job is finished when it is finished."
+        "text": "No – just tell us how we'll get in (lockbox, key or concierge) when you book."
       }
     },
     {
       "@type": "Question",
-      "name": "Do I need to be home during the deep clean?",
+      "name": "How do I pay?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Most clients in Isle of Capri provide access and leave us to it. We can also arrange access through your property manager or real estate agent if needed."
+        "text": "We'll text you a secure payment link after your clean."
       }
     },
     {
       "@type": "Question",
-      "name": "When should I book a deep clean instead of a regular clean?",
+      "name": "When do you clean?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A deep clean is the right choice when moving into a new property, after a long tenancy with no professional cleaning, before a significant event, after renovations, after extended absence, or simply when a home needs a proper reset before starting a regular cleaning routine."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you use surface-appropriate products on the architectural finishes found in Isle of Capri properties?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Isle of Capri properties frequently feature stone benchtops, custom joinery, river-facing glass, and premium bathroom finishes that require material-appropriate products and careful technique. We do not apply generic cleaning chemicals to surfaces that require something more considered — our team is briefed before every job."
+        "text": "Most cleans start between 8 and 11am."
       }
     }
   ]
@@ -631,6 +623,32 @@ footer{
   .whatsapp-float{padding:7px 12px 7px 9px;gap:6px;font-size:.35rem;letter-spacing:.15em;bottom:18px;right:18px;}
   .whatsapp-float svg{width:10px;height:10px;}
 }
+
+/* ─── PRICING, EXTRA TIME & INCLUSIONS ─── */
+.pricing-grid.pricing-grid--5{grid-template-columns:repeat(5,1fr);}
+.pricing-grid--5 .pricing-cell{padding:28px 18px;}
+.extra-time{margin-top:32px;padding:28px 32px;border:1px solid var(--border-mid);background:var(--linen);max-width:760px;}
+.section .extra-time-title{font-family:'Poppins',sans-serif;font-size:1rem;font-weight:400;color:var(--obsidian);letter-spacing:.04em;margin-bottom:10px;}
+.section .extra-time-body{font-size:.84rem;line-height:1.9;margin-bottom:0;}
+.inc-rooms{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px;border:1px solid var(--border);}
+.inc-room{padding:32px 28px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.inc-room:nth-child(2n){border-right:none;}
+.inc-room--wide{grid-column:1/-1;border-right:none;}
+.section .inc-room-title{max-width:none;font-family:'Poppins',sans-serif;font-size:1rem;font-weight:400;color:var(--obsidian);letter-spacing:.04em;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.inc-room ul{list-style:none;}
+.inc-room--wide ul{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;}
+.inc-room ul li{padding:7px 0;border-bottom:1px solid var(--border);font-size:.78rem;line-height:1.5;color:rgba(44,40,37,.65);letter-spacing:.01em;display:flex;align-items:flex-start;gap:10px;}
+.inc-room ul li::before{content:'';display:block;width:4px;height:4px;border-radius:50%;background:var(--sage);margin-top:6px;flex-shrink:0;}
+.inc-room--extras ul li::before{background:var(--stone);}
+.section .inc-room-note{font-size:.78rem;line-height:1.7;margin:16px 0 0;}
+@media(max-width:960px){
+  .pricing-grid.pricing-grid--5{grid-template-columns:1fr 1fr;}
+  .pricing-grid--5 .pricing-cell{border-bottom:1px solid var(--border);}
+  .extra-time{padding:24px 22px;}
+  .inc-rooms{grid-template-columns:1fr;}
+  .inc-room,.inc-room:nth-child(2n){border-right:none;}
+  .inc-room--wide ul{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -714,39 +732,61 @@ footer{
     <div class="two-col">
       <div>
         <h2>Everything a regular<br><em>clean doesn't touch.</em></h2>
-        <p>A deep clean goes where a maintenance clean does not. Inside every appliance. Behind every fitting. Along every grout line and window track. In Isle of Capri, where river-facing glass and architectural finishes accumulate humidity and require careful treatment, this level of attention matters more than a surface tidy.</p>
-        <p>Below is exactly what we cover on every deep clean in Isle of Capri — every item completed with the care and precision these properties require.</p>
+        <p>A deep clean includes everything in our regular clean, plus the detail work that builds up over time — in Isle of Capri. Here's exactly what's included, and what's available as an extra.</p>
       </div>
       <div></div>
     </div>
-    <ul class="included-list" style="margin-top:40px;">
-      <li>All rooms vacuumed and mopped</li>
-      <li>Beds stripped and remade</li>
-      <li>Wardrobe interiors, tracks and shelving</li>
-      <li>Behind and under all furniture</li>
-      <li>Oven interior, racks and tray degreased</li>
-      <li>Stovetop, burners and rangehood degreased</li>
-      <li>Microwave interior and exterior</li>
-      <li>Dishwasher interior, filter and door seal</li>
-      <li>Fridge interior and door seals</li>
-      <li>All cupboard interiors wiped</li>
-      <li>Shower screen and grout scrubbed</li>
-      <li>Mould treated in bathrooms and laundry</li>
-      <li>Toilet scrubbed inside, outside and behind</li>
-      <li>All tapware and fixtures polished</li>
-      <li>Exhaust fans cleaned</li>
-      <li>Ceiling fans and light fittings</li>
-      <li>Skirting boards wiped throughout</li>
-      <li>Light switches and power points</li>
-      <li>Door frames and architraves</li>
-      <li>Windows cleaned inside, sills and tracks</li>
-      <li>Blinds and curtain tracks wiped</li>
-      <li>Walls spot-cleaned throughout</li>
-      <li>Mirrors and glass streak-free</li>
-      <li>Balcony or outdoor area cleaned</li>
-      <li>Rubbish bins emptied and sanitised</li>
-      <li>Natural products used throughout</li>
-    </ul>
+
+    <div class="inc-rooms">
+
+      <div class="inc-room">
+        <p class="inc-room-title">Everything in a regular clean</p>
+        <ul>
+          <li>Bathrooms — toilet, shower, basin, mirrors, vanity, floors</li>
+          <li>Kitchen — benchtops, sink, stovetop, outside of appliances</li>
+          <li>Splashback and cupboard fronts spot-cleaned</li>
+          <li>Bedrooms — beds made, dusting, tidy</li>
+          <li>Living areas — dusting, tables</li>
+          <li>All floors vacuumed and mopped</li>
+          <li>Bins emptied</li>
+        </ul>
+      </div>
+
+      <div class="inc-room">
+        <p class="inc-room-title">Plus deep clean detail</p>
+        <ul>
+          <li>Inside kitchen and bathroom cupboards and drawers (please empty them first)</li>
+          <li>Skirting boards</li>
+          <li>Door frames and doors</li>
+          <li>Light switches</li>
+          <li>Ceiling fans</li>
+          <li>Cobwebs removed</li>
+          <li>Window sills and tracks</li>
+          <li>Inside microwave</li>
+          <li>Full splashback</li>
+          <li>Grout scrubbed</li>
+          <li>Shower screen and taps descaled</li>
+          <li>Exhaust fan covers</li>
+          <li>Vacuum under and behind movable furniture</li>
+        </ul>
+      </div>
+
+      <div class="inc-room inc-room--wide inc-room--extras">
+        <p class="inc-room-title">Not included — available as extras</p>
+        <ul>
+          <li>Oven interior</li>
+          <li>Fridge interior</li>
+          <li>Carpet steam cleaning</li>
+          <li>Blinds</li>
+          <li>Outside windows</li>
+          <li>Walls</li>
+          <li>Laundry</li>
+          <li>Large piles of dishes</li>
+          <li>Heavy clutter</li>
+        </ul>
+      </div>
+
+    </div>
   </section>
 
 
@@ -757,30 +797,30 @@ footer{
     <p>A deep clean and a regular maintenance clean are different services with different purposes. This table shows exactly where they differ — so you can make the right choice for your property.</p>
     <div class="diff-table" style="margin-top:40px;">
       <div class="diff-col">
-        <div class="diff-col-header">Deep Clean — what's included</div>
-        <div class="diff-row">Inside oven, racks and tray fully degreased</div>
-        <div class="diff-row">Fridge interior cleaned and door seals treated</div>
-        <div class="diff-row">Grout scrubbed and mould treated throughout</div>
-        <div class="diff-row">Behind and under furniture moved</div>
-        <div class="diff-row">Wardrobe interiors, tracks and shelving</div>
-        <div class="diff-row">Ceiling fans, light fittings and exhaust fans</div>
-        <div class="diff-row">Window tracks, blind slats and curtain rails</div>
-        <div class="diff-row">Skirting boards, door frames and architraves</div>
-        <div class="diff-row">Walls spot-cleaned throughout</div>
-        <div class="diff-row">Dishwasher interior, filter and door seal</div>
+        <div class="diff-col-header">Deep Clean — everything in Regular, plus</div>
+        <div class="diff-row">Inside kitchen and bathroom cupboards and drawers (please empty them first)</div>
+        <div class="diff-row">Skirting boards</div>
+        <div class="diff-row">Door frames and doors</div>
+        <div class="diff-row">Light switches</div>
+        <div class="diff-row">Ceiling fans</div>
+        <div class="diff-row">Cobwebs removed</div>
+        <div class="diff-row">Window sills and tracks</div>
+        <div class="diff-row">Inside microwave</div>
+        <div class="diff-row">Full splashback</div>
+        <div class="diff-row">Grout scrubbed</div>
+        <div class="diff-row">Shower screen and taps descaled</div>
+        <div class="diff-row">Exhaust fan covers</div>
+        <div class="diff-row">Vacuum under and behind movable furniture</div>
       </div>
       <div class="diff-col">
         <div class="diff-col-header">Regular Clean — what's covered</div>
-        <div class="diff-row no-marker">Oven exterior wiped only</div>
-        <div class="diff-row no-marker">Fridge exterior wiped</div>
-        <div class="diff-row no-marker">Bathroom surfaces cleaned, grout not targeted</div>
-        <div class="diff-row no-marker">Floors vacuumed and mopped in accessible areas</div>
-        <div class="diff-row no-marker">Wardrobe exteriors only</div>
-        <div class="diff-row no-marker">Ceiling fans dusted if accessible</div>
-        <div class="diff-row no-marker">Windows cleaned, tracks not targeted</div>
-        <div class="diff-row no-marker">Skirting boards dusted where visible</div>
-        <div class="diff-row no-marker">Walls not included</div>
-        <div class="diff-row no-marker">Dishwasher exterior only</div>
+        <div class="diff-row no-marker">Bathrooms — toilet, shower, basin, mirrors, vanity, floors</div>
+        <div class="diff-row no-marker">Kitchen — benchtops, sink, stovetop, outside of appliances</div>
+        <div class="diff-row no-marker">Splashback and cupboard fronts spot-cleaned</div>
+        <div class="diff-row no-marker">Bedrooms — beds made, dusting, tidy</div>
+        <div class="diff-row no-marker">Living areas — dusting, tables</div>
+        <div class="diff-row no-marker">All floors vacuumed and mopped</div>
+        <div class="diff-row no-marker">Bins emptied</div>
       </div>
     </div>
   </section>
@@ -790,30 +830,39 @@ footer{
   <section class="section">
     <p class="section-label">Transparent pricing</p>
     <h2>Simple, <em>honest</em> pricing</h2>
-    <p>No hidden fees. No surprises. Deep cleans are priced higher than regular cleans to reflect the time and intensity required — every area on the checklist is completed before we leave.</p>
-    <div class="pricing-grid">
+    <p>Clear, upfront prices in AUD, based on the size of your home.</p>
+    <div class="pricing-grid pricing-grid--5">
       <div class="pricing-cell">
         <span class="pricing-bed">1 Bedroom</span>
-        <span class="pricing-amount">$249</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-amount">$300</span>
+        <span class="pricing-from">per clean</span>
       </div>
       <div class="pricing-cell">
         <span class="pricing-bed">2 Bedrooms</span>
-        <span class="pricing-amount">$319</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-amount">$350</span>
+        <span class="pricing-from">per clean</span>
       </div>
       <div class="pricing-cell">
         <span class="pricing-bed">3 Bedrooms</span>
-        <span class="pricing-amount">$399</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-amount">$400</span>
+        <span class="pricing-from">per clean</span>
       </div>
       <div class="pricing-cell">
-        <span class="pricing-bed">4+ Bedrooms</span>
-        <span class="pricing-amount">$479</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-bed">4 Bedrooms</span>
+        <span class="pricing-amount">$450</span>
+        <span class="pricing-from">per clean</span>
+      </div>
+      <div class="pricing-cell">
+        <span class="pricing-bed">5 Bedrooms</span>
+        <span class="pricing-amount">$500</span>
+        <span class="pricing-from">per clean</span>
       </div>
     </div>
-    <p class="pricing-note">Prices are a starting guide. Properties that haven't had a thorough clean in some time, have additional bathrooms, or require post-renovation attention may vary. You will receive a confirmed price before we begin.</p>
+    <p class="pricing-note">Extra time is $85/hr, only with your approval.</p>
+    <div class="extra-time">
+      <p class="extra-time-title">How extra time works</p>
+      <p class="extra-time-body">Our prices cover the typical time for a home of your size. When our cleaner arrives, they do a quick walkthrough. If your home needs more time than usual, we'll contact you before doing any extra work. You can approve extra time, billed in 30-minute blocks, or we'll focus on the essentials within your booked time. You'll never be charged for extra time you haven't approved.</p>
+    </div>
   </section>
 
 
@@ -825,7 +874,7 @@ footer{
       <div class="pillar-item">
         <p class="pillar-num">I</p>
         <h3 class="pillar-title">Nothing skipped</h3>
-        <p class="pillar-desc">A deep clean only earns its name if the hard parts actually get done. Oven racks. Grout lines. Exhaust fans. Behind the fridge. These are not optional extras — they are the whole point. We do not substitute effort with speed.</p>
+        <p class="pillar-desc">A deep clean only earns its name if the hard parts actually get done. Grout lines. Window tracks. Exhaust fan covers. Behind and under the furniture. These are not optional extras — they are the whole point. We do not substitute effort with speed.</p>
       </div>
       <div class="pillar-item">
         <p class="pillar-num">II</p>
@@ -877,47 +926,39 @@ footer{
           How much does deep cleaning cost in Isle of Capri?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">From $249 for a one-bedroom property. Two bedrooms from $319, three bedrooms from $399, four or more from $479. Deep cleans are priced higher than regular cleans to reflect the time and intensity required. Your confirmed price is provided before we begin.</div>
+        <div class="faq-answer">A deep clean is $300 for 1 bedroom, $350 for 2, $400 for 3, $450 for 4 and $500 for 5 bedrooms. Extra time is $85/hr, and only with your approval.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          What is the difference between a deep clean and a regular house clean?
+          What if my home takes longer than expected?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">A regular clean maintains a home that is already in good condition. A deep clean addresses accumulated grime, neglected areas, and buildup that a maintenance clean does not touch — inside appliances, behind furniture, grout lines, window tracks, ceiling fans, skirting boards, and all the areas that rarely get attention. It is a full reset, not a maintenance visit.</div>
+        <div class="faq-answer">We'll always ask you first. Extra time is billed in 30-minute blocks, and only with your approval.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          How long does a deep clean take in Isle of Capri?
+          Do I need to be home?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">A two-bedroom home typically takes 4–6 hours. Larger properties or homes that haven't had a thorough clean in some time may take longer. We do not work to a clock — the job is finished when it is finished.</div>
+        <div class="faq-answer">No – just tell us how we'll get in (lockbox, key or concierge) when you book.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          Do I need to be home during the deep clean?
+          How do I pay?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">No. Most clients in Isle of Capri provide access and leave us to it. We can also arrange access through your property manager or real estate agent if needed.</div>
+        <div class="faq-answer">We'll text you a secure payment link after your clean.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          When should I book a deep clean instead of a regular clean?
+          When do you clean?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">A deep clean is the right choice when moving into a new property, after a long tenancy with no professional cleaning, before a significant event, after renovations, after extended absence, or simply when a home needs a proper reset before starting a regular cleaning routine.</div>
-      </li>
-
-      <li class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          Do you use surface-appropriate products on the architectural finishes found in Isle of Capri properties?
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        </button>
-        <div class="faq-answer">Yes. Isle of Capri properties frequently feature stone benchtops, custom joinery, river-facing glass, and premium bathroom finishes that require material-appropriate products and careful technique. We do not apply generic cleaning chemicals to surfaces that require something more considered — our team is briefed before every job.</div>
+        <div class="faq-answer">Most cleans start between 8 and 11am.</div>
       </li>
 
     </ul>

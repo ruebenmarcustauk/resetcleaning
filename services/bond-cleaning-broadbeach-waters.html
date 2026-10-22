@@ -51,55 +51,39 @@
       "name": "How much does bond cleaning cost in Broadbeach Waters?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Our bond cleaning in Broadbeach Waters starts from $299 for a one-bedroom property, $369 for two bedrooms, $449 for three bedrooms, and $529 for four or more bedrooms. All prices include our 72-hour re-clean guarantee."
+        "text": "A bond / end of lease clean is $450 for 1 bedroom, $550 for 2, $650 for 3, $750 for 4 and $850 for 5 bedrooms, cleaned to REIQ exit report standard. Extra time is $95/hr, and only with your approval."
       }
     },
     {
       "@type": "Question",
-      "name": "Do you guarantee the bond will be returned?",
+      "name": "What if my home takes longer than expected?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "We cannot guarantee a landlord's decision, but we guarantee our clean. If the property manager identifies any cleaning-related issue at the exit inspection, we return within 72 hours and re-clean those areas at no charge."
+        "text": "We'll always ask you first. Extra time is billed in 30-minute blocks, and only with your approval."
       }
     },
     {
       "@type": "Question",
-      "name": "What does a bond clean cover in Broadbeach Waters?",
+      "name": "Do I need to be home?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Our bond clean follows the Queensland REIQ exit condition checklist in full — every room, every surface, inside every appliance, windows, tracks, blinds, walls, skirting boards, light fittings, and all outdoor areas. It is a complete top-to-bottom clean of the entire property."
+        "text": "No – just tell us how we'll get in (lockbox, key or concierge) when you book."
       }
     },
     {
       "@type": "Question",
-      "name": "Do I need to be present during the bond clean?",
+      "name": "How do I pay?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Most tenants in Broadbeach Waters hand us the keys and we handle everything. We can also coordinate directly with your property manager if needed."
+        "text": "We'll text you a secure payment link after your clean."
       }
     },
     {
       "@type": "Question",
-      "name": "How long does a bond clean take?",
+      "name": "When do you clean?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A two-bedroom property typically takes 5–7 hours. Larger homes or properties requiring extra attention may take a full day. We do not rush — every item on the checklist is completed before we leave."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you clean carpet as part of the bond clean?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Carpet steam cleaning can be added to your bond clean package. Many Broadbeach Waters landlords require it as a condition of the lease — check your tenancy agreement and we will include it in your quote."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you clean canal-front outdoor areas and glass balustrades?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Outdoor entertaining areas, glass balustrades, sliding door tracks, and waterfront-facing surfaces are all included as standard on Broadbeach Waters bond cleans. These are among the first things a property manager checks on canal-front homes."
+        "text": "Most cleans start between 8 and 11am."
       }
     }
   ]
@@ -661,6 +645,32 @@ footer{
   .whatsapp-float{padding:7px 12px 7px 9px;gap:6px;font-size:.35rem;letter-spacing:.15em;bottom:18px;right:18px;}
   .whatsapp-float svg{width:10px;height:10px;}
 }
+
+/* ─── PRICING, EXTRA TIME & INCLUSIONS ─── */
+.pricing-grid.pricing-grid--5{grid-template-columns:repeat(5,1fr);}
+.pricing-grid--5 .pricing-cell{padding:28px 18px;}
+.extra-time{margin-top:32px;padding:28px 32px;border:1px solid var(--border-mid);background:var(--linen);max-width:760px;}
+.section .extra-time-title{font-family:'Poppins',sans-serif;font-size:1rem;font-weight:400;color:var(--obsidian);letter-spacing:.04em;margin-bottom:10px;}
+.section .extra-time-body{font-size:.84rem;line-height:1.9;margin-bottom:0;}
+.inc-rooms{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px;border:1px solid var(--border);}
+.inc-room{padding:32px 28px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.inc-room:nth-child(2n){border-right:none;}
+.inc-room--wide{grid-column:1/-1;border-right:none;}
+.section .inc-room-title{max-width:none;font-family:'Poppins',sans-serif;font-size:1rem;font-weight:400;color:var(--obsidian);letter-spacing:.04em;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.inc-room ul{list-style:none;}
+.inc-room--wide ul{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;}
+.inc-room ul li{padding:7px 0;border-bottom:1px solid var(--border);font-size:.78rem;line-height:1.5;color:rgba(44,40,37,.65);letter-spacing:.01em;display:flex;align-items:flex-start;gap:10px;}
+.inc-room ul li::before{content:'';display:block;width:4px;height:4px;border-radius:50%;background:var(--sage);margin-top:6px;flex-shrink:0;}
+.inc-room--extras ul li::before{background:var(--stone);}
+.section .inc-room-note{font-size:.78rem;line-height:1.7;margin:16px 0 0;}
+@media(max-width:960px){
+  .pricing-grid.pricing-grid--5{grid-template-columns:1fr 1fr;}
+  .pricing-grid--5 .pricing-cell{border-bottom:1px solid var(--border);}
+  .extra-time{padding:24px 22px;}
+  .inc-rooms{grid-template-columns:1fr;}
+  .inc-room,.inc-room:nth-child(2n){border-right:none;}
+  .inc-room--wide ul{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -764,102 +774,67 @@ footer{
     <div class="two-col">
       <div>
         <h2>Every room.<br><em>Every surface.</em></h2>
-        <p>A bond clean is not a regular clean with extra effort. It is a top-to-bottom reset of the entire property — every item a property manager checks, completed to the standard required to get your deposit back.</p>
-        <p>Canal-front and waterway properties in Broadbeach Waters have specific handover requirements — salt air affects tracks and glass, outdoor entertaining areas are closely inspected, and property managers here know exactly what to look for. This is the complete checklist we work through on every bond clean in the suburb, room by room.</p>
+        <p>Our bond / end of lease clean includes everything in our deep clean, plus the extras property managers check at the exit inspection — in Broadbeach Waters. Every bond clean is cleaned to REIQ exit report standard.</p>
       </div>
       <div></div>
     </div>
 
-    <div class="checklist-rooms">
+    <div class="inc-rooms">
 
-      <div class="checklist-room">
-        <p class="checklist-room-title">All Bedrooms</p>
+      <div class="inc-room">
+        <p class="inc-room-title">Everything in a regular clean</p>
         <ul>
-          <li>Wardrobe interiors wiped, tracks cleaned</li>
-          <li>All surfaces dusted and wiped</li>
-          <li>Ceiling fans and light fittings cleaned</li>
-          <li>Mirrors cleaned streak-free</li>
-          <li>Skirting boards wiped throughout</li>
-          <li>Light switches and power points</li>
-          <li>Floors vacuumed and mopped</li>
-          <li>Window sills, tracks and frames</li>
-          <li>Window glass cleaned inside</li>
-          <li>Blinds or curtains wiped down</li>
+          <li>Bathrooms — toilet, shower, basin, mirrors, vanity, floors</li>
+          <li>Kitchen — benchtops, sink, stovetop, outside of appliances</li>
+          <li>Splashback and cupboard fronts spot-cleaned</li>
+          <li>Bedrooms — beds made, dusting, tidy</li>
+          <li>Living areas — dusting, tables</li>
+          <li>All floors vacuumed and mopped</li>
+          <li>Bins emptied</li>
         </ul>
       </div>
 
-      <div class="checklist-room">
-        <p class="checklist-room-title">All Bathrooms &amp; Ensuites</p>
+      <div class="inc-room">
+        <p class="inc-room-title">Everything in a deep clean</p>
         <ul>
-          <li>Shower screen and tiles scrubbed</li>
-          <li>Grout cleaned and mould treated</li>
-          <li>Bath cleaned and polished (if applicable)</li>
-          <li>Toilet cleaned inside, outside and behind</li>
-          <li>Vanity, basin and tapware polished</li>
-          <li>Mirrors cleaned streak-free</li>
-          <li>Exhaust fan grille wiped</li>
-          <li>Towel rails and fittings wiped</li>
-          <li>Floors scrubbed and mopped</li>
-          <li>Skirting boards and door frames</li>
+          <li>Inside kitchen and bathroom cupboards and drawers (please empty them first)</li>
+          <li>Skirting boards</li>
+          <li>Door frames and doors</li>
+          <li>Light switches</li>
+          <li>Ceiling fans</li>
+          <li>Cobwebs removed</li>
+          <li>Window sills and tracks</li>
+          <li>Inside microwave</li>
+          <li>Full splashback</li>
+          <li>Grout scrubbed</li>
+          <li>Shower screen and taps descaled</li>
+          <li>Exhaust fan covers</li>
+          <li>Vacuum under and behind movable furniture</li>
         </ul>
       </div>
 
-      <div class="checklist-room">
-        <p class="checklist-room-title">Kitchen</p>
+      <div class="inc-room inc-room--wide">
+        <p class="inc-room-title">Plus bond clean extras</p>
         <ul>
-          <li>Oven interior, racks and tray degreased</li>
-          <li>Stovetop and burners degreased</li>
-          <li>Rangehood filter and interior degreased</li>
-          <li>Microwave interior and exterior</li>
-          <li>Dishwasher interior, filter and door seal</li>
-          <li>Fridge interior cleaned (if vacated)</li>
-          <li>All cupboard interiors wiped</li>
-          <li>Benchtops and splashback</li>
-          <li>Sink and tapware polished</li>
-          <li>Floors mopped and corners scrubbed</li>
+          <li>Full oven clean, including racks</li>
+          <li>Range hood filters</li>
+          <li>Inside fridge</li>
+          <li>Inside dishwasher</li>
+          <li>Walls and doors spot-cleaned</li>
+          <li>Windows inside, including tracks and screens</li>
+          <li>Blinds</li>
+          <li>Air con vents</li>
+          <li>Balcony or patio</li>
         </ul>
+        <p class="inc-room-note">Cleaned to REIQ exit report standard.</p>
       </div>
 
-      <div class="checklist-room">
-        <p class="checklist-room-title">Living &amp; Dining Areas</p>
+      <div class="inc-room inc-room--wide inc-room--extras">
+        <p class="inc-room-title">Not included — available as extras</p>
         <ul>
-          <li>All surfaces dusted and wiped</li>
-          <li>Skirting boards throughout</li>
-          <li>Light fittings and ceiling fans</li>
-          <li>Light switches and power points</li>
-          <li>Window sills, tracks and glass</li>
-          <li>Blinds and curtain tracks</li>
-          <li>Doors wiped both sides</li>
-          <li>Walls spot-cleaned for marks</li>
-          <li>Floors vacuumed and mopped</li>
-          <li>Sliding door tracks cleaned</li>
-        </ul>
-      </div>
-
-      <div class="checklist-room">
-        <p class="checklist-room-title">Laundry</p>
-        <ul>
-          <li>Tub and tapware cleaned and polished</li>
-          <li>Inside and top of washing machine wiped</li>
-          <li>Dryer lint filter and drum wiped</li>
-          <li>Cupboard interiors wiped</li>
-          <li>Shelving wiped down</li>
-          <li>Skirting boards and door frames</li>
-          <li>Floors mopped</li>
-        </ul>
-      </div>
-
-      <div class="checklist-room">
-        <p class="checklist-room-title">Garage, Balcony &amp; Entry</p>
-        <ul>
-          <li>Garage floor swept and mopped</li>
-          <li>Garage walls and shelving wiped</li>
-          <li>Balcony or courtyard swept and wiped</li>
-          <li>Balcony glass and rails cleaned</li>
-          <li>Entry area swept and mopped</li>
-          <li>Front door and frame wiped</li>
-          <li>Cobwebs removed throughout exterior</li>
-          <li>Bins cleaned and repositioned</li>
+          <li>Carpet steam cleaning</li>
+          <li>Pest control</li>
+          <li>Rubbish removal</li>
         </ul>
       </div>
 
@@ -871,30 +846,39 @@ footer{
   <section class="section">
     <p class="section-label">Transparent pricing</p>
     <h2>Simple, <em>honest</em> pricing</h2>
-    <p>No hidden fees. No surprises. Every bond clean includes the full REIQ checklist and our 72-hour guarantee.</p>
-    <div class="pricing-grid">
+    <p>Clear, upfront prices in AUD, based on the size of your home. Every bond clean is cleaned to REIQ exit report standard.</p>
+    <div class="pricing-grid pricing-grid--5">
       <div class="pricing-cell">
         <span class="pricing-bed">1 Bedroom</span>
-        <span class="pricing-amount">$299</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-amount">$450</span>
+        <span class="pricing-from">per clean</span>
       </div>
       <div class="pricing-cell">
         <span class="pricing-bed">2 Bedrooms</span>
-        <span class="pricing-amount">$369</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-amount">$550</span>
+        <span class="pricing-from">per clean</span>
       </div>
       <div class="pricing-cell">
         <span class="pricing-bed">3 Bedrooms</span>
-        <span class="pricing-amount">$449</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-amount">$650</span>
+        <span class="pricing-from">per clean</span>
       </div>
       <div class="pricing-cell">
-        <span class="pricing-bed">4+ Bedrooms</span>
-        <span class="pricing-amount">$529</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-bed">4 Bedrooms</span>
+        <span class="pricing-amount">$750</span>
+        <span class="pricing-from">per clean</span>
+      </div>
+      <div class="pricing-cell">
+        <span class="pricing-bed">5 Bedrooms</span>
+        <span class="pricing-amount">$850</span>
+        <span class="pricing-from">per clean</span>
       </div>
     </div>
-    <p class="pricing-note">Prices are a starting guide. Properties with additional bathrooms, heavy soiling, or carpet steam cleaning requirements may vary. Carpet steam cleaning is available as an add-on — ask when booking. You will receive a confirmed price before we begin.</p>
+    <p class="pricing-note">Extra time is $95/hr, only with your approval. Carpet steam cleaning, pest control and rubbish removal are available as extras.</p>
+    <div class="extra-time">
+      <p class="extra-time-title">How extra time works</p>
+      <p class="extra-time-body">Our prices cover the typical time for a home of your size. When our cleaner arrives, they do a quick walkthrough. If your home needs more time than usual, we'll contact you before doing any extra work. You can approve extra time, billed in 30-minute blocks, or we'll focus on the essentials within your booked time. You'll never be charged for extra time you haven't approved.</p>
+    </div>
   </section>
 
 
@@ -933,55 +917,39 @@ footer{
           How much does bond cleaning cost in Broadbeach Waters?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">From $299 for a one-bedroom property. Two bedrooms from $369, three bedrooms from $449, four or more from $529. All prices include the full REIQ checklist and our 72-hour re-clean guarantee. Your confirmed price is provided before we begin.</div>
+        <div class="faq-answer">A bond / end of lease clean is $450 for 1 bedroom, $550 for 2, $650 for 3, $750 for 4 and $850 for 5 bedrooms, cleaned to REIQ exit report standard. Extra time is $95/hr, and only with your approval.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          Do you guarantee the bond will be returned?
+          What if my home takes longer than expected?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">We cannot guarantee a landlord's or property manager's decision — bond disputes can involve condition, fair wear and tear, and other factors outside our control. What we do guarantee is our clean. If any cleaning-related issue is raised at the exit inspection, we return within 72 hours and re-clean those areas at no charge.</div>
+        <div class="faq-answer">We'll always ask you first. Extra time is billed in 30-minute blocks, and only with your approval.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          What does a bond clean cover in Broadbeach Waters?
+          Do I need to be home?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">Everything on the Queensland REIQ exit condition checklist — every room, inside all appliances, windows, tracks, blinds, walls, skirting boards, light fittings, garage, balcony, and all outdoor areas. See the full room-by-room checklist above.</div>
+        <div class="faq-answer">No – just tell us how we'll get in (lockbox, key or concierge) when you book.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          Do I need to be present during the bond clean?
+          How do I pay?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">No. Most tenants in Broadbeach Waters hand us the keys and we handle everything. We can also coordinate directly with your property manager for access or exit inspection timing if needed.</div>
+        <div class="faq-answer">We'll text you a secure payment link after your clean.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          How long does a bond clean take?
+          When do you clean?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">A two-bedroom property typically takes 5–7 hours. Larger homes or properties requiring more attention may take a full day. We do not rush — every item on the checklist is completed before we leave.</div>
-      </li>
-
-      <li class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          Do you clean carpets as part of the bond clean?
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        </button>
-        <div class="faq-answer">Carpet steam cleaning can be added to your bond clean package. Many Broadbeach Waters landlords require it as a condition of the lease — check your tenancy agreement and let us know when booking. We will include it in your confirmed quote.</div>
-      </li>
-
-      <li class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          Do you clean canal-front outdoor areas and glass balustrades?
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        </button>
-        <div class="faq-answer">Yes. Outdoor entertaining areas, glass balustrades, sliding door tracks, and waterfront-facing surfaces are all included as standard on Broadbeach Waters properties. These are among the first things a property manager checks on canal-front homes — we treat them accordingly.</div>
+        <div class="faq-answer">Most cleans start between 8 and 11am.</div>
       </li>
 
     </ul>

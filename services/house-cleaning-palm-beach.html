@@ -55,39 +55,39 @@
       "name": "How much does house cleaning cost in Palm Beach?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Our house cleaning in Palm Beach starts from $169 for a one-bedroom home, $189 for two bedrooms, $229 for three bedrooms, and $269 for four or more bedrooms."
+        "text": "A regular clean is $169 for 1 bedroom, $189 for 2, $229 for 3, $269 for 4 and $309 for 5 bedrooms. Each price includes a set amount of time — from up to 2.5 hours for 1 bedroom to 4.5 hours for 5 bedrooms. Available weekly, fortnightly, monthly or one-off. Extra time is $65/hr, and only with your approval."
       }
     },
     {
       "@type": "Question",
-      "name": "Do you bring your own cleaning products?",
+      "name": "What if my home takes longer than expected?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. We bring everything — all natural, plant-derived products. Nothing synthetic touches your home."
+        "text": "We'll always ask you first. Extra time is billed in 30-minute blocks, and only with your approval."
       }
     },
     {
       "@type": "Question",
-      "name": "How long does a house clean take in Palm Beach?",
+      "name": "Do I need to be home?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A standard clean of a two-bedroom home typically takes 2–3 hours. Larger homes or first cleans may take longer."
+        "text": "No – just tell us how we'll get in (lockbox, key or concierge) when you book."
       }
     },
     {
       "@type": "Question",
-      "name": "Do I need to be home during the clean?",
+      "name": "How do I pay?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Most of our Palm Beach clients provide access and we handle everything while they are out. Your home is secured when we leave."
+        "text": "We'll text you a secure payment link after your clean."
       }
     },
     {
       "@type": "Question",
-      "name": "Can I choose my own scent?",
+      "name": "When do you clean?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. At your first clean you choose from four signature scent profiles. We record your preference and apply it consistently on every visit after."
+        "text": "Most cleans start between 8 and 11am."
       }
     }
   ]
@@ -527,6 +527,32 @@ footer{
   .whatsapp-float{padding:7px 12px 7px 9px;gap:6px;font-size:.35rem;letter-spacing:.15em;bottom:18px;right:18px;}
   .whatsapp-float svg{width:10px;height:10px;}
 }
+
+/* ─── PRICING, EXTRA TIME & INCLUSIONS ─── */
+.pricing-grid.pricing-grid--5{grid-template-columns:repeat(5,1fr);}
+.pricing-grid--5 .pricing-cell{padding:28px 18px;}
+.extra-time{margin-top:32px;padding:28px 32px;border:1px solid var(--border-mid);background:var(--linen);max-width:760px;}
+.section .extra-time-title{font-family:'Poppins',sans-serif;font-size:1rem;font-weight:400;color:var(--obsidian);letter-spacing:.04em;margin-bottom:10px;}
+.section .extra-time-body{font-size:.84rem;line-height:1.9;margin-bottom:0;}
+.inc-rooms{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px;border:1px solid var(--border);}
+.inc-room{padding:32px 28px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.inc-room:nth-child(2n){border-right:none;}
+.inc-room--wide{grid-column:1/-1;border-right:none;}
+.section .inc-room-title{max-width:none;font-family:'Poppins',sans-serif;font-size:1rem;font-weight:400;color:var(--obsidian);letter-spacing:.04em;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.inc-room ul{list-style:none;}
+.inc-room--wide ul{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;}
+.inc-room ul li{padding:7px 0;border-bottom:1px solid var(--border);font-size:.78rem;line-height:1.5;color:rgba(44,40,37,.65);letter-spacing:.01em;display:flex;align-items:flex-start;gap:10px;}
+.inc-room ul li::before{content:'';display:block;width:4px;height:4px;border-radius:50%;background:var(--sage);margin-top:6px;flex-shrink:0;}
+.inc-room--extras ul li::before{background:var(--stone);}
+.section .inc-room-note{font-size:.78rem;line-height:1.7;margin:16px 0 0;}
+@media(max-width:960px){
+  .pricing-grid.pricing-grid--5{grid-template-columns:1fr 1fr;}
+  .pricing-grid--5 .pricing-cell{border-bottom:1px solid var(--border);}
+  .extra-time{padding:24px 22px;}
+  .inc-rooms{grid-template-columns:1fr;}
+  .inc-room,.inc-room:nth-child(2n){border-right:none;}
+  .inc-room--wide ul{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -585,73 +611,118 @@ footer{
 
 <div class="content-wrap">
 
-  <!-- ═══════════════════════════════════════════════════════
-    WHAT'S INCLUDED
-    EDIT: update bullet points to match the specific service
-    (house cleaning list below — swap out for bond/deep/airbnb/office)
-  ═══════════════════════════════════════════════════════ -->
+  <!-- WHAT'S INCLUDED -->
   <section class="section">
     <p class="section-label">The service</p>
     <div class="two-col">
       <div>
         <h2>What's <em>included</em></h2>
-        <p>Every house clean in Palm Beach covers the full property — not a checklist minimum. Here is exactly what we do.</p>
+        <p>Every regular clean covers the essentials, room by room — in Palm Beach. Here's exactly what's included, and what's available as an extra.</p>
       </div>
       <div></div>
     </div>
-    <ul class="included-list" style="margin-top:40px;">
-      <!-- EDIT: change these bullets to match the service -->
-      <li>All bedrooms vacuumed and mopped</li>
-      <li>Beds made to hotel specification</li>
-      <li>Bathrooms scrubbed, sanitised, polished</li>
-      <li>Toilets cleaned inside and out</li>
-      <li>Kitchen benches, splashback, stovetop</li>
-      <li>Sink and tapware polished</li>
-      <li>Microwave interior cleaned</li>
-      <li>All surfaces dusted and wiped</li>
-      <li>Mirrors and glass streak-free</li>
-      <li>Skirting boards wiped down</li>
-      <li>Light switches and door handles</li>
-      <li>Rubbish bins emptied and relined</li>
-      <li>Floors vacuumed throughout</li>
-      <li>Hard floors mopped</li>
-      <li>Signature scent applied on finish</li>
-      <li>Finishing touches — towels folded, surfaces arranged</li>
-    </ul>
+
+    <div class="inc-rooms">
+
+      <div class="inc-room">
+        <p class="inc-room-title">Bathrooms</p>
+        <ul>
+          <li>Toilet</li>
+          <li>Shower</li>
+          <li>Basin</li>
+          <li>Mirrors</li>
+          <li>Vanity</li>
+          <li>Floors</li>
+        </ul>
+      </div>
+
+      <div class="inc-room">
+        <p class="inc-room-title">Kitchen</p>
+        <ul>
+          <li>Benchtops</li>
+          <li>Sink</li>
+          <li>Stovetop</li>
+          <li>Outside of appliances</li>
+          <li>Spot-clean splashback</li>
+          <li>Spot-clean cupboard fronts</li>
+        </ul>
+      </div>
+
+      <div class="inc-room">
+        <p class="inc-room-title">Bedrooms &amp; living areas</p>
+        <ul>
+          <li>Beds made</li>
+          <li>Bedrooms dusted and tidied</li>
+          <li>Living areas dusted</li>
+          <li>Tables wiped</li>
+        </ul>
+      </div>
+
+      <div class="inc-room">
+        <p class="inc-room-title">Floors &amp; bins</p>
+        <ul>
+          <li>All floors vacuumed</li>
+          <li>All floors mopped</li>
+          <li>Bins emptied</li>
+        </ul>
+      </div>
+
+      <div class="inc-room inc-room--wide inc-room--extras">
+        <p class="inc-room-title">Not included — available as extras</p>
+        <ul>
+          <li>Oven interior</li>
+          <li>Fridge interior</li>
+          <li>Carpet steam cleaning</li>
+          <li>Blinds</li>
+          <li>Outside windows</li>
+          <li>Walls</li>
+          <li>Laundry</li>
+          <li>Large piles of dishes</li>
+          <li>Heavy clutter</li>
+        </ul>
+      </div>
+
+    </div>
   </section>
 
 
-  <!-- ═══════════════════════════════════════════════════════
-    PRICING
-    No edits needed — pricing is the same across all pages
-  ═══════════════════════════════════════════════════════ -->
+  <!-- PRICING -->
   <section class="section">
     <p class="section-label">Transparent pricing</p>
     <h2>Simple, <em>honest</em> pricing</h2>
-    <p>No hidden fees. No surprises. The price you see is what you pay.</p>
-    <div class="pricing-grid">
+    <p>Clear, upfront prices in AUD. Each regular clean includes a set amount of time for your home's size.</p>
+    <div class="pricing-grid pricing-grid--5">
       <div class="pricing-cell">
         <span class="pricing-bed">1 Bedroom</span>
         <span class="pricing-amount">$169</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-from">Up to 2.5 hrs included</span>
       </div>
       <div class="pricing-cell">
         <span class="pricing-bed">2 Bedrooms</span>
         <span class="pricing-amount">$189</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-from">Up to 3 hrs included</span>
       </div>
       <div class="pricing-cell">
         <span class="pricing-bed">3 Bedrooms</span>
         <span class="pricing-amount">$229</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-from">Up to 3.5 hrs included</span>
       </div>
       <div class="pricing-cell">
-        <span class="pricing-bed">4+ Bedrooms</span>
+        <span class="pricing-bed">4 Bedrooms</span>
         <span class="pricing-amount">$269</span>
-        <span class="pricing-from">from</span>
+        <span class="pricing-from">Up to 4 hrs included</span>
+      </div>
+      <div class="pricing-cell">
+        <span class="pricing-bed">5 Bedrooms</span>
+        <span class="pricing-amount">$309</span>
+        <span class="pricing-from">Up to 4.5 hrs included</span>
       </div>
     </div>
-    <p class="pricing-note">Prices are a starting guide. First cleans, larger properties, or additional services may vary. You will receive a confirmed price before we begin.</p>
+    <p class="pricing-note">Available weekly, fortnightly, monthly or one-off. Extra time is $65/hr, only with your approval.</p>
+    <div class="extra-time">
+      <p class="extra-time-title">How extra time works</p>
+      <p class="extra-time-body">Our prices cover the typical time for a home of your size. When our cleaner arrives, they do a quick walkthrough. If your home needs more time than usual, we'll contact you before doing any extra work. You can approve extra time, billed in 30-minute blocks, or we'll focus on the essentials within your booked time. You'll never be charged for extra time you haven't approved.</p>
+    </div>
   </section>
 
 
@@ -693,45 +764,43 @@ footer{
     <ul class="faq-list" style="margin-top:8px;">
 
       <li class="faq-item">
-        <!-- EDIT: question text -->
         <button class="faq-question" aria-expanded="false">
           How much does house cleaning cost in Palm Beach?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <!-- EDIT: answer text -->
-        <div class="faq-answer">From $169 for a one-bedroom home. Two bedrooms from $189, three bedrooms from $229, four or more from $269. Your confirmed price is provided before we begin.</div>
+        <div class="faq-answer">A regular clean is $169 for 1 bedroom, $189 for 2, $229 for 3, $269 for 4 and $309 for 5 bedrooms. Each price includes a set amount of time — from up to 2.5 hours for 1 bedroom to 4.5 hours for 5 bedrooms. Available weekly, fortnightly, monthly or one-off. Extra time is $65/hr, and only with your approval.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          Do you bring your own cleaning products?
+          What if my home takes longer than expected?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">Yes. We bring everything. All natural, plant-derived products — nothing synthetic. You do not need to provide anything.</div>
+        <div class="faq-answer">We'll always ask you first. Extra time is billed in 30-minute blocks, and only with your approval.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          How long does a house clean take in Palm Beach?
+          Do I need to be home?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">A standard two-bedroom home typically takes 2–3 hours. Larger homes or first cleans may take longer as we bring everything to a consistent baseline.</div>
+        <div class="faq-answer">No – just tell us how we'll get in (lockbox, key or concierge) when you book.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          Do I need to be home during the clean?
+          How do I pay?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">No. Most of our Palm Beach clients provide access and go about their day. Your home is fully secured when we leave.</div>
+        <div class="faq-answer">We'll text you a secure payment link after your clean.</div>
       </li>
 
       <li class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          Can I choose my own scent?
+          When do you clean?
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-answer">Yes. At your first clean you choose from four signature scent profiles. We record your preference and apply it on every visit after — without exception.</div>
+        <div class="faq-answer">Most cleans start between 8 and 11am.</div>
       </li>
 
     </ul>
