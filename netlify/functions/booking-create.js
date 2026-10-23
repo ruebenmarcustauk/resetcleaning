@@ -1,7 +1,7 @@
 // POST /.netlify/functions/booking-create
 // Creates (or updates) the contact in GoHighLevel, books the appointment on the
 // calendar, and adds a note with the full booking details.
-const { pricing, config, ghl, quote, json, startTimeAllowed, bookingStage } = require("../lib/booking");
+const { pricing, config, ghl, quote, json, startTimeAllowed, bookingStage, opportunityFields } = require("../lib/booking");
 
 const clean = (v, max = 300) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
@@ -144,19 +144,50 @@ exports.handler = async (event) => {
     try {
       const { pipelineId, stageId } = await bookingStage(cfg);
       const day = new Date(startMs).toLocaleDateString("en-AU", { timeZone: pricing.timezone, day: "numeric", month: "short" });
-      await ghl(cfg, "POST", "/opportunities/", {
-        version: "2021-07-28",
-        body: {
-          locationId: cfg.locationId,
-          pipelineId,
-          pipelineStageId: stageId,
-          contactId,
-          name: `${service.label} - ${bedLabel} - ${firstName} ${lastName} (${day})`.trim(),
-          status: "open",
-          monetaryValue: total || 0,
-          source: "Website booking",
-        },
-      });
+      const body = {
+        locationId: cfg.locationId,
+        pipelineId,
+        pipelineStageId: stageId,
+        contactId,
+        name: `${service.label} - ${bedLabel} - ${firstName} ${lastName} (${day})`.trim(),
+        status: "open",
+        monetaryValue: total || 0,
+        source: "Website booking",
+      };
+
+      // Fill the opportunity's custom fields (matched by name in GHL).
+      let customFields = [];
+      try {
+        const fields = await opportunityFields(cfg);
+        const values = {
+          "clean type": service.label,
+          "bedrooms": Number(b.bedrooms),
+          "bathrooms": bathrooms,
+          "frequency": freqLabel,
+          "extras": extras.length ? extras.map((x) => x.label).join(", ") : "None",
+          // Date fields take the clean's date in Gold Coast time (YYYY-MM-DD).
+          "clean date": new Date(startMs + 10 * 3600e3).toISOString().slice(0, 10),
+        };
+        customFields = Object.entries(values)
+          .filter(([name]) => fields[name])
+          .map(([name, value]) => ({ id: fields[name].id, field_value: value }));
+        const missing = Object.keys(values).filter((name) => !fields[name]);
+        if (missing.length) console.error("Opportunity fields not found in GHL:", missing.join(", "));
+      } catch (err) {
+        console.error("Custom field lookup failed:", err.message, JSON.stringify(err.data));
+      }
+
+      try {
+        await ghl(cfg, "POST", "/opportunities/", {
+          version: "2021-07-28",
+          body: customFields.length ? { ...body, customFields } : body,
+        });
+      } catch (err) {
+        if (!customFields.length) throw err;
+        // Don't lose the opportunity over a field problem: retry without the fields.
+        console.error("Opportunity with fields failed, retrying without:", err.message, JSON.stringify(err.data));
+        await ghl(cfg, "POST", "/opportunities/", { version: "2021-07-28", body });
+      }
       opportunity = true;
     } catch (err) {
       console.error("Opportunity failed:", err.message, JSON.stringify(err.data));

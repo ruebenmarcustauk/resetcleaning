@@ -61,6 +61,22 @@ async function bookingStage(cfg) {
   return pipelineCache;
 }
 
+// Opportunity custom fields, looked up by name: { "clean type": "fieldId", ... }
+let fieldCache = null;
+async function opportunityFields(cfg) {
+  if (fieldCache) return fieldCache;
+  const data = await ghl(cfg, "GET", `/locations/${cfg.locationId}/customFields`, {
+    version: "2021-07-28",
+    query: { model: "opportunity" },
+  });
+  const map = {};
+  (data.customFields || []).forEach((f) => {
+    if (f.name && f.id) map[f.name.trim().toLowerCase()] = { id: f.id, type: f.dataType };
+  });
+  fieldCache = map;
+  return map;
+}
+
 // Customer price for a clean. Returns { base, quote } where quote=true means
 // the price must be confirmed manually (regular/deep over 5 bedrooms).
 function quote(serviceId, bedrooms) {
@@ -96,4 +112,4 @@ function json(statusCode, body) {
   };
 }
 
-module.exports = { pricing, config, ghl, quote, json, startTimeAllowed, bookingStage };
+module.exports = { pricing, config, ghl, quote, json, startTimeAllowed, bookingStage, opportunityFields };
