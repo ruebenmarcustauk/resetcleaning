@@ -54,6 +54,6 @@
     { "id": "home",      "label": "I'll be home" },
     { "id": "lockbox",   "label": "Lockbox" },
     { "id": "key",       "label": "Key left for you" },
-    { "id": "concierge", "label": "Concierge / building manager" }
+    { "id": "concierge", "label": "Concierge" }
   ]
 }

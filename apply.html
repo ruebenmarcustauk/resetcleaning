@@ -283,8 +283,17 @@ footer {
 @media (min-width: 768px) {
   .hero { padding: 64px 40px 32px; }
   .form-section { padding: 0 40px 40px; }
-  .trust { padding: 40px 40px 24px; flex-direction: row; gap: 32px; }
+  .trust { padding: 40px 40px 24px; flex-direction: row; gap: 32px; max-width: 980px; }
   .trust-item { flex: 1; }
+}
+/* Phones: keep the heading short so the booking starts above the fold */
+@media (max-width: 900px) {
+  header { padding: 12px 16px; }
+  .hero { padding: 18px 16px 6px; max-width: none; text-align: left; }
+  .headline { font-size: 1.75rem; margin-bottom: 4px; }
+  .headline br { display: none; }
+  .subhead { display: block !important; max-width: none; margin: 0 0 14px; font-size: .84rem; line-height: 1.6; }
+  .divider { display: none; }
 }
 
 @keyframes fadeUp {

@@ -2,6 +2,7 @@
   'use strict';
 
   var API = '/.netlify/functions';
+  var SAVE_KEY = 'rc-booking-v1';
   var root = document.getElementById('booking');
   if (!root) return;
 
@@ -21,7 +22,10 @@
     info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
     check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
     left: '<path d="M15 5l-7 7 7 7"/>',
-    right: '<path d="M9 5l7 7-7 7"/>'
+    right: '<path d="M9 5l7 7-7 7"/>',
+    up: '<path d="M6 15l6-6 6 6"/>',
+    close: '<path d="M6 6l12 12M18 6L6 18"/>',
+    plus: '<path d="M12 5v14M5 12h14"/>'
   };
   function icon(name, w) {
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (w || 1.5) +
@@ -34,10 +38,23 @@
   }
   function money(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)); }
   function hrs(h) { return h + (h === 1 ? ' hr' : ' hrs'); }
+  function isPhone() { return window.matchMedia('(max-width: 900px)').matches; }
+  // Meta Pixel standard events (no-op if the pixel hasn't loaded).
+  function metaTrack(name, params, eventId) {
+    if (typeof window.fbq !== 'function') return;
+    if (eventId) window.fbq('track', name, params || {}, { eventID: eventId });
+    else window.fbq('track', name, params || {});
+  }
+  function metaParams() {
+    var s = P.services[state.service], q = quote();
+    var p = { content_name: s.label, content_category: 'Cleaning', currency: 'AUD', num_items: 1 };
+    if (q && q.total) p.value = q.total;
+    return p;
+  }
 
   var P = null; // pricing.json
   var TZ = 'Australia/Brisbane';
-  var fmtTime, fmtDay, fmtDayLong, fmtMonth;
+  var fmtTime, fmtDay, fmtDayLong, fmtWeekday, fmtMonthShort;
 
   var state = {
     step: 0,
@@ -46,13 +63,40 @@
     bathrooms: 1,
     frequency: 'fortnightly',
     extras: [],
-    month: null,
     day: null,
     slot: null,
     access: null,
+    addr: null,
+    contact: {},
+    showNotes: false,
     submitting: false
   };
-  var slotCache = {};   // month -> { days } | 'loading' | { error }
+  var slots = { status: 'idle', days: {}, error: null }; // availability for the next few months
+
+  // ── saved progress (so people can leave and come back) ──
+  function save() {
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify({
+        at: Date.now(),
+        step: Math.min(state.step, 3),
+        service: state.service, bedrooms: state.bedrooms, bathrooms: state.bathrooms,
+        frequency: state.frequency, extras: state.extras, access: state.access,
+        addr: state.addr, contact: state.contact, showNotes: state.showNotes
+      }));
+    } catch (e) { /* storage unavailable */ }
+  }
+  function restore() {
+    try {
+      var s = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
+      if (!s || Date.now() - s.at > 7 * 864e5 || !P.services[s.service]) return;
+      ['service', 'bedrooms', 'bathrooms', 'frequency', 'extras', 'access', 'addr', 'contact', 'showNotes'].forEach(function (k) {
+        if (s[k] != null) state[k] = s[k];
+      });
+      // Times go stale, so come back no further than the date step.
+      state.step = Math.min(s.step || 0, 2);
+    } catch (e) { /* ignore */ }
+  }
+  function clearSaved() { try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* ignore */ } }
 
   // ── pricing ──
   function quote() {
@@ -85,12 +129,11 @@
   function todayKey() {
     return new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
   }
-  function monthKey(y, m) { return y + '-' + String(m).padStart(2, '0'); }
   function shiftMonth(key, d) {
     var y = +key.slice(0, 4), m = +key.slice(5, 7) + d;
     while (m > 12) { m -= 12; y++; }
     while (m < 1) { m += 12; y--; }
-    return monthKey(y, m);
+    return y + '-' + String(m).padStart(2, '0');
   }
   function dayDate(key) { return new Date(key + 'T12:00:00+10:00'); }
 
@@ -98,6 +141,10 @@
   function shell() {
     root.innerHTML =
       '<div class="bk-main">' +
+        '<div class="bk-top">' +
+          '<button type="button" class="bk-top-back" aria-label="Back">' + icon('left', 2) + '</button>' +
+          '<div class="bk-top-text"><span class="bk-top-count"></span><span class="bk-top-name"></span></div>' +
+        '</div>' +
         '<div class="bk-progress" role="list">' + STEPS.map(function (label, i) {
           return '<div class="bk-progress-step" role="listitem" data-i="' + i + '"><div class="bk-progress-bar"><span></span></div>' +
             '<p class="bk-progress-label">' + label + '</p></div>';
@@ -107,62 +154,77 @@
         '<section class="bk-step" data-step="2"></section>' +
         '<section class="bk-step" data-step="3"></section>' +
         '<section class="bk-step" data-step="4"></section>' +
-        '<p class="bk-error" role="alert" aria-live="polite"></p>' +
+        '<p class="bk-error" role="alert" aria-live="assertive"></p>' +
         '<div class="bk-nav"><button type="button" class="bk-back">Back</button>' +
           '<button type="button" class="bk-next">Continue</button></div>' +
       '</div>' +
+      '<div class="bk-sheet-backdrop" hidden></div>' +
       '<aside class="bk-summary" aria-label="Booking summary"><div class="bk-sum-card"></div></aside>' +
-      '<div class="bk-bar"><div class="bk-bar-price"></div><div class="bk-bar-actions">' +
-        '<button type="button" class="bk-back">Back</button><button type="button" class="bk-next">Continue</button></div></div>';
+      '<div class="bk-bar">' +
+        '<button type="button" class="bk-bar-price" aria-label="Show booking summary"></button>' +
+        '<button type="button" class="bk-next">Continue</button>' +
+      '</div>';
 
     root.querySelectorAll('.bk-next').forEach(function (b) { b.addEventListener('click', next); });
-    root.querySelectorAll('.bk-back').forEach(function (b) { b.addEventListener('click', back); });
+    root.querySelectorAll('.bk-back, .bk-top-back').forEach(function (b) { b.addEventListener('click', back); });
+    $('.bk-bar-price').addEventListener('click', function () { toggleSheet(true); });
+    $('.bk-sheet-backdrop').addEventListener('click', function () { toggleSheet(false); });
   }
 
   function $(sel) { return root.querySelector(sel); }
   function stepEl(i) { return root.querySelector('.bk-step[data-step="' + i + '"]'); }
-  function setError(msg) { $('.bk-error').textContent = msg || ''; }
+  var errTimer = null;
+  function setError(msg) {
+    var el = $('.bk-error');
+    el.textContent = msg || '';
+    clearTimeout(errTimer);
+    if (msg && isPhone()) errTimer = setTimeout(function () { el.textContent = ''; }, 5000);
+  }
+  function toggleSheet(open) {
+    root.classList.toggle('sheet-open', open);
+    $('.bk-sheet-backdrop').hidden = !open;
+    document.documentElement.classList.toggle('bk-no-scroll', open);
+  }
 
   // ── step 0: clean type & size ──
   function renderStep0() {
     var s = state.service ? P.services[state.service] : null;
-    var maxBeds = P.maxBedrooms;
     var html =
       '<h2 class="bk-h">What kind of clean?</h2>' +
-      '<p class="bk-sub">Clear, upfront prices in AUD. No payment today.</p>' +
+      '<p class="bk-sub">Upfront prices. No payment today.</p>' +
       '<div class="bk-group"><div class="bk-services" role="radiogroup" aria-label="Clean type">' +
       Object.keys(P.services).map(function (id) {
         var sv = P.services[id];
         return '<button type="button" class="bk-card" role="radio" data-service="' + id + '" aria-checked="' + (state.service === id) + '">' +
           '<span class="bk-card-icon">' + icon(id, 1.4) + '</span>' +
-          '<span class="bk-card-body"><span class="bk-card-title">' + esc(sv.label) + '</span><br>' +
+          '<span class="bk-card-body"><span class="bk-card-title">' + esc(sv.label) + '</span>' +
           '<span class="bk-card-text">' + esc(sv.tagline) + '</span></span>' +
-          '<span class="bk-card-price">From <strong>' + money(sv.prices['1']) + '</strong></span></button>';
+          '<span class="bk-card-price">from <strong>' + money(sv.prices['1']) + '</strong></span></button>';
       }).join('') + '</div></div>';
 
     if (s) {
       var q = quote();
-      html += '<div class="bk-group"><p class="bk-group-title">Your home</p>' +
-        counter('bedrooms', 'Bedrooms', state.bedrooms, 1, maxBeds,
+      html += '<div class="bk-group" id="bk-home"><p class="bk-group-title">Your home</p>' +
+        counter('bedrooms', 'Bedrooms', state.bedrooms, 1, P.maxBedrooms,
           q.quote ? 'Homes over 5 bedrooms are quoted individually' : (q.baseHours ? 'Includes up to ' + hrs(q.baseHours) : '')) +
         counter('bathrooms', 'Bathrooms', state.bathrooms, 1, 6, "Doesn't change the price") +
         '</div>';
 
       if (s.frequencies.length > 1) {
-        html += '<div class="bk-group"><p class="bk-group-title">How often?</p><div class="bk-chips" role="radiogroup" aria-label="Frequency">' +
+        html += '<div class="bk-group"><p class="bk-group-title">How often?</p><div class="bk-chips bk-chips-4" role="radiogroup" aria-label="Frequency">' +
           s.frequencies.map(function (f) {
             return '<button type="button" class="bk-chip" role="radio" data-freq="' + f + '" aria-checked="' + (state.frequency === f) + '">' + esc(P.frequencyLabels[f]) + '</button>';
           }).join('') + '</div><p class="bk-hint">Same price whichever you choose.</p></div>';
       }
 
-      html += '<div class="bk-callout">' + icon('info') + '<span><strong>How extra time works:</strong> our prices cover the typical time for a home of your size. ' +
-        "If your home needs more, we'll contact you before doing any extra work. Extra time is " + money(s.extraPerHour) +
-        "/hr, and only with your approval.</span></div>";
+      html += '<div class="bk-callout">' + icon('info') + '<span>Our prices cover the typical time for a home your size. ' +
+        "If yours needs longer, we'll ask before doing any extra work (" + money(s.extraPerHour) + '/hr).</span></div>';
     }
     stepEl(0).innerHTML = html;
 
     stepEl(0).querySelectorAll('[data-service]').forEach(function (b) {
       b.addEventListener('click', function () {
+        var first = !state.service;
         state.service = b.dataset.service;
         var sv = P.services[state.service];
         if (sv.frequencies.indexOf(state.frequency) === -1) state.frequency = sv.frequencies[0];
@@ -171,20 +233,42 @@
           return availableExtras().some(function (x) { return x.id === id; });
         });
         setError('');
-        renderStep0(); renderStep1(); renderSummary();
+        renderStep0(); renderStep1(); renderSummary(); save();
+        // First pick on a phone: bring the next question into view.
+        if (first && isPhone()) {
+          var home = document.getElementById('bk-home');
+          if (home) setTimeout(function () { scrollToEl(home, 130); }, 60);
+        }
       });
     });
     stepEl(0).querySelectorAll('[data-freq]').forEach(function (b) {
-      b.addEventListener('click', function () { state.frequency = b.dataset.freq; renderStep0(); renderSummary(); });
+      b.addEventListener('click', function () {
+        state.frequency = b.dataset.freq;
+        stepEl(0).querySelectorAll('[data-freq]').forEach(function (o) { o.setAttribute('aria-checked', o === b); });
+        renderSummary(); save();
+      });
     });
-    stepEl(0).querySelectorAll('[data-count]').forEach(function (b) {
+    bindCounters();
+  }
+  function bindCounters() {
+    // Bind +/- buttons once each (they're replaced in place on every tap).
+    stepEl(0).querySelectorAll('[data-count]:not([data-bound])').forEach(function (b) {
+      b.setAttribute('data-bound', '1');
       b.addEventListener('click', function () {
         var key = b.dataset.count, d = +b.dataset.d;
         var max = key === 'bedrooms' ? P.maxBedrooms : 6;
         state[key] = Math.min(max, Math.max(1, state[key] + d));
-        renderStep0(); renderSummary();
+        b.closest('.bk-counter').outerHTML = counterFor(key);
+        bindCounters();
+        renderSummary(); save();
       });
     });
+  }
+  function counterFor(key) {
+    if (key === 'bathrooms') return counter('bathrooms', 'Bathrooms', state.bathrooms, 1, 6, "Doesn't change the price");
+    var q = quote();
+    return counter('bedrooms', 'Bedrooms', state.bedrooms, 1, P.maxBedrooms,
+      q.quote ? 'Homes over 5 bedrooms are quoted individually' : (q.baseHours ? 'Includes up to ' + hrs(q.baseHours) : ''));
   }
   function counter(key, label, val, min, max, help) {
     var raw = state[key];
@@ -202,160 +286,226 @@
     if (!state.service) return;
     var s = P.services[state.service];
     var included = P.extras.filter(function (x) { return x.includedIn.indexOf(state.service) !== -1; });
-    var html = '<h2 class="bk-h">Add any extras</h2>' +
-      '<p class="bk-sub">Each extra is ' + money(extraPrice()) + ', added to your price' +
-        (s.includedHours ? ', and adds an hour to your booked time' : '') + '.</p>' +
+    var html = '<h2 class="bk-h">Add any extras?</h2>' +
+      '<p class="bk-sub">' + money(extraPrice()) + ' each' +
+        (s.includedHours ? ', and we add an hour to your booking for each one' : '') + '. Optional.</p>' +
       '<div class="bk-group"><div class="bk-extras">' +
       availableExtras().map(function (x) {
         var on = state.extras.indexOf(x.id) !== -1;
         return '<button type="button" class="bk-extra" data-extra="' + x.id + '" aria-pressed="' + on + '">' +
           '<span class="bk-extra-icon">' + icon(x.id) + '</span>' +
-          '<span class="bk-extra-body"><span class="bk-extra-name">' + esc(x.label) + '</span><br>' +
+          '<span class="bk-extra-body"><span class="bk-extra-name">' + esc(x.label) + '</span>' +
           '<span class="bk-extra-meta">+' + money(extraPrice()) + '</span></span>' +
           '<span class="bk-extra-check">' + icon('check', 3) + '</span></button>';
-      }).join('') +
-      included.map(function (x) {
-        return '<button type="button" class="bk-extra" disabled>' +
-          '<span class="bk-extra-icon">' + icon(x.id) + '</span>' +
-          '<span class="bk-extra-body"><span class="bk-extra-name">' + esc(x.label) + '</span><br>' +
-          '<span class="bk-extra-meta">Part of your ' + esc(s.label.toLowerCase()) + '</span></span>' +
-          '<span class="bk-badge">Included</span></button>';
-      }).join('') +
-      '</div><p class="bk-hint">No extras needed? Just continue.</p></div>';
+      }).join('') + '</div>' +
+      (included.length ? '<p class="bk-included"><span class="bk-badge">Included</span> ' +
+        esc(included.map(function (x) { return x.label; }).join(', ')) + ' — already part of your ' + esc(s.label.toLowerCase()) + '.</p>' : '') +
+      '</div>';
     stepEl(1).innerHTML = html;
     stepEl(1).querySelectorAll('[data-extra]').forEach(function (b) {
       b.addEventListener('click', function () {
         var id = b.dataset.extra, i = state.extras.indexOf(id);
         if (i === -1) state.extras.push(id); else state.extras.splice(i, 1);
         b.setAttribute('aria-pressed', i === -1);
-        renderSummary();
+        renderSummary(); renderNav(); save();
       });
     });
   }
 
   // ── step 2: date & time ──
-  function loadMonth(month, force) {
-    if (!force && slotCache[month] && slotCache[month] !== 'error') return;
-    slotCache[month] = 'loading';
-    fetch(API + '/booking-slots?month=' + month)
-      .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || 'Error'); return j; }); })
-      .then(function (j) { slotCache[month] = { days: j.days || {} }; })
-      .catch(function (e) { slotCache[month] = { error: e.message || "Couldn't load availability." }; })
-      .then(function () { if (state.month === month) renderStep2(); });
+  // Load the next three months at once so the date strip is complete.
+  function loadSlots(force) {
+    if (!force && (slots.status === 'loading' || slots.status === 'ready')) return;
+    slots = { status: 'loading', days: {}, error: null };
+    var cur = todayKey().slice(0, 7);
+    var months = [cur, shiftMonth(cur, 1), shiftMonth(cur, 2)];
+    Promise.all(months.map(function (m) {
+      return fetch(API + '/booking-slots?month=' + m)
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || 'Error'); return j.days || {}; }); });
+    })).then(function (all) {
+      var days = {};
+      all.forEach(function (d) { Object.keys(d).forEach(function (k) { days[k] = d[k]; }); });
+      slots = { status: 'ready', days: days, error: null };
+    }).catch(function (e) {
+      slots = { status: 'error', days: {}, error: e.message || "Couldn't load availability." };
+    }).then(function () {
+      if (state.step === 2) renderStep2();
+    });
   }
 
   function renderStep2() {
-    var cur = todayKey().slice(0, 7);
-    if (!state.month) state.month = cur;
-    var month = state.month;
-    var data = slotCache[month];
-    if (!data) { loadMonth(month); data = 'loading'; }
+    loadSlots();
+    var html = '<h2 class="bk-h">When suits you?</h2>' +
+      '<p class="bk-sub">Pick a day, then a start time. Gold Coast time.</p>';
 
-    var y = +month.slice(0, 4), m = +month.slice(5, 7);
-    var first = new Date(Date.UTC(y, m - 1, 1));
-    var lead = (first.getUTCDay() + 6) % 7; // Monday first
-    var days = new Date(Date.UTC(y, m, 0)).getUTCDate();
-    var avail = data && data.days ? data.days : {};
-
-    var html = '<h2 class="bk-h">Choose a date and time</h2>' +
-      '<p class="bk-sub">Most cleans start between 8 and 11am. Times shown in Gold Coast time.</p>' +
-      '<div class="bk-cal"><div class="bk-cal-head">' +
-      '<button type="button" class="bk-round" data-month="-1" aria-label="Previous month"' + (month <= cur ? ' disabled' : '') + '>' + icon('left', 2) + '</button>' +
-      '<span class="bk-cal-month">' + fmtMonth.format(dayDate(month + '-15')) + '</span>' +
-      '<button type="button" class="bk-round" data-month="1" aria-label="Next month"' + (month >= shiftMonth(cur, 3) ? ' disabled' : '') + '>' + icon('right', 2) + '</button>' +
-      '</div>';
-
-    if (data === 'loading') {
-      html += '<div class="bk-loading"><span class="bk-spinner"></span>Checking availability…</div>';
-    } else if (data.error) {
-      html += '<div class="bk-loading">' + esc(data.error) + ' <button type="button" class="bk-link" data-retry>Try again</button></div>';
-    } else {
-      html += '<div class="bk-cal-grid">' + ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(function (d) {
-        return '<span class="bk-cal-dow">' + d + '</span>';
-      }).join('');
-      for (var i = 0; i < lead; i++) html += '<span class="bk-day empty"></span>';
-      for (var d = 1; d <= days; d++) {
-        var key = month + '-' + String(d).padStart(2, '0');
-        var ok = !!avail[key];
-        html += '<button type="button" class="bk-day" data-day="' + key + '"' + (ok ? '' : ' disabled') +
-          ' aria-pressed="' + (state.day === key) + '" aria-label="' + fmtDayLong.format(dayDate(key)) + (ok ? '' : ', unavailable') + '">' + d + '</button>';
-      }
-      html += '</div>';
-      if (!Object.keys(avail).length) {
-        html += '<p class="bk-hint" style="text-align:center">No times left this month. Try the next month.</p>';
-      }
+    if (slots.status === 'loading' || slots.status === 'idle') {
+      html += '<div class="bk-dates bk-dates-loading">' + new Array(6).join('<span class="bk-date bk-skel"></span>') + '</div>' +
+        '<div class="bk-loading"><span class="bk-spinner"></span>Checking availability…</div>';
+      stepEl(2).innerHTML = html;
+      return;
     }
-    html += '</div>';
-
-    if (state.day && avail[state.day]) {
-      html += '<div class="bk-times"><p class="bk-times-title">' + fmtDayLong.format(dayDate(state.day)) + '</p><div class="bk-times-grid">' +
-        avail[state.day].map(function (t) {
-          return '<button type="button" class="bk-time" data-slot="' + esc(t) + '" aria-pressed="' + (state.slot === t) + '">' + fmtTime.format(new Date(t)) + '</button>';
-        }).join('') + '</div></div>';
+    if (slots.status === 'error') {
+      html += '<div class="bk-empty">' + esc(slots.error) + '<br><button type="button" class="bk-link" data-retry>Try again</button>' +
+        ' or call <a href="tel:+61494427135">0494 427 135</a></div>';
+      stepEl(2).innerHTML = html;
+      stepEl(2).querySelector('[data-retry]').addEventListener('click', function () { loadSlots(true); renderStep2(); });
+      return;
     }
+
+    var days = Object.keys(slots.days).sort();
+    if (!days.length) {
+      html += '<div class="bk-empty">We’re fully booked online for now. Call <a href="tel:+61494427135">0494 427 135</a> and we’ll find you a time.</div>';
+      stepEl(2).innerHTML = html;
+      return;
+    }
+    if (!state.day || !slots.days[state.day]) { state.day = days[0]; state.slot = null; }
+    if (state.slot && slots.days[state.day].indexOf(state.slot) === -1) state.slot = null;
+
+    var lastMonth = '';
+    html += '<div class="bk-dates-wrap">' +
+      '<button type="button" class="bk-dates-arrow prev" aria-label="Earlier dates">' + icon('left', 2) + '</button>' +
+      '<div class="bk-dates" role="listbox" aria-label="Available days">' +
+      days.map(function (k) {
+        var d = dayDate(k), mon = fmtMonthShort.format(d);
+        var showMon = mon !== lastMonth; lastMonth = mon;
+        return '<button type="button" class="bk-date" role="option" data-day="' + k + '" aria-selected="' + (state.day === k) + '" aria-label="' + fmtDayLong.format(d) + '">' +
+          '<span class="bk-date-dow">' + (k === todayKey() ? 'Today' : fmtWeekday.format(d)) + '</span>' +
+          '<span class="bk-date-num">' + +k.slice(8) + '</span>' +
+          '<span class="bk-date-mon">' + (showMon || state.day === k ? mon : '&nbsp;') + '</span></button>';
+      }).join('') + '</div>' +
+      '<button type="button" class="bk-dates-arrow next" aria-label="Later dates">' + icon('right', 2) + '</button></div>';
+
+    html += '<div class="bk-times"><p class="bk-times-title">' + fmtDayLong.format(dayDate(state.day)) + '</p>' +
+      '<div class="bk-times-grid" role="listbox" aria-label="Start times">' +
+      slots.days[state.day].map(function (t) {
+        return '<button type="button" class="bk-time" role="option" data-slot="' + esc(t) + '" aria-selected="' + (state.slot === t) + '">' + fmtTime.format(new Date(t)) + '</button>';
+      }).join('') + '</div></div>';
     stepEl(2).innerHTML = html;
 
-    stepEl(2).querySelectorAll('[data-month]').forEach(function (b) {
-      b.addEventListener('click', function () { state.month = shiftMonth(state.month, +b.dataset.month); renderStep2(); });
+    var strip = stepEl(2).querySelector('.bk-dates');
+    var sel = strip.querySelector('[aria-selected="true"]');
+    if (sel) strip.scrollLeft = Math.max(0, sel.offsetLeft - strip.offsetLeft - 8);
+    stepEl(2).querySelectorAll('.bk-dates-arrow').forEach(function (a) {
+      a.addEventListener('click', function () {
+        strip.scrollBy({ left: (a.classList.contains('next') ? 1 : -1) * strip.clientWidth * 0.8, behavior: 'smooth' });
+      });
     });
-    var retry = stepEl(2).querySelector('[data-retry]');
-    if (retry) retry.addEventListener('click', function () { loadMonth(month, true); renderStep2(); });
-    stepEl(2).querySelectorAll('[data-day]').forEach(function (b) {
+    strip.querySelectorAll('[data-day]').forEach(function (b) {
       b.addEventListener('click', function () {
+        if (state.day === b.dataset.day) return;
+        var keep = strip.scrollLeft;
         state.day = b.dataset.day; state.slot = null; setError('');
-        renderStep2(); renderSummary();
-        var t = stepEl(2).querySelector('.bk-times');
-        if (t && window.innerWidth < 900) t.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        renderStep2(); renderSummary(); renderNav();
+        stepEl(2).querySelector('.bk-dates').scrollLeft = keep;
       });
     });
     stepEl(2).querySelectorAll('[data-slot]').forEach(function (b) {
-      b.addEventListener('click', function () { state.slot = b.dataset.slot; setError(''); renderStep2(); renderSummary(); });
+      b.addEventListener('click', function () {
+        state.slot = b.dataset.slot; setError('');
+        stepEl(2).querySelectorAll('[data-slot]').forEach(function (o) { o.setAttribute('aria-selected', o === b); });
+        renderSummary(); renderNav();
+      });
     });
   }
 
   // ── step 3: details ──
   function renderStep3() {
-    if (stepEl(3).innerHTML) return; // keep what the customer typed
+    var s = P.services[state.service], q = quote();
+    var recap = '<div class="bk-recap">' +
+      '<div class="bk-recap-row"><span><strong>' + esc(s.label) + '</strong> · ' + state.bedrooms + ' bed' +
+        (chosenExtras().length ? ' + ' + chosenExtras().length + ' extra' + (chosenExtras().length > 1 ? 's' : '') : '') + '</span>' +
+        '<button type="button" class="bk-link" data-edit="0">Edit</button></div>' +
+      '<div class="bk-recap-row"><span>' + fmtDay.format(new Date(state.slot)) + ' at ' + fmtTime.format(new Date(state.slot)) + '</span>' +
+        '<button type="button" class="bk-link" data-edit="2">Change</button></div>' +
+      '<div class="bk-recap-row bk-recap-total"><span>Total</span><strong>' + (q.quote ? 'Quoted' : money(q.total)) + '</strong></div>' +
+      '</div>';
+
+    if (stepEl(3).querySelector('form')) {
+      // Keep what they've typed; just refresh the recap.
+      stepEl(3).querySelector('.bk-recap').outerHTML = recap;
+      bindRecap();
+      return;
+    }
+    var c = state.contact || {};
+    var accessHelp = { lockbox: 'Where is the lockbox, and the code?', key: 'Where will the key be?', concierge: 'Building name or concierge details', home: 'Anything we should know to get in?' };
     stepEl(3).innerHTML =
-      '<h2 class="bk-h">Your details</h2>' +
-      "<p class=\"bk-sub\">We'll send your booking confirmation here.</p>" +
-      '<form class="bk-form" novalidate>' +
+      '<h2 class="bk-h">Last step: your details</h2>' +
+      '<p class="bk-sub">No payment today. We’ll text you a payment link after your clean.</p>' +
+      recap +
+      '<form class="bk-form" novalidate autocomplete="on">' +
       '<div class="bk-group"><div class="bk-fields">' +
-      field('firstName', 'First name', 'text', 'given-name') +
-      field('lastName', 'Last name', 'text', 'family-name') +
-      field('phone', 'Mobile', 'tel', 'tel') +
-      field('email', 'Email', 'email', 'email') +
+      field('firstName', 'First name', 'text', 'given-name', false, 'autocapitalize="words" enterkeyhint="next"', c.firstName) +
+      field('lastName', 'Last name', 'text', 'family-name', false, 'autocapitalize="words" enterkeyhint="next"', c.lastName) +
+      field('phone', 'Mobile', 'tel', 'tel', true, 'inputmode="tel" enterkeyhint="next"', c.phone) +
+      field('email', 'Email', 'email', 'email', true, 'inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="next"', c.email) +
       '<div class="bk-field full bk-addr"><label for="bk-street">Address</label>' +
-      '<input id="bk-street" name="street" type="text" autocomplete="off" placeholder="Start typing, e.g. 12 Lakeview Drive" required ' +
+      '<input id="bk-street" name="street" type="text" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done" ' +
+      'placeholder="Start typing your address" value="' + esc(c.street || '') + '" required ' +
       'role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="bk-addr-list">' +
       '<ul class="bk-addr-list" id="bk-addr-list" role="listbox" hidden></ul></div>' +
       '</div></div>' +
-      '<div class="bk-group"><p class="bk-group-title">How will we get in?</p><div class="bk-chips" role="radiogroup" aria-label="Access">' +
+      '<div class="bk-group"><p class="bk-group-title">How will we get in?</p><div class="bk-chips bk-chips-2" role="radiogroup" aria-label="Access">' +
       P.accessOptions.map(function (a) {
-        return '<button type="button" class="bk-chip" role="radio" data-access="' + a.id + '" aria-checked="false">' + esc(a.label) + '</button>';
+        return '<button type="button" class="bk-chip" role="radio" data-access="' + a.id + '" aria-checked="' + (state.access === a.id) + '">' + esc(a.label) + '</button>';
       }).join('') + '</div>' +
-      '<div class="bk-fields" style="margin-top:14px"><div class="bk-field full"><label for="bk-accessDetails">Access details (optional)</label>' +
-      '<input id="bk-accessDetails" name="accessDetails" type="text" placeholder="e.g. lockbox location, building code"></div>' +
-      '<div class="bk-field full"><label for="bk-notes">Anything else we should know? (optional)</label>' +
-      '<textarea id="bk-notes" name="notes" placeholder="Pets, parking, areas to focus on…"></textarea></div></div></div>' +
+      '<div class="bk-field full bk-access-details"' + (state.access ? '' : ' hidden') + '><label for="bk-accessDetails">Details (optional)</label>' +
+      '<input id="bk-accessDetails" name="accessDetails" type="text" enterkeyhint="done" placeholder="' + esc(accessHelp[state.access] || '') + '" value="' + esc(c.accessDetails || '') + '"></div>' +
+      '</div>' +
+      '<div class="bk-group bk-notes"' + (state.showNotes || c.notes ? '' : ' hidden') + '><div class="bk-field full"><label for="bk-notes">Anything else? (optional)</label>' +
+      '<textarea id="bk-notes" name="notes" rows="3" placeholder="Pets, parking, areas to focus on…">' + esc(c.notes || '') + '</textarea></div></div>' +
+      '<button type="button" class="bk-add-note"' + (state.showNotes || c.notes ? ' hidden' : '') + '>' + icon('plus', 2) + 'Add a note (pets, parking…)</button>' +
       '<div class="bk-hp" aria-hidden="true"><label>Company<input name="company" tabindex="-1" autocomplete="off"></label></div>' +
-      '<div class="bk-callout">' + icon('info') + "<span><strong>No payment today.</strong> We'll text you a secure payment link after your clean. " +
-      "You'll never be charged for extra time you haven't approved.</span></div>" +
+      '<p class="bk-fineprint">You’ll never be charged for extra time you haven’t approved.</p>' +
       '</form>';
 
+    bindRecap();
     stepEl(3).querySelectorAll('[data-access]').forEach(function (b) {
       b.addEventListener('click', function () {
         state.access = b.dataset.access;
         setError('');
         stepEl(3).querySelectorAll('[data-access]').forEach(function (o) { o.setAttribute('aria-checked', o === b); });
+        var det = stepEl(3).querySelector('.bk-access-details');
+        det.hidden = false;
+        det.querySelector('input').placeholder = accessHelp[state.access] || '';
+        save();
       });
+    });
+    stepEl(3).querySelector('.bk-add-note').addEventListener('click', function () {
+      state.showNotes = true;
+      this.hidden = true;
+      var n = stepEl(3).querySelector('.bk-notes');
+      n.hidden = false;
+      n.querySelector('textarea').focus();
     });
     stepEl(3).querySelector('form').addEventListener('submit', function (e) { e.preventDefault(); next(); });
     setupAddress(stepEl(3).querySelector('#bk-street'), stepEl(3).querySelector('#bk-addr-list'));
-    stepEl(3).querySelectorAll('input').forEach(function (inp) {
-      inp.addEventListener('input', function () { inp.closest('.bk-field') && inp.closest('.bk-field').classList.remove('invalid'); setError(''); });
+    stepEl(3).querySelectorAll('input, textarea').forEach(function (inp) {
+      inp.addEventListener('input', function () {
+        var f = inp.closest('.bk-field');
+        if (f) f.classList.remove('invalid');
+        setError('');
+        state.contact = formValues();
+        save();
+      });
+    });
+    // "Next" on the iPhone keyboard moves to the next box.
+    ['firstName', 'lastName', 'phone', 'email'].forEach(function (k, i, arr) {
+      var el = stepEl(3).querySelector('#bk-' + k);
+      el.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          var nextId = arr[i + 1] || 'street';
+          stepEl(3).querySelector('#bk-' + nextId).focus();
+        }
+      });
     });
   }
+  function bindRecap() {
+    stepEl(3).querySelectorAll('[data-edit]').forEach(function (b) {
+      b.addEventListener('click', function () { go(+b.dataset.edit); });
+    });
+  }
+
   // ── address autocomplete (Photon / OpenStreetMap, Gold Coast area) ──
   var ADDR_API = 'https://photon.komoot.io/api/';
   var ADDR_BBOX = '152.9,-28.3,153.6,-27.6';
@@ -391,10 +541,15 @@
       state.addr = it;
       input.value = it.street + ', ' + it.suburb + ' ' + it.state + (it.postcode ? ' ' + it.postcode : '');
       input.closest('.bk-field').classList.remove('invalid');
+      state.contact = formValues();
+      save();
       close();
       if (!it.hasNumber) {
         // Street only: put the cursor at the start so they can add their number.
         input.focus(); input.setSelectionRange(0, 0);
+        setError('Add your street number at the start.');
+      } else {
+        input.blur();
       }
     }
     // Build suggestions for what's in the box right now from every recent result.
@@ -469,29 +624,26 @@
       if (list.hidden) return;
       if (e.key === 'ArrowDown') { e.preventDefault(); highlight(Math.min(items.length - 1, active + 1)); }
       else if (e.key === 'ArrowUp') { e.preventDefault(); highlight(Math.max(0, active - 1)); }
-      else if (e.key === 'Enter' && active >= 0) { e.preventDefault(); pick(active); }
+      else if (e.key === 'Enter') { e.preventDefault(); pick(active >= 0 ? active : 0); }
       else if (e.key === 'Escape') { close(); }
     });
     input.addEventListener('blur', function () { setTimeout(close, 150); });
-    // On phones, lift the field so suggestions aren't hidden behind the keyboard or price bar.
+    // On phones, lift the field so suggestions aren't hidden behind the keyboard.
     input.addEventListener('focus', function () {
-      if (window.innerWidth < 900) {
-        setTimeout(function () {
-          window.scrollTo({ top: input.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
-        }, 300);
-      }
+      if (isPhone()) setTimeout(function () { scrollToEl(input, 70); }, 300);
     });
   }
 
-  function field(name, label, type, ac, full, extra) {
+  function field(name, label, type, ac, full, extra, value) {
     return '<div class="bk-field' + (full ? ' full' : '') + '"><label for="bk-' + name + '">' + label + '</label>' +
-      '<input id="bk-' + name + '" name="' + name + '" type="' + type + '" autocomplete="' + ac + '" ' + (extra || '') + ' required></div>';
+      '<input id="bk-' + name + '" name="' + name + '" type="' + type + '" autocomplete="' + ac + '" ' + (extra || '') +
+      ' value="' + esc(value || '') + '" required></div>';
   }
   function formValues() {
     var f = stepEl(3).querySelector('form');
     var v = {};
     ['firstName', 'lastName', 'phone', 'email', 'street', 'accessDetails', 'notes', 'company'].forEach(function (k) {
-      v[k] = (f.elements[k].value || '').trim();
+      v[k] = f ? (f.elements[k].value || '').trim() : '';
     });
     return v;
   }
@@ -506,11 +658,17 @@
     stepEl(3).querySelectorAll('.bk-field').forEach(function (el) { el.classList.remove('invalid'); });
     bad.forEach(function (k) { stepEl(3).querySelector('#bk-' + k).closest('.bk-field').classList.add('invalid'); });
     if (bad.length) {
-      stepEl(3).querySelector('#bk-' + bad[0]).focus();
-      if (bad.length === 1 && bad[0] === 'street') return 'Please enter your full address, including the street number.';
-      return 'Please check the highlighted fields.';
+      var first = stepEl(3).querySelector('#bk-' + bad[0]);
+      scrollToEl(first, 110);
+      first.focus({ preventScroll: true });
+      var msgs = { firstName: 'Please add your first name.', lastName: 'Please add your last name.', phone: 'Please check your mobile number.',
+        email: 'Please check your email address.', street: 'Please enter your full address, including the street number.' };
+      return bad.length === 1 ? msgs[bad[0]] : 'Please check the highlighted details.';
     }
-    if (!state.access) return 'Please tell us how we’ll get in.';
+    if (!state.access) {
+      scrollToEl(stepEl(3).querySelector('[data-access]'), 140);
+      return 'Please tell us how we’ll get in.';
+    }
     return null;
   }
 
@@ -518,43 +676,44 @@
   function renderSummary() {
     var card = $('.bk-sum-card');
     var bar = $('.bk-bar-price');
+    var closeBtn = '<button type="button" class="bk-sheet-close" aria-label="Close summary">' + icon('close', 2) + '</button>';
     if (!state.service) {
-      card.innerHTML = '<p class="bk-sum-title">Your booking</p><p class="bk-sum-meta">Choose a clean type to see your price.</p>' +
+      card.innerHTML = closeBtn + '<p class="bk-sum-title">Your booking</p><p class="bk-sum-meta">Choose a clean to see your price.</p>' +
         '<div class="bk-sum-rows"><div class="bk-sum-row"><span>Regular clean</span><span>from $169</span></div>' +
         '<div class="bk-sum-row"><span>Deep clean</span><span>from $300</span></div>' +
         '<div class="bk-sum-row"><span>Bond clean</span><span>from $450</span></div></div>' +
         '<p class="bk-sum-note">No payment today. We text you a secure payment link after your clean.</p>';
-      bar.innerHTML = 'From $169<small>No payment today</small>';
-      return;
-    }
-    var s = P.services[state.service], q = quote(), ex = chosenExtras();
-    var beds = state.bedrooms + ' bed';
-    var rows = [
-      ['Home', beds + ', ' + state.bathrooms + ' bath'],
-      ['Frequency', P.frequencyLabels[state.frequency]]
-    ];
-    if (q.hours) rows.push(['Time included', 'Up to ' + hrs(q.hours)]);
-    if (state.slot) rows.push(['When', fmtDay.format(new Date(state.slot)) + ', ' + fmtTime.format(new Date(state.slot))]);
-    else if (state.day) rows.push(['When', fmtDay.format(dayDate(state.day))]);
-    var lines = [['Clean (' + beds + ')', q.quote ? 'Quoted' : money(q.base)]].concat(ex.map(function (x) {
-      return [x.label, '+' + money(extraPrice())];
-    }));
+      bar.innerHTML = '<span class="bk-bar-total">from $169</span><small>No payment today</small>';
+    } else {
+      var s = P.services[state.service], q = quote(), ex = chosenExtras();
+      var beds = state.bedrooms + ' bed';
+      var rows = [
+        ['Home', beds + ', ' + state.bathrooms + ' bath'],
+        ['Frequency', P.frequencyLabels[state.frequency]]
+      ];
+      if (q.hours) rows.push(['Time included', 'Up to ' + hrs(q.hours)]);
+      if (state.slot) rows.push(['When', fmtDay.format(new Date(state.slot)) + ', ' + fmtTime.format(new Date(state.slot))]);
+      var lines = [['Clean (' + beds + ')', q.quote ? 'Quoted' : money(q.base)]].concat(ex.map(function (x) {
+        return [x.label, '+' + money(extraPrice())];
+      }));
 
-    var total = q.quote ? 'Quoted' : money(q.total);
-    card.innerHTML =
-      '<p class="bk-sum-title">' + esc(s.label) + '</p><p class="bk-sum-meta">' + esc(s.tagline) + '</p>' +
-      '<div class="bk-sum-rows">' + rows.map(function (r) {
-        return '<div class="bk-sum-row"><span>' + r[0] + '</span><span>' + esc(r[1]) + '</span></div>';
-      }).join('') + '</div>' +
-      '<div class="bk-sum-rows bk-sum-lines">' + lines.map(function (r) {
-        return '<div class="bk-sum-row"><span>' + esc(r[0]) + '</span><span>' + r[1] + '</span></div>';
-      }).join('') + '</div>' +
-      '<div class="bk-sum-total"><span>Total</span><span>' + total + '</span></div>' +
-      (q.quote ? '<p class="bk-sum-note">Homes over 5 bedrooms are quoted individually. We’ll confirm your price before the clean' +
-        (ex.length ? ', plus ' + money(q.extrasTotal) + ' for extras' : '') + '.</p>' : '') +
-      '<div class="bk-sum-due"><span>Due today</span><span>$0</span></div>' +
-      '<p class="bk-sum-note">Any extra time on the day is ' + money(s.extraPerHour) + "/hr and only with your approval. We'll text you a secure payment link after your clean.</p>";
-    bar.innerHTML = total + '<small>' + esc(s.label) + ' · ' + beds + '</small>';
+      var total = q.quote ? 'Quoted' : money(q.total);
+      card.innerHTML = closeBtn +
+        '<p class="bk-sum-title">' + esc(s.label) + '</p><p class="bk-sum-meta">' + esc(s.tagline) + '</p>' +
+        '<div class="bk-sum-rows">' + rows.map(function (r) {
+          return '<div class="bk-sum-row"><span>' + r[0] + '</span><span>' + esc(r[1]) + '</span></div>';
+        }).join('') + '</div>' +
+        '<div class="bk-sum-rows bk-sum-lines">' + lines.map(function (r) {
+          return '<div class="bk-sum-row"><span>' + esc(r[0]) + '</span><span>' + r[1] + '</span></div>';
+        }).join('') + '</div>' +
+        '<div class="bk-sum-total"><span>Total</span><span>' + total + '</span></div>' +
+        (q.quote ? '<p class="bk-sum-note">Homes over 5 bedrooms are quoted individually. We’ll confirm your price before the clean' +
+          (ex.length ? ', plus ' + money(q.extrasTotal) + ' for extras' : '') + '.</p>' : '') +
+        '<div class="bk-sum-due"><span>Due today</span><span>$0</span></div>' +
+        '<p class="bk-sum-note">Any extra time on the day is ' + money(s.extraPerHour) + "/hr and only with your approval. We'll text you a secure payment link after your clean.</p>";
+      bar.innerHTML = '<span class="bk-bar-total">' + total + icon('up', 2.2) + '</span><small>' + esc(s.label) + ' · ' + beds + '</small>';
+    }
+    card.querySelector('.bk-sheet-close').addEventListener('click', function () { toggleSheet(false); });
   }
 
   // ── navigation ──
@@ -572,34 +731,75 @@
       el.classList.toggle('done', i < state.step);
       el.classList.toggle('active', i === state.step);
     });
+    if (state.step < 4) {
+      $('.bk-top-count').textContent = 'Step ' + (state.step + 1) + ' of 4';
+      $('.bk-top-name').textContent = STEPS[state.step];
+    }
+    root.classList.toggle('is-first', state.step === 0);
+    root.style.setProperty('--bk-progress', Math.min(100, (state.step + 1) * 25) + '%');
+    var head = document.querySelector('header');
+    if (head) root.style.setProperty('--bk-head', head.offsetHeight + 'px');
     root.querySelectorAll('.bk-back').forEach(function (b) { b.hidden = state.step === 0; });
+    var label = state.submitting ? 'Booking…'
+      : state.step === 3 ? 'Confirm booking'
+      : state.step === 1 && !chosenExtras().length ? 'Skip extras'
+      : 'Continue';
     root.querySelectorAll('.bk-next').forEach(function (b) {
-      b.textContent = state.submitting ? 'Booking…' : state.step === 3 ? 'Confirm booking' : 'Continue';
+      b.textContent = label;
       b.disabled = state.submitting;
+      b.classList.toggle('is-waiting', !canContinue());
     });
   }
-  function go(step) {
+  function scrollToEl(el, offset) {
+    if (!el) return;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - (offset || 90), behavior: 'smooth' });
+  }
+  function go(step, fromHistory) {
     state.step = step;
     setError('');
+    toggleSheet(false);
     if (step === 1) renderStep1();
     if (step === 2) renderStep2();
     if (step === 3) renderStep3();
     renderNav();
-    var top = root.getBoundingClientRect().top + window.scrollY - 90;
-    if (window.scrollY > top) window.scrollTo({ top: top, behavior: 'smooth' });
+    save();
+    if (!fromHistory) {
+      try { history.pushState({ bk: step }, '', '#' + ['clean', 'extras', 'time', 'details'][step]); } catch (e) { /* ignore */ }
+    }
+    // Start each step at its top.
+    var top = root.getBoundingClientRect().top + window.scrollY - (isPhone() ? 64 : 90);
+    if (window.scrollY > top || isPhone()) window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   }
   function next() {
     if (state.submitting) return;
     if (!canContinue()) {
-      setError(state.step === 0 ? 'Please choose a clean type.' : 'Please choose a date and time.');
+      setError(state.step === 0 ? 'Choose a clean to continue.' : 'Choose a start time to continue.');
+      if (state.step === 2) scrollToEl(stepEl(2).querySelector('.bk-times'), 110);
       return;
+    }
+    if (state.step === 0 && !state.checkoutTracked) {
+      state.checkoutTracked = true;
+      metaTrack('InitiateCheckout', metaParams());
     }
     if (state.step < 3) return go(state.step + 1);
     var err = validateDetails();
     if (err) return setError(err);
     submit();
   }
-  function back() { if (state.step > 0 && !state.submitting) go(state.step - 1); }
+  function back() {
+    if (state.step > 0 && state.step < 4 && !state.submitting) {
+      // Use the browser's history so the iPhone swipe-back and our Back button agree.
+      if (history.state && history.state.bk === state.step) history.back();
+      else go(state.step - 1);
+    }
+  }
+  window.addEventListener('popstate', function (e) {
+    if (state.step === 4 || state.submitting) return;
+    var target = e.state && typeof e.state.bk === 'number' ? e.state.bk : 0;
+    if (target > 0 && !state.service) target = 0;
+    if (target === 3 && !state.slot) target = 2;
+    go(target, true);
+  });
 
   // ── submit ──
   function submit() {
@@ -634,7 +834,7 @@
         if (res.r.ok && res.j.ok) return done(res.j);
         if (res.r.status === 409) {
           state.slot = null;
-          delete slotCache[state.month];
+          loadSlots(true);
           go(2);
           renderSummary();
         } else {
@@ -650,12 +850,11 @@
 
   function done(res) {
     var s = P.services[state.service], q = quote();
-    // Facebook: Lead, only after GoHighLevel has confirmed the booking.
-    if (typeof window.fbq === 'function') {
-      var params = { content_name: s.label, currency: 'AUD' };
-      if (q.total) params.value = q.total;
-      window.fbq('track', 'Lead', params, { eventID: 'booking_' + res.bookingId });
-    }
+    // Meta: Lead (what the ads optimise for) and Schedule (Meta's appointment
+    // event), only after GoHighLevel has confirmed the booking.
+    var params = metaParams();
+    metaTrack('Lead', params, 'booking_' + res.bookingId);
+    metaTrack('Schedule', params, 'booking_' + res.bookingId);
     // Google Ads: Book appointment conversion.
     if (typeof window.gtag === 'function') {
       window.gtag('event', 'conversion', {
@@ -664,6 +863,7 @@
         'currency': 'GBP'
       });
     }
+    clearSaved();
     var v = formValues();
     var el = stepEl(4);
     el.innerHTML = '<div class="bk-done"><div class="bk-done-icon">' + icon('check', 2.2) + '</div>' +
@@ -675,12 +875,17 @@
       '<div class="bk-done-item"><span class="bk-done-num">3</span><span><strong>After your clean,</strong> we’ll text you a secure payment link.</span></div>' +
       '</div></div>';
     root.classList.add('is-done');
-    root.querySelector('.bk-progress').style.display = 'none';
-    root.querySelector('.bk-nav').style.display = 'none';
     state.step = 4;
     renderNav();
-    window.scrollTo({ top: root.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
+    try { history.replaceState({ bk: 4 }, '', '#booked'); } catch (e) { /* ignore */ }
+    window.scrollTo({ top: Math.max(0, root.getBoundingClientRect().top + window.scrollY - 90), behavior: 'smooth' });
   }
+
+  // Meta: Contact when someone taps a phone number on this page.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="tel:"]');
+    if (a) metaTrack('Contact', { content_name: 'Phone call' });
+  });
 
   // ── start ──
   fetch('/booking/pricing.json')
@@ -691,23 +896,38 @@
       fmtTime = new Intl.DateTimeFormat('en-AU', { timeZone: TZ, hour: 'numeric', minute: '2-digit' });
       fmtDay = new Intl.DateTimeFormat('en-AU', { timeZone: TZ, weekday: 'short', day: 'numeric', month: 'short' });
       fmtDayLong = new Intl.DateTimeFormat('en-AU', { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long' });
-      fmtMonth = new Intl.DateTimeFormat('en-AU', { timeZone: TZ, month: 'long', year: 'numeric' });
+      fmtWeekday = new Intl.DateTimeFormat('en-AU', { timeZone: TZ, weekday: 'short' });
+      fmtMonthShort = new Intl.DateTimeFormat('en-AU', { timeZone: TZ, month: 'short' });
 
-      // Allow links like /apply.html?service=bond&bedrooms=3
+      restore();
+      // Links like /apply.html?service=bond&bedrooms=3 take priority over saved progress.
       var params = new URLSearchParams(location.search);
       if (P.services[params.get('service')]) {
         state.service = params.get('service');
-        state.frequency = P.services[state.service].frequencies[0] === 'one_off' && state.service !== 'regular'
-          ? 'one_off' : 'fortnightly';
+        var fr = P.services[state.service].frequencies;
+        if (fr.indexOf(state.frequency) === -1) state.frequency = fr[0];
+        if (state.service === 'regular' && state.frequency === 'one_off') state.frequency = 'fortnightly';
+        state.step = 0;
       }
       var beds = parseInt(params.get('bedrooms'), 10);
       if (beds >= 1 && beds <= P.maxBedrooms) state.bedrooms = beds;
+      if (!state.service) state.step = 0;
 
       shell();
       renderStep0();
+      if (state.service) renderStep1();
       renderSummary();
-      renderNav();
-      loadMonth(todayKey().slice(0, 7)); // warm up availability
+      try { history.replaceState({ bk: 0 }, '', location.pathname + location.search); } catch (e) { /* ignore */ }
+      if (state.step > 0) {
+        // Rebuild history so swipe-back walks back through the steps.
+        for (var i = 1; i <= state.step; i++) {
+          try { history.pushState({ bk: i }, '', '#' + ['clean', 'extras', 'time', 'details'][i]); } catch (e) { /* ignore */ }
+        }
+        go(state.step, true);
+      } else {
+        renderNav();
+      }
+      loadSlots(); // warm up availability
     })
     .catch(function () {
       root.innerHTML = '<p class="bk-sub" style="text-align:center">Online booking is unavailable right now. Please call us on ' +
