@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap" rel="stylesheet"/>
 
-<!-- Meta Pixel — Reset Cleaning Group HIRING -->
+<!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -47,13 +47,13 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '719595437882075');
+fbq('init', '1746360023718132');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=719595437882075&ev=PageView&noscript=1"
+src="https://www.facebook.com/tr?id=1746360023718132&ev=PageView&noscript=1"
 /></noscript>
-<!-- End Meta Pixel -->
+<!-- End Meta Pixel Code -->
 
 <style>
 :root {
@@ -442,14 +442,14 @@ footer {
 
 <script src="https://link.msgsndr.com/js/form_embed.js"></script>
 
-<!-- GHL Form Submission → Meta Lead Event -->
+<!-- GHL Form Submission → Meta SubmitApplication Event -->
 <script>
   window.addEventListener('message', function(event) {
     if (!event.data) return;
     var d = event.data;
     if (Array.isArray(d) && d[0] === 'set-sticky-contacts') {
       if (typeof fbq !== 'undefined') {
-        fbq('track', 'Lead');
+        fbq('track', 'SubmitApplication', { content_name: 'Job application' });
       }
     }
   });
