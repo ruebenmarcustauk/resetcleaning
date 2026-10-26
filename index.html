@@ -570,6 +570,91 @@ h1 em{font-style:normal;font-weight:500;color:var(--driftwood);}
   .hero-left{height:auto;}
   .hero-insta{padding:12px 12px 14px;gap:10px;}
 }
+
+/* ─── HOMEPAGE REFRESH ─── */
+h1{font-size:clamp(1.9rem,2.9vw,2.9rem);line-height:1.12;margin-bottom:16px;letter-spacing:-.01em;}
+h1 em{display:block;}
+.hero-eyebrow{font-size:.62rem;}
+.hero-lede{font-size:.95rem;line-height:1.75;color:rgba(44,40,37,.65);max-width:470px;margin-bottom:26px;}
+.hero-lede strong{color:var(--obsidian);font-weight:600;}
+.hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:18px 22px;margin-bottom:26px;}
+.hero-book{font-size:.68rem;padding:18px 46px;}
+.hero-rating{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;color:var(--driftwood);text-decoration:none;}
+.hero-stars{color:#AD674A;letter-spacing:.08em;font-size:.9rem;}
+.hero-rating:hover{color:var(--obsidian);}
+.qf-toggle{display:none;}
+.qf-title{font-size:1.05rem;}
+
+.sec-eyebrow{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--obsidian);opacity:.5;margin-bottom:14px;}
+.sec-title{font-family:'Poppins',sans-serif;font-weight:800;font-size:clamp(1.8rem,2.6vw,2.6rem);line-height:1.12;color:var(--obsidian);margin-bottom:14px;}
+.sec-title em{font-style:normal;color:#AD674A;}
+.sec-sub{font-size:.9rem;line-height:1.7;color:rgba(44,40,37,.6);max-width:520px;margin:0 auto;}
+
+.svc{background:var(--bg);padding:84px 64px 72px;}
+.svc-head{text-align:center;margin-bottom:44px;}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1120px;margin:0 auto;}
+.svc-card{position:relative;display:flex;flex-direction:column;background:var(--linen);border-radius:var(--radius);padding:32px 30px 28px;text-decoration:none;color:var(--obsidian);box-shadow:var(--shadow-soft);border:1.5px solid transparent;transition:transform .3s, box-shadow .3s, border-color .3s;}
+.svc-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-elev);border-color:rgba(173,103,74,.35);}
+.svc-card-feature{background:#fff;border-color:rgba(173,103,74,.35);}
+.svc-tag{position:absolute;top:-12px;left:30px;background:#AD674A;color:#fff;font-size:.56rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:6px 12px;border-radius:var(--radius-pill);}
+.svc-name{font-weight:700;font-size:1.15rem;margin-bottom:6px;}
+.svc-price{font-weight:800;font-size:2.1rem;line-height:1.1;margin-bottom:20px;}
+.svc-price span{font-size:.72rem;font-weight:400;color:var(--driftwood);margin-right:2px;}
+.svc-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:26px;flex:1;}
+.svc-list li{position:relative;padding-left:22px;font-size:.84rem;line-height:1.55;color:rgba(44,40,37,.7);}
+.svc-list li::before{content:'';position:absolute;left:0;top:.45em;width:12px;height:7px;border-left:2px solid #AD674A;border-bottom:2px solid #AD674A;transform:rotate(-45deg);}
+.svc-go{font-size:.8rem;font-weight:600;color:#AD674A;display:inline-flex;gap:6px;align-items:center;}
+.svc-card:hover .svc-go span{transform:translateX(3px);}
+.svc-go span{transition:transform .25s;}
+.svc-more{text-align:center;margin-top:30px;font-size:.84rem;color:rgba(44,40,37,.6);}
+.svc-more a{color:var(--obsidian);font-weight:500;text-decoration:underline;text-underline-offset:3px;}
+
+.how{background:var(--linen);padding:76px 64px 80px;}
+.how-grid{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1120px;margin:0 auto;counter-reset:none;}
+.how-grid li{padding:4px 8px;text-align:center;}
+.how-num{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--obsidian);color:var(--linen);font-weight:700;font-size:1rem;margin-bottom:16px;}
+.how-title{font-weight:700;font-size:1.05rem;margin-bottom:8px;color:var(--obsidian);}
+.how-text{font-size:.86rem;line-height:1.7;color:rgba(44,40,37,.62);max-width:300px;margin:0 auto;}
+
+.m-bar{display:none;}
+
+@media(max-width:960px){
+  .svc{padding:64px 24px 56px;}
+  .how{padding:60px 24px 64px;}
+  .svc-grid{grid-template-columns:1fr;max-width:520px;gap:26px;}
+  .how-grid{grid-template-columns:1fr;gap:28px;}
+}
+@media(max-width:768px){
+  /* Phones: sticky Call / Book bar instead of the small floating button */
+  .whatsapp-float{display:none !important;}
+  .m-bar{
+    display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:998;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    background:rgba(245,242,238,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    border-top:1px solid var(--border);box-shadow:0 -6px 24px rgba(44,40,37,.08);
+  }
+  .m-bar a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;border-radius:14px;text-decoration:none;font-family:'Poppins',sans-serif;font-weight:600;font-size:.92rem;}
+  .m-bar-call{flex:0 0 32%;background:#fff;color:var(--obsidian);border:1.5px solid var(--border-mid);}
+  .m-bar-call svg{width:17px;height:17px;}
+  .m-bar-book{flex:1;background:#AD674A;color:#fff;box-shadow:0 8px 20px rgba(173,103,74,.3);}
+  body{padding-bottom:calc(72px + env(safe-area-inset-bottom));}
+}
+@media(max-width:520px){
+  h1{font-size:1.75rem;margin-bottom:12px;}
+  .hero-lede{font-size:.88rem;margin-bottom:20px;}
+  .hero-actions{flex-direction:column;align-items:stretch;gap:14px;margin-bottom:18px;}
+  .hero-book{display:block;align-self:stretch;text-align:center;padding:18px 24px;font-size:.72rem;}
+  .hero-rating{justify-content:center;}
+  /* Quote form tucks behind a "Prefer a call?" button on phones */
+  .qf-toggle{display:block;width:100%;background:none;border:1.5px solid var(--border-mid);border-radius:var(--radius-pill);padding:14px;font-family:'Poppins',sans-serif;font-size:.86rem;color:var(--driftwood);cursor:pointer;}
+  .qf-toggle span{color:var(--obsidian);font-weight:600;text-decoration:underline;text-underline-offset:3px;}
+  .quote-form{display:none;margin-top:16px;}
+  .quote-form.qf-open{display:flex;}
+  .qf-toggle[aria-expanded="true"]{display:none;}
+  /* 16px text stops iPhone zooming in on the quote form */
+  .quote-form input,.cselect-btn,.cselect-list li{font-size:16px;}
+  .svc-price{font-size:1.9rem;}
+}
 /* ─── BLOG nav link + homepage blog section ─── */
 .nav-link{font-family:'Poppins',sans-serif;font-weight:400;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--obsidian);text-decoration:none;padding:10px 0;transition:color .3s;}
 .nav-link:hover{color:var(--driftwood);}
@@ -614,12 +699,17 @@ h1 em{font-style:normal;font-weight:500;color:var(--driftwood);}
   </div>
 
   <div class="hero-right">
-    <span class="hero-index">I</span>
     <div class="hero-content">
       <p class="hero-eyebrow">Premium Cleaning · Gold Coast</p>
       <h1>Thoughtfully cleaned. <em>Quietly transformed.</em></h1>
+      <p class="hero-lede">Regular, deep and bond cleans with natural products and hotel-standard results. Upfront prices from <strong>$169</strong>, booked online in two minutes.</p>
+      <div class="hero-actions">
+        <a class="btn hero-book" href="/apply.html"><span>Book online</span></a>
+        <a class="hero-rating" href="https://share.google/6jxrriIpBQZ5gDwnU" target="_blank" rel="noopener"><span class="hero-stars" aria-hidden="true">★★★★★</span> Rated 5 stars on Google</a>
+      </div>
+      <button type="button" class="qf-toggle" aria-expanded="false" aria-controls="quote-form">Prefer a call? <span>Get a free quote</span></button>
       <form class="quote-form" id="quote-form">
-        <p class="qf-title">Get your free instant quote</p>
+        <p class="qf-title">Get your free quote</p>
         <p class="qf-sub">Tell us a little about your place — we'll call you with a price.</p>
         <div class="qf-row">
           <input type="text" name="name" placeholder="Full name" autocomplete="name" required>
@@ -664,6 +754,62 @@ h1 em{font-style:normal;font-weight:500;color:var(--driftwood);}
   </div>
 </section>
 
+
+<!-- SERVICES -->
+<section class="svc" id="services">
+  <div class="svc-head">
+    <p class="sec-eyebrow">Our cleans</p>
+    <h2 class="sec-title">Clear prices. <em>No surprises.</em></h2>
+    <p class="sec-sub">Pick your clean, choose a time and you're booked. No payment until after your clean.</p>
+  </div>
+  <div class="svc-grid">
+    <a class="svc-card" href="/apply.html?service=regular">
+      <p class="svc-name">Regular Clean</p>
+      <p class="svc-price"><span>from</span> $169</p>
+      <ul class="svc-list">
+        <li>Bathrooms, kitchen, bedrooms &amp; living areas</li>
+        <li>Floors vacuumed and mopped</li>
+        <li>Weekly, fortnightly, monthly or one-off</li>
+      </ul>
+      <span class="svc-go">Book a regular clean <span aria-hidden="true">&rarr;</span></span>
+    </a>
+    <a class="svc-card svc-card-feature" href="/apply.html?service=deep">
+      <p class="svc-tag">Most thorough</p>
+      <p class="svc-name">Deep Clean</p>
+      <p class="svc-price"><span>from</span> $300</p>
+      <ul class="svc-list">
+        <li>Everything in a regular clean</li>
+        <li>Inside cupboards, grout, skirting &amp; tracks</li>
+        <li>Ideal for a first clean or seasonal reset</li>
+      </ul>
+      <span class="svc-go">Book a deep clean <span aria-hidden="true">&rarr;</span></span>
+    </a>
+    <a class="svc-card" href="/apply.html?service=bond">
+      <p class="svc-name">Bond / End of Lease</p>
+      <p class="svc-price"><span>from</span> $450</p>
+      <ul class="svc-list">
+        <li>Everything in a deep clean</li>
+        <li>Oven, fridge, windows, blinds &amp; walls</li>
+        <li>Cleaned to REIQ exit report standard</li>
+      </ul>
+      <span class="svc-go">Book a bond clean <span aria-hidden="true">&rarr;</span></span>
+    </a>
+  </div>
+  <p class="svc-more">Also: <a href="/services/airbnb-cleaning-gold-coast.html">Airbnb</a> &middot; <a href="/services/office-cleaning-gold-coast.html">Office</a> &middot; <a href="/services/gym-cleaning-gold-coast.html">Gym &amp; studio</a> cleaning</p>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="svc-head">
+    <p class="sec-eyebrow">How it works</p>
+    <h2 class="sec-title">Booked in minutes. <em>Paid after.</em></h2>
+  </div>
+  <ol class="how-grid">
+    <li><span class="how-num">1</span><p class="how-title">Book online</p><p class="how-text">Choose your clean, add any extras and pick a time. It takes about two minutes.</p></li>
+    <li><span class="how-num">2</span><p class="how-title">We reset your home</p><p class="how-text">Natural products, hotel-standard finish. If your home needs extra time, we'll always ask first.</p></li>
+    <li><span class="how-num">3</span><p class="how-title">Pay after</p><p class="how-text">Once you're happy, we text you a secure payment link. Nothing to pay upfront.</p></li>
+  </ol>
+</section>
 <!-- INSTAGRAM -->
 <style>
 .insta-intro{padding:56px 64px 32px;text-align:center;background:var(--linen);}
@@ -831,6 +977,10 @@ h1 em{font-style:normal;font-weight:500;color:var(--driftwood);}
   </svg>
   Call us
 </a>
+<div class="m-bar" aria-label="Quick actions">
+  <a class="m-bar-call" href="tel:+61494427135"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.57.57 1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.57 1 1 0 01-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="m-bar-book" href="/apply.html">Book online &middot; from $169</a>
+</div>
 <!-- FOOTER -->
 <style>
 .uf{background:#2C2825;color:#F5F2EE;padding:56px 56px 26px;font-family:'Poppins',sans-serif;}
@@ -907,6 +1057,17 @@ h1 em{font-style:normal;font-weight:500;color:var(--driftwood);}
   });
 </script>
 <script>
+  // Phones: show the quote form when "Prefer a call?" is tapped
+  (function () {
+    var t = document.querySelector('.qf-toggle'), f = document.getElementById('quote-form');
+    if (!t || !f) return;
+    t.addEventListener('click', function () {
+      f.classList.add('qf-open');
+      t.setAttribute('aria-expanded', 'true');
+      var first = f.querySelector('input'); if (first) first.focus();
+    });
+  })();
+
   // Free quote form → GoHighLevel inbound webhook
   // Set this to the "Inbound Webhook" trigger URL from your GHL workflow
   // (Automation → Workflows → Trigger: Inbound Webhook). Leave blank to disable.
