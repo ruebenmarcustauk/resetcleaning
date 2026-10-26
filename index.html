@@ -557,18 +557,34 @@ h1 em{font-style:normal;font-weight:500;color:var(--driftwood);}
   .hero-footer{flex-direction:column;gap:6px;align-items:flex-start;}
 }
 /* ─── HERO INSTAGRAM GRID ─── */
-.hero-left{display:flex;align-items:center;justify-content:center;background:var(--linen);line-height:normal;}
-.hero-insta{width:100%;max-width:640px;padding:40px;display:flex;flex-direction:column;align-items:center;gap:16px;}
-.hero-insta iframe{display:block;width:100%;}
-.hero-insta-link{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--driftwood);text-decoration:none;text-align:center;}
-.hero-insta-link:hover{color:var(--obsidian);}
+/* Desktop: 2 x 3 photos fill the whole left half, matching the height of the form side */
+.hero-left{display:block;position:relative;background:#E4DDD2;line-height:normal;min-height:560px;}
+/* Desktop: two kitchen photos fill the left half, matching the form side's height */
+.hero-photos{position:absolute;inset:0;display:grid;grid-template-rows:1fr 1fr;gap:4px;}
+.hero-photos picture,.hero-photos img{display:block;width:100%;height:100%;min-height:0;}
+.hero-photos img{object-fit:cover;}
+.hero-photos picture:first-child img{object-position:center 62%;}
+.hero-photos picture:last-child img{object-position:center 55%;}
+/* Instagram grid: phones and tablets only */
+.ig{display:none;position:relative;}
+.ig-grid{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);gap:4px;}
+.ig-tile{display:block;position:relative;overflow:hidden;background:#E4DDD2;}
+.ig-tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s ease;}
+.ig-tile:hover img{transform:scale(1.04);}
+.ig-badge{position:absolute;left:20px;bottom:20px;z-index:2;display:inline-flex;align-items:center;gap:8px;
+  padding:10px 16px;border-radius:var(--radius-pill);background:rgba(245,242,238,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  box-shadow:var(--shadow-soft);font-size:.74rem;font-weight:600;color:var(--obsidian);text-decoration:none;transition:transform .25s;}
+.ig-badge:hover{transform:translateY(-2px);}
+.ig-badge svg{width:16px;height:16px;color:#AD674A;}
+@media(prefers-reduced-motion:reduce){.ig-tile img{transition:none;}}
 @media(max-width:960px){
-  .hero-left{aspect-ratio:auto;height:auto;}
-  .hero-insta{padding:20px 16px 16px;max-width:none;}
-}
-@media(max-width:520px){
-  .hero-left{height:auto;}
-  .hero-insta{padding:12px 12px 14px;gap:10px;}
+  .hero-right{order:-1;}
+  .hero-left{border-bottom:none;border-top:1px solid var(--border);aspect-ratio:auto;height:auto;min-height:0;}
+  .hero-photos{display:none;}
+  .ig{display:block;}
+  .ig-grid{position:static;grid-template-columns:repeat(3,1fr);grid-template-rows:none;gap:3px;}
+  .ig-tile{aspect-ratio:1/1;}
+  .ig-badge{left:12px;bottom:12px;padding:8px 13px;font-size:.7rem;}
 }
 
 /* ─── HOMEPAGE REFRESH ─── */
@@ -582,7 +598,6 @@ h1 em{display:block;}
 .hero-rating{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;color:var(--driftwood);text-decoration:none;}
 .hero-stars{color:#AD674A;letter-spacing:.08em;font-size:.9rem;}
 .hero-rating:hover{color:var(--obsidian);}
-.qf-toggle{display:none;}
 .qf-title{font-size:1.05rem;}
 
 .sec-eyebrow{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--obsidian);opacity:.5;margin-bottom:14px;}
@@ -627,6 +642,9 @@ h1 em{display:block;}
 @media(max-width:768px){
   /* Phones: sticky Call / Book bar instead of the small floating button */
   .whatsapp-float{display:none !important;}
+  .hero-actions .hero-book{display:none;}
+  .hero-actions{margin-bottom:16px;justify-content:flex-start;}
+  .hero-rating{justify-content:flex-start;}
   .m-bar{
     display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:998;
     padding:10px 14px calc(10px + env(safe-area-inset-bottom));
@@ -643,16 +661,21 @@ h1 em{display:block;}
   h1{font-size:1.75rem;margin-bottom:12px;}
   .hero-lede{font-size:.88rem;margin-bottom:20px;}
   .hero-actions{flex-direction:column;align-items:stretch;gap:14px;margin-bottom:18px;}
-  .hero-book{display:block;align-self:stretch;text-align:center;padding:18px 24px;font-size:.72rem;}
-  .hero-rating{justify-content:center;}
-  /* Quote form tucks behind a "Prefer a call?" button on phones */
-  .qf-toggle{display:block;width:100%;background:none;border:1.5px solid var(--border-mid);border-radius:var(--radius-pill);padding:14px;font-family:'Poppins',sans-serif;font-size:.86rem;color:var(--driftwood);cursor:pointer;}
-  .qf-toggle span{color:var(--obsidian);font-weight:600;text-decoration:underline;text-underline-offset:3px;}
-  .quote-form{display:none;margin-top:16px;}
-  .quote-form.qf-open{display:flex;}
-  .qf-toggle[aria-expanded="true"]{display:none;}
+  .hero-book{align-self:stretch;text-align:center;padding:18px 24px;font-size:.72rem;}
   /* 16px text stops iPhone zooming in on the quote form */
   .quote-form input,.cselect-btn,.cselect-list li{font-size:16px;}
+  .hero-right{padding:22px 16px 22px;}
+  .hero-eyebrow{margin-bottom:8px;}
+  h1{font-size:1.55rem;}
+  .hero-lede{font-size:.86rem;line-height:1.6;margin-bottom:16px;}
+  .quote-form{padding:18px 16px;gap:10px;border-radius:20px;border:1px solid var(--border-mid);box-shadow:0 10px 30px rgba(44,40,37,.1);}
+  .qf-title{font-size:1rem;}
+  .qf-sub{display:none;}
+  .qf-row{grid-template-columns:1fr 1fr;gap:10px;}
+  .qf-row-single{grid-template-columns:1fr;}
+  .quote-form input,.cselect-btn{background:#fff;border:1.5px solid var(--border-mid);padding:12px 12px;min-height:48px;}
+  .cselect-btn{color:rgba(44,40,37,.5);}
+  .qf-submit{padding:16px 20px;font-size:.66rem;}
   .svc-price{font-size:1.9rem;}
 }
 /* ─── BLOG nav link + homepage blog section ─── */
@@ -692,9 +715,26 @@ h1 em{display:block;}
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <div class="hero-insta">
-      <iframe src="https://snapwidget.com/embed/1129205" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none;overflow:hidden;width:100%;" title="Posts from Instagram"></iframe>
-      <a class="hero-insta-link" href="https://www.instagram.com/resetcleaninggroup/" target="_blank" rel="noopener">Real homes, freshly reset · @resetcleaninggroup</a>
+    <div class="hero-photos">
+      <picture>
+        <source media="(min-width: 961px)" srcset="/images/hero-kitchen-island-800.webp 800w, /images/hero-kitchen-island-1400.webp 1400w" sizes="50vw">
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Timber kitchen with a curved island, freshly cleaned by Reset Cleaning" width="1400" height="1400" fetchpriority="high">
+      </picture>
+      <picture>
+        <source media="(min-width: 961px)" srcset="/images/hero-kitchen-hall-800.webp 800w, /images/hero-kitchen-hall-1400.webp 1400w" sizes="50vw">
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Bright white and timber kitchen, freshly cleaned by Reset Cleaning" width="1400" height="1400">
+      </picture>
+    </div>
+    <div class="ig" id="ig">
+      <div class="ig-grid" aria-label="Recent posts from our Instagram">
+        <a class="ig-tile" href="https://www.instagram.com/p/Dd-5tuTkaQd/" target="_blank" rel="noopener" aria-label="Instagram: Palm Beach Bond Clean 🧽 Moving out? You know who to call!"><img src="/images/instagram/post-1.webp" alt="Palm Beach Bond Clean 🧽 Moving out? You know who to call!" width="720" height="720" decoding="async" loading="lazy"></a>
+        <a class="ig-tile" href="https://www.instagram.com/p/Dd-46wJEbt3/" target="_blank" rel="noopener" aria-label="Instagram: Ready for the weekend 🧼Amazing Miami home looking perfect!"><img src="/images/instagram/post-2.webp" alt="Ready for the weekend 🧼Amazing Miami home looking perfect!" width="720" height="720" decoding="async" loading="lazy"></a>
+        <a class="ig-tile" href="https://www.instagram.com/p/Dd74pTyiZtR/" target="_blank" rel="noopener" aria-label="Instagram: Bond clean We clean, you get your deposit back 🤝🫡"><img src="/images/instagram/post-3.webp" alt="Bond clean We clean, you get your deposit back 🤝🫡" width="720" height="720" decoding="async" loading="lazy"></a>
+        <a class="ig-tile" href="https://www.instagram.com/p/DdngbUekX3d/" target="_blank" rel="noopener" aria-label="Instagram: Ready for Market! Prepping this luxurious Broadbeach Waters home for potential buyers 🤝🧼🫡"><img src="/images/instagram/post-4.webp" alt="Ready for Market! Prepping this luxurious Broadbeach Waters home for potential buyers 🤝🧼🫡" width="720" height="720" decoding="async" loading="lazy"></a>
+        <a class="ig-tile" href="https://www.instagram.com/p/DdlJGzJkR2P/" target="_blank" rel="noopener" aria-label="Instagram: We don’t cut corners, we clean them 🫡Wonderful Mermaid Beach home in for a deep clean🧼"><img src="/images/instagram/post-5.webp" alt="We don’t cut corners, we clean them 🫡Wonderful Mermaid Beach home in for a deep clean🧼" width="720" height="720" decoding="async" loading="lazy"></a>
+        <a class="ig-tile" href="https://www.instagram.com/p/DdTTkzpEX_a/" target="_blank" rel="noopener" aria-label="Instagram: Homes that feel like hotels Weekly cleaning and house management for this amazing Gold Coast property."><img src="/images/instagram/post-6.webp" alt="Homes that feel like hotels Weekly cleaning and house management for this amazing Gold Coast property." width="720" height="720" decoding="async" loading="lazy"></a>
+      </div>
+      <a class="ig-badge" href="https://www.instagram.com/resetcleaninggroup/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>@resetcleaninggroup</a>
     </div>
   </div>
 
@@ -707,7 +747,6 @@ h1 em{display:block;}
         <a class="btn hero-book" href="/apply.html"><span>Book online</span></a>
         <a class="hero-rating" href="https://share.google/6jxrriIpBQZ5gDwnU" target="_blank" rel="noopener"><span class="hero-stars" aria-hidden="true">★★★★★</span> Rated 5 stars on Google</a>
       </div>
-      <button type="button" class="qf-toggle" aria-expanded="false" aria-controls="quote-form">Prefer a call? <span>Get a free quote</span></button>
       <form class="quote-form" id="quote-form">
         <p class="qf-title">Get your free quote</p>
         <p class="qf-sub">Tell us a little about your place — we'll call you with a price.</p>
@@ -821,7 +860,7 @@ h1 em{display:block;}
 .insta-link svg{width:15px;height:15px;}
 .insta-embed{background:var(--linen);display:flex;justify-content:center;padding:0 0 40px;}
 </style>
-<script src="https://snapwidget.com/js/snapwidget.js"></script>
+
 <!-- REVIEWS -->
 <style>
 .reviews-section{padding:64px 0 60px;background:var(--stone);}
@@ -1057,15 +1096,43 @@ h1 em{display:block;}
   });
 </script>
 <script>
-  // Phones: show the quote form when "Prefer a call?" is tapped
+  // Instagram grid: the page ships with saved copies of recent posts (instant,
+  // works anywhere). The live feed then swaps in anything newer, using photos
+  // resized to WebP by Netlify's Image CDN. If the feed is down, nothing changes.
   (function () {
-    var t = document.querySelector('.qf-toggle'), f = document.getElementById('quote-form');
-    if (!t || !f) return;
-    t.addEventListener('click', function () {
-      f.classList.add('qf-open');
-      t.setAttribute('aria-expanded', 'true');
-      var first = f.querySelector('input'); if (first) first.focus();
-    });
+    var box = document.getElementById('ig');
+    if (!box || !window.fetch || !window.matchMedia('(max-width: 960px)').matches) return;
+    function cdn(url, w) {
+      return '/.netlify/images?url=' + encodeURIComponent(url) + '&w=' + w + '&fm=webp&q=72';
+    }
+    function swap(tile, post) {
+      var img = tile.querySelector('img');
+      var next = new Image();
+      next.onload = function () {
+        img.removeAttribute('srcset');
+        img.src = next.src;
+        img.alt = post.caption || 'Recent clean by Reset Cleaning';
+        tile.href = post.link;
+        tile.setAttribute('aria-label', 'Instagram: ' + (post.caption || 'View post'));
+      };
+      next.onerror = function () {
+        // Image CDN unavailable: try Instagram's own image once.
+        if (next.dataset.direct) return;
+        next.dataset.direct = '1';
+        next.src = post.image;
+      };
+      next.src = cdn(post.image, 720);
+    }
+    fetch('/.netlify/functions/instagram')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.posts || !data.posts.length) return;
+        var tiles = box.querySelectorAll('.ig-tile');
+        data.posts.slice(0, tiles.length).forEach(function (post, i) {
+          if (tiles[i].getAttribute('href') !== post.link) swap(tiles[i], post);
+        });
+      })
+      .catch(function () { /* keep the saved photos */ });
   })();
 
   // Free quote form → GoHighLevel inbound webhook

@@ -1,0 +1,4 @@
+# Build settings stay in the Netlify UI; this file only allows Netlify's
+# Image CDN to resize and convert the homepage's Instagram photos.
+[images]
+  remote_images = ["https://scontent[a-z0-9.-]*\\.cdninstagram\\.com/.*", "https://[a-z0-9.-]*\\.fbcdn\\.net/.*"]
