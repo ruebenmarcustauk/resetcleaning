@@ -233,7 +233,7 @@
           return availableExtras().some(function (x) { return x.id === id; });
         });
         setError('');
-        renderStep0(); renderStep1(); renderSummary(); save();
+        renderStep0(); renderStep1(); renderSummary(); renderNav(); save();
         // First pick on a phone: bring the next question into view.
         if (first && isPhone()) {
           var home = document.getElementById('bk-home');
