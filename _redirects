@@ -1,3 +1,8 @@
 # Old booking page (used a deleted GoHighLevel calendar) -> current booking flow
 /book.html  /apply.html  301!
 /book       /apply.html  301!
+
+# One address per page: send extensionless URLs (e.g. /services/house-cleaning-robina)
+# to the canonical .html page. Existing files are served as normal.
+/services/:slug  /services/:slug.html  301
+/blog/:slug      /blog/:slug.html      301
